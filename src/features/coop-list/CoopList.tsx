@@ -1,11 +1,15 @@
-import './CoopList.scss'
+import { Card, CardHeader, CardBody } from '@heroui/react'
 
 const CoopList = () => {
   return (
-    <section className="coop-list">
-      <h2 className="coop-list__title">Каталог кооперативов</h2>
-      <p className="coop-list__placeholder">Здесь будет список кооперативов</p>
-    </section>
+    <Card>
+      <CardHeader>
+        <h2 className="text-2xl font-bold">Каталог кооперативов</h2>
+      </CardHeader>
+      <CardBody>
+        <p className="text-default-500">Здесь будет список кооперативов</p>
+      </CardBody>
+    </Card>
   )
 }
 

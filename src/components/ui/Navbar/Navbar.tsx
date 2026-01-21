@@ -22,41 +22,36 @@ const AppNavbar: React.FC = () => {
   };
 
   return (
-    <div className="navbar-wrapper">
-      <HeroNavbar
-        as="nav"
-        shouldHideOnScroll
-        maxWidth="xl"
-        className="navbar"
-      >
+    <HeroNavbar shouldHideOnScroll maxWidth="xl" isBordered>
+      <NavbarContent>
         <NavbarBrand>
           <p className="font-bold text-inherit">MCP COOP</p>
         </NavbarBrand>
+      </NavbarContent>
 
-        <NavbarContent className="gap-4">
-          {links.map((link) => (
-            <NavbarItem key={link.href}>
-              <HeroLink color="foreground" href={link.href}>
-                {link.label}
-              </HeroLink>
-            </NavbarItem>
-          ))}
-        </NavbarContent>
-
-        <NavbarContent justify="end">
-          <NavbarItem>
-            <Button
-              isIconOnly
-              variant="light"
-              onPress={handleToggleTheme}
-              aria-label="Переключить тему"
-            >
-              {isDark ? "🌙" : "☀️"}
-            </Button>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {links.map((link) => (
+          <NavbarItem key={link.href}>
+            <HeroLink color="foreground" href={link.href}>
+              {link.label}
+            </HeroLink>
           </NavbarItem>
-        </NavbarContent>
-      </HeroNavbar>
-    </div>
+        ))}
+      </NavbarContent>
+
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <Button
+            isIconOnly
+            variant="light"
+            onPress={handleToggleTheme}
+            aria-label="Переключить тему"
+          >
+            {isDark ? "🌙" : "☀️"}
+          </Button>
+        </NavbarItem>
+      </NavbarContent>
+    </HeroNavbar>
   );
 };
 

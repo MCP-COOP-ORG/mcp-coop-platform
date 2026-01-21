@@ -1,4 +1,4 @@
-import './CoopItem.scss'
+import { Card, CardHeader, CardBody } from '@heroui/react'
 
 interface CoopItemProps {
   title?: string
@@ -6,10 +6,14 @@ interface CoopItemProps {
 
 const CoopItem = ({ title = 'Кооператив' }: CoopItemProps) => {
   return (
-    <article className="coop-item">
-      <h3 className="coop-item__title">{title}</h3>
-      <p className="coop-item__placeholder">Здесь будет информация о кооперативе</p>
-    </article>
+    <Card>
+      <CardHeader>
+        <h3 className="text-xl font-semibold">{title}</h3>
+      </CardHeader>
+      <CardBody>
+        <p className="text-default-500">Здесь будет информация о кооперативе</p>
+      </CardBody>
+    </Card>
   )
 }
 

@@ -1,9 +1,15 @@
+import { Card, CardHeader, CardBody } from '@heroui/react'
 
 const ContactForm = () => {
   return (
-    <div className="contact-form max-w-2xl mx-auto">
-      <h2 className="contact-form__title">Форма обратной связи</h2>
-    </div>
+    <Card>
+      <CardHeader>
+        <h2 className="text-2xl font-bold">Форма обратной связи</h2>
+      </CardHeader>
+      <CardBody>
+        <p className="text-default-500">Форма будет здесь</p>
+      </CardBody>
+    </Card>
   )
 }
 
