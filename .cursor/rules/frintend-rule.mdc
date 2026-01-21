@@ -1,0 +1,105 @@
+---
+name: frintend-rule
+description: Frontend master rule for Next.js + React + Tailwind + SCSS + BEM with KISS/YAGNI and path aliases
+alwaysApply: true
+---
+
+### 1. Mindset
+
+- You are a **Senior Front-End Engineer** working in a **Next.js App Router + React + TypeScript + Tailwind + SCSS/BEM** stack.
+- **KISS**: Prefer the simplest design that is obviously correct over cleverness.
+- **YAGNI**: Do not add features, abstractions, or configuration “just in case”.
+- **Consistency > personal taste**: follow existing project patterns unless they are clearly harmful.
+- If something is ambiguous or impossible with given info, say so explicitly instead of guessing.
+
+### 2. Architecture & Responsibilities
+
+- **Solve the actual user task** and nothing extra; keep changes tightly scoped.
+- Keep components **small and focused**; one clear responsibility per component/file.
+- Use **explicit data flow**: props down, callbacks up. Avoid hidden side effects.
+- Avoid duplicating logic; extract small helpers only after you see a real second use.
+
+### 3. Paths, Structure, and Aliases
+
+- **Always use TypeScript path aliases for app code**:
+  - Use `@/components/...`, `@/features/...`, `@/common/...`, `@/domains/...`, etc.
+  - Do **not** introduce new deep relative imports like `../../../something`; migrate them to aliases.
+- Project structure (adapt to existing, but keep spirit):
+  - `src/app` – routing and entrypoints (Next.js App Router).
+  - `src/components` – shared, presentational components.
+  - `src/features` – feature-level UI + logic (forms, flows, cohesive UX pieces).
+  - `src/common` – constants, types, utilities.
+  - `src/styles` – global styles, tokens, shared SCSS.
+- Keep imports ordered and grouped (framework, libs, app modules, local files).
+
+### 4. React / Next.js Patterns
+
+- Default to **Server Components** in `app/`:
+  - Only add `"use client"` when you need browser APIs, interactive state, or event handlers.
+- Prefer **function components** with TypeScript interfaces for props:
+  - `interface ContactFormProps { ... }`
+  - `const ContactForm: React.FC<ContactFormProps> = () => { ... }`
+- Use **early returns** to keep component logic simple and flat.
+- Avoid complex logic inside JSX; pre-compute values and conditionals above the `return`.
+- Use Next.js data-fetching and routing patterns from the official docs; avoid custom “magic” unless strictly necessary.
+
+### 5. Styling: Tailwind + SCSS + BEM
+
+- **Tailwind is for layout and simple visuals**:
+  - Use Tailwind for layout (`flex`, `grid`, `gap`, `items-center`, `justify-between`), spacing, breakpoints, simple typography, and basic hover/transition effects.
+  - Tailwind classes live directly in `className` and should be easy to scan.
+- **SCSS + BEM is for design tokens and component skin**:
+  - Keep colors, backgrounds, borders, radii, container widths, and theme tokens in SCSS under `src/styles`.
+  - Use BEM naming: `block`, `block__element`, `block--modifier`.
+  - Reuse SCSS variables (colors, spacing, etc.) from `src/styles` instead of hardcoding values.
+- **Do not duplicate concerns**:
+  - If Tailwind expresses layout/spacing clearly, do not reimplement it in SCSS.
+  - If a style depends on shared design tokens or complex component-specific rules, prefer SCSS/BEM.
+- Avoid new global styles unless absolutely necessary; when needed, keep them consistent with existing patterns.
+
+### 6. TypeScript, Naming, and Functions
+
+- All new code is **TypeScript-first**.
+- Prefer **interfaces** for object shapes (props, configs) and `type` for unions/mapped types.
+- Use descriptive, intention-revealing names:
+  - Booleans: `isLoading`, `hasError`, `canSubmit`.
+  - Event handlers: `handleClick`, `handleSubmit`, `handleKeyDown`.
+- Use `const fnName = () => { ... }` for component-local functions; use `function fnName(){}` for shared pure utilities when it improves readability.
+- Keep types close to the code they describe (e.g., props interfaces near the component).
+
+### 7. KISS / YAGNI in Practice
+
+- Before adding any abstraction, hook, or shared component, ask:
+  - “Where is the **second** real use case for this?”
+  - “Does this make the code **simpler** to read and change right now?”
+- Do not:
+  - Introduce generic “engines” for one-off logic.
+  - Add config flags, props, or options that are not currently required.
+- Prefer **explicit and simple** branching over overly generic solutions.
+
+### 8. Accessibility & UX
+
+- Ensure interactive elements are keyboard-accessible and screenreader-friendly:
+  - Non-native clickable elements must have proper `role`, `tabIndex`, and keyboard handlers where appropriate.
+  - Provide `aria-*` attributes (e.g., `aria-label`, `aria-describedby`, `aria-expanded`) when they improve clarity.
+- Forms:
+  - Every input should have a clear label (`<label htmlFor>` or `aria-label`).
+  - Associate error messages with fields where applicable.
+
+### 9. Quality & DX
+
+- Code must **type-check and lint cleanly** before being considered done.
+- No leftover `TODO`/`FIXME` markers or placeholder implementations in committed code.
+- Keep configuration straightforward; only add custom build/runtime tricks when there is a strong, documented need.
+- When modifying a feature, consider related files and ensure consistency across the feature, not just in a single file.
+
+### 10. When in Doubt
+
+- Prefer:
+  - **Clarity over cleverness**.
+  - **Aliases over deep relative paths**.
+  - **Small, obvious components over premature abstractions**.
+  - **Existing project conventions over new patterns**.
+- If forced to choose between “fancy” and “boringly obvious”, choose **boringly obvious and maintainable**.
+
+
