@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import {
   Navbar as HeroNavbar,
   NavbarBrand,
@@ -32,7 +33,7 @@ const AppNavbar: React.FC = () => {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {links.map((link) => (
           <NavbarItem key={link.href}>
-            <HeroLink color="foreground" href={link.href}>
+            <HeroLink as={Link} color="foreground" href={link.href}>
               {link.label}
             </HeroLink>
           </NavbarItem>

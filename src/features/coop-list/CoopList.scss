@@ -1,0 +1,14 @@
+@use '../../styles/variables' as *;
+
+.coop-list {
+  padding: $spacing-lg;
+
+  &__title {
+    margin: 0 0 $spacing-md 0;
+  }
+
+  &__placeholder {
+    color: $text-gray;
+  }
+}
+
