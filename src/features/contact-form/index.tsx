@@ -7,8 +7,9 @@ import {
   contactFormCheckbox,
   contactFormButton,
   contactFormErrors,
+  commonFormErrors,
   type ContactFormData,
-} from "@/common/constants/ContactForm";
+} from "@/common/constants/Form";
 
 const initialFormData: ContactFormData = {
   firstName: "",
@@ -36,11 +37,11 @@ const validateEmailFormat = (value: string): boolean =>
 
 const validateEmail = (value: string): string | null => {
   if (!value) {
-    return contactFormErrors.emailRequired;
+    return commonFormErrors.emailRequired;
   }
 
   if (!validateEmailFormat(value)) {
-    return contactFormErrors.emailInvalid;
+    return commonFormErrors.emailInvalid;
   }
 
   return null;
@@ -108,6 +109,7 @@ export default function ContactForm() {
               <div className="flex gap-4 w-full">
                 <Input
                   className="flex-1 w-full"
+                  variant="bordered"
                   label={contactFormFields.firstName.label}
                   labelPlacement="outside"
                   name={contactFormFields.firstName.name}
@@ -120,6 +122,7 @@ export default function ContactForm() {
                 />
                 <Input
                   className="flex-1 w-full"
+                  variant="bordered"
                   label={contactFormFields.lastName.label}
                   labelPlacement="outside"
                   name={contactFormFields.lastName.name}
@@ -132,6 +135,7 @@ export default function ContactForm() {
               <div className="w-full pt-6">
                 <Input
                   className="w-full"
+                  variant="bordered"
                   label={contactFormFields.email.label}
                   labelPlacement="outside"
                   name={contactFormFields.email.name}
@@ -157,6 +161,7 @@ export default function ContactForm() {
             <div className="w-full h-full pt-6 pb-6 border-b border-default-200">
               <Textarea
                 className="w-full h-full"
+                variant="bordered"
                 label={contactFormFields.message.label}
                 labelPlacement="outside"
                 name={contactFormFields.message.name}

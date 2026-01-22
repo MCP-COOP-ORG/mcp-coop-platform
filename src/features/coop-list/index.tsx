@@ -1,6 +1,6 @@
-import { Card, CardHeader, CardBody } from '@heroui/react'
+import { Card, CardHeader, CardBody } from '@heroui/react';
 
-const CoopList = () => {
+export default function CoopList() {
   return (
     <Card>
       <CardHeader>
@@ -10,8 +10,6 @@ const CoopList = () => {
         <p className="text-default-500">Здесь будет список кооперативов</p>
       </CardBody>
     </Card>
-  )
+  );
 }
-
-export default CoopList
 

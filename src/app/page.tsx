@@ -1,6 +1,6 @@
-import ContactForm from '@/features/contact-form/ContactForm'
-import CoopList from '@/features/coop-list/CoopList'
-import CoopItem from '@/features/coop-item/CoopItem'
+import ContactForm from '@/features/contact-form'
+import CoopList from '@/features/coop-list'
+import CoopItem from '@/features/coop-item'
 
 export default function Home() {
   return (

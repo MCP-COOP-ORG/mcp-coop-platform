@@ -1,4 +1,4 @@
-import ContactForm from '@/features/contact-form/ContactForm'
+import ContactForm from '@/features/contact-form'
 
 export default function ContactsPage() {
   return (

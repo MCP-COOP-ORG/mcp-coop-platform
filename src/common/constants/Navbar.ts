@@ -15,3 +15,9 @@ export const footerNavigationLinks: NavigationLink[] = [
   { href: '/contacts', label: 'Contact' },
 ]
 
+export const navbarAuth = {
+  login: "Login",
+  logout: "Logout",
+  modalTitle: "Login",
+  themeToggleLabel: "Toggle theme",
+} as const;

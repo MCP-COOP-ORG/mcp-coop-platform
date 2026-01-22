@@ -1,10 +1,10 @@
 import { Card, CardHeader, CardBody } from '@heroui/react'
 
 interface CoopItemProps {
-  title?: string
+  title?: string;
 }
 
-const CoopItem = ({ title = 'Кооператив' }: CoopItemProps) => {
+export default function CoopItem({ title = 'Кооператив' }: CoopItemProps) {
   return (
     <Card>
       <CardHeader>
@@ -14,8 +14,6 @@ const CoopItem = ({ title = 'Кооператив' }: CoopItemProps) => {
         <p className="text-default-500">Здесь будет информация о кооперативе</p>
       </CardBody>
     </Card>
-  )
+  );
 }
-
-export default CoopItem
 
