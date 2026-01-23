@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { auth } from "@/auth";
 import "./globals.css";
 import { Providers } from "./providers";
-import Navbar from "@/components/ui/navbar";
+import Header from "@/components/layout/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,17 +20,19 @@ export const metadata: Metadata = {
   description: "MCP COOP Blockchain",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>
+        <Providers session={session}>
           <div className="app min-h-screen flex flex-col">
-            <Navbar />
+            <Header session={session} />
             <main className="flex-1">
               {children}
             </main>

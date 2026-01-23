@@ -4,9 +4,12 @@ export interface NavigationLink {
 }
 
 export const headerNavigationLinks: NavigationLink[] = [
-  { href: '/', label: 'Главная' },
-  { href: '/dashboard', label: 'Dashboard' },
-  { href: '/contacts', label: 'Contact' },
+  { href: '/', label: 'Home' },
+  { href: '/docs', label: 'Documentation' },
+  { href: '/status', label: 'Blockchain' },
+  { href: '/coops', label: 'Coops' },
+  { href: '/contacts', label: 'Contact Us' },
+  { href: '/dashboard', label: 'Dashboard' }, 
 ]
 
 export const footerNavigationLinks: NavigationLink[] = [

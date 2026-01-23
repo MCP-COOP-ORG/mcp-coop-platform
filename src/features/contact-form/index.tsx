@@ -6,10 +6,10 @@ import {
   contactFormFields,
   contactFormCheckbox,
   contactFormButton,
-  contactFormErrors,
-  commonFormErrors,
   type ContactFormData,
 } from "@/common/constants/Form";
+import { contactFormSchema } from "@/common/validation/contact";
+import { validateWithZod } from "@/common/validation/zod";
 
 const initialFormData: ContactFormData = {
   firstName: "",
@@ -20,37 +20,12 @@ const initialFormData: ContactFormData = {
   file: null,
 };
 
-const validateFirstName = (value: string): string | null => {
-  if (!value || value.length === 0) {
-    return contactFormErrors.firstNameRequired;
-  }
-  
-  if (value.includes(" ")) {
-    return contactFormErrors.firstNameNoSpaces;
-  }
-
-  return null;
-};
-
-const validateEmailFormat = (value: string): boolean =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
-const validateEmail = (value: string): string | null => {
-  if (!value) {
-    return commonFormErrors.emailRequired;
-  }
-
-  if (!validateEmailFormat(value)) {
-    return commonFormErrors.emailInvalid;
-  }
-
-  return null;
-};
-
 export default function ContactForm() {
   const [formData, setFormData] = React.useState<ContactFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [shouldValidate, setShouldValidate] = React.useState(false);
+  const [errors, setErrors] = React.useState<
+    Partial<Record<keyof ContactFormData, string>>
+  >({});
 
   const handleInputChange = (field: keyof ContactFormData) => (value: string) => {
     setFormData((prev) => ({...prev, [field]: value}));
@@ -68,26 +43,26 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Enable validation on submit attempt
-    setShouldValidate(true);
+    const { success, data, errors: validationErrors } = validateWithZod(
+      contactFormSchema,
+      formData
+    );
 
-    // Run client-side validation before sending data
-    const firstNameError = validateFirstName(formData.firstName);
-    const emailError = validateEmail(formData.email);
-
-    if (firstNameError || emailError) {
+    if (!success) {
+      setErrors(validationErrors as Partial<Record<keyof ContactFormData, string>>);
       return;
     }
 
+    setErrors({});
     setIsSubmitting(true);
 
     try {
-      const result = await submitFormData(formData);
+      const result = await submitFormData(data as ContactFormData);
 
       if (!result.errors || Object.keys(result.errors).length === 0) {
         // Success - reset form
         setFormData(initialFormData);
-        setShouldValidate(false);
+        setErrors({});
       }
     } catch (error) {
       console.error("Form submission error:", error);
@@ -118,7 +93,8 @@ export default function ContactForm() {
                   isRequired={contactFormFields.firstName.isRequired}
                   value={formData.firstName}
                   onValueChange={handleInputChange("firstName")}
-                  validate={shouldValidate ? validateFirstName : undefined}
+                  isInvalid={Boolean(errors.firstName)}
+                  errorMessage={errors.firstName}
                 />
                 <Input
                   className="flex-1 w-full"
@@ -144,7 +120,8 @@ export default function ContactForm() {
                   isRequired={contactFormFields.email.isRequired}
                   value={formData.email}
                   onValueChange={handleInputChange("email")}
-                  validate={shouldValidate ? validateEmail : undefined}
+                  isInvalid={Boolean(errors.email)}
+                  errorMessage={errors.email}
                 />
                 <div className="pt-6">
                   <Checkbox

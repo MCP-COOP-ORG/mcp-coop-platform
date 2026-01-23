@@ -135,3 +135,15 @@ export const authFormTitles = {
   login: "Login",
   signup: "Sign Up",
 } as const;
+
+export const authFormErrors = {
+  emailRequired: commonFormErrors.emailRequired,
+  emailInvalid: commonFormErrors.emailInvalid,
+  passwordMinLength: "Password must be at least 8 characters long",
+  nameRequired: "Name is required",
+  passwordsMismatch: "Passwords must match",
+  emailAlreadyExists: "Email already exists",
+  invalidCredentials: "Invalid email or password",
+  validationFailed: "Validation failed",
+  internalServerError: "Internal server error",
+} as const;

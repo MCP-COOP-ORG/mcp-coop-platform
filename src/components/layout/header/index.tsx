@@ -2,6 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import type { Session } from "next-auth";
 import {
   Navbar as HeroNavbar,
   NavbarBrand,
@@ -15,29 +17,46 @@ import {
   NavigationLink,
   headerNavigationLinks,
   navbarAuth,
-} from "@/common/constants/Navbar";
-import { useTheme } from "@/app/providers";
+} from "@/common/constants/Header";
+import { useTheme, useSession } from "@/app/providers";
 import AppModal, { useModal } from "@/components/ui/modal";
 import AuthForm from "@/features/auth-form";
-import { authFormModes, authFormTitles, type AuthFormMode, type AuthFormData } from "@/common/constants/Form";
+import { authFormModes, authFormTitles, type AuthFormMode } from "@/common/constants/Form";
+import { logout } from "@/app/actions/auth";
 
-export default function AppNavbar() {
+interface HeaderProps {
+  session: Session | null;
+}
+
+export default function Header({ session: initialSession }: HeaderProps) {
   const links: NavigationLink[] = headerNavigationLinks;
+  const router = useRouter();
   const { isDark, setIsDark } = useTheme();
+  const { session } = useSession();
   const { isOpen, onOpen, onClose } = useModal();
   const [authMode, setAuthMode] = React.useState<AuthFormMode>(authFormModes.login);
+  
+  const isAuthenticated = !!session?.user || !!initialSession?.user;
 
   const handleToggleTheme = () => {
     setIsDark(!isDark);
   };
 
-  const handleAuthSubmit = (data: AuthFormData) => {
-    console.log("Auth form submitted:", { mode: authMode, data });
-    // TODO: Implement authentication logic
-  };
-
   const handleModeChange = (mode: AuthFormMode) => {
     setAuthMode(mode);
+  };
+
+  const handleAuthSuccess = () => {
+    setAuthMode(authFormModes.login);
+    onClose();
+    router.refresh();
+  };
+
+  const handleLogout = async () => {
+    const result = await logout();
+    if (result.success) {
+      router.refresh();
+    }
   };
 
   const handleModalClose = (open: boolean) => {
@@ -67,13 +86,23 @@ export default function AppNavbar() {
 
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button
-            variant="bordered"
-            color="primary"
-            onPress={onOpen}
-          >
-            {navbarAuth.login}
-          </Button>
+          {isAuthenticated ? (
+            <Button
+              variant="bordered"
+              color="danger"
+              onPress={handleLogout}
+            >
+              {navbarAuth.logout}
+            </Button>
+          ) : (
+            <Button
+              variant="bordered"
+              color="primary"
+              onPress={onOpen}
+            >
+              {navbarAuth.login}
+            </Button>
+          )}
         </NavbarItem>
         <NavbarItem>
           <Button
@@ -96,7 +125,7 @@ export default function AppNavbar() {
         <AuthForm
           mode={authMode}
           onModeChange={handleModeChange}
-          onSubmit={handleAuthSubmit}
+          onSuccess={handleAuthSuccess}
         />
       </AppModal>
     </HeroNavbar>
