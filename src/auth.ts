@@ -1,17 +1,17 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
+import authConfig from "./auth.config";
 
 import { prisma } from "@/lib/prisma";
 import { authCredentialsSchema } from "@/common/validation/auth";
 
+/**
+ * Full Auth.js configuration with Prisma.
+ * Used in Server Components, API routes, and Server Actions.
+ */
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  session: {
-    strategy: "jwt",
-    maxAge: 3600, // 1 hour in seconds
-  },
-  secret: process.env.AUTH_SECRET,
-  trustHost: true,
+  ...authConfig,
   providers: [
     Credentials({
       name: "Credentials",
