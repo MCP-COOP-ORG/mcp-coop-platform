@@ -1,19 +1,30 @@
-import { Card, CardHeader, CardBody } from '@heroui/react'
+import { Card, CardHeader, CardBody } from "@heroui/react";
+
+import type { CoopItemDto } from "@/app/actions/coops";
 
 interface CoopItemProps {
-  title?: string;
+  coop: CoopItemDto;
 }
 
-export default function CoopItem({ title = 'Кооператив' }: CoopItemProps) {
+/**
+ * Detailed view for a single cooperative.
+ * Intended for coop detail pages.
+ */
+const CoopItem: React.FC<CoopItemProps> = ({ coop }) => {
   return (
     <Card>
-      <CardHeader>
-        <h3 className="text-xl font-semibold">{title}</h3>
+      <CardHeader className="flex flex-col items-start gap-1">
+        <h1 className="text-2xl font-bold">{coop.name}</h1>
+        <p className="text-xs font-mono text-default-500 break-all">
+          {coop.address}
+        </p>
       </CardHeader>
-      <CardBody>
-        <p className="text-default-500">Здесь будет информация о кооперативе</p>
+      <CardBody className="space-y-3">
+        <p className="text-default-500 text-sm">{coop.description}</p>
       </CardBody>
     </Card>
   );
-}
+};
+
+export default CoopItem;
 

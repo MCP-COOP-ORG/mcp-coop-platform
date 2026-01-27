@@ -16,3 +16,37 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model PageContent {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  page        String   @unique
+  language    String
+  title       String
+  subtitle    String?
+  description String
+  image       String?
+  video       String?
+  jsonContent Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Article {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  subtitle    String
+  image       String
+  jsonContent Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CoopItem {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  address     String
+  name        String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

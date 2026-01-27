@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import "./globals.css";
 import { Providers } from "./providers";
 import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default async function RootLayout({
             <main className="flex-1">
               {children}
             </main>
+            <Footer />
           </div>
         </Providers>
       </body>

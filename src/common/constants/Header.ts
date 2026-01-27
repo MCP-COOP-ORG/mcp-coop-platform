@@ -6,9 +6,9 @@ export interface NavigationLink {
 export const navigationRoutes = {
   home: { href: "/", label: "Home" },
   docs: { href: "/docs", label: "Documentation" },
-  status: { href: "/status", label: "Blockchain" },
+  status: { href: "/blockchain-status", label: "Blockchain" },
   coops: { href: "/coops", label: "Coops" },
-  contacts: { href: "/contacts", label: "Contact Us" },
+  contacts: { href: "/contact-us", label: "Contact Us" },
   dashboard: { href: "/dashboard", label: "Dashboard" },
 } as const;
 

@@ -16,6 +16,7 @@ import {
 import {
   NavigationLink,
   headerNavigationLinks,
+  navigationRoutes,
   navbarAuth,
 } from "@/common/constants/Header";
 import { useTheme, useSession } from "@/app/providers";
@@ -29,7 +30,6 @@ interface HeaderProps {
 }
 
 export default function Header({ session: initialSession }: HeaderProps) {
-  const links: NavigationLink[] = headerNavigationLinks;
   const router = useRouter();
   const { isDark, setIsDark } = useTheme();
   const { session } = useSession();
@@ -37,6 +37,15 @@ export default function Header({ session: initialSession }: HeaderProps) {
   const [authMode, setAuthMode] = React.useState<AuthFormMode>(authFormModes.login);
   
   const isAuthenticated = !!session?.user || !!initialSession?.user;
+
+  const links: NavigationLink[] = React.useMemo(() => {
+    return headerNavigationLinks.filter((link) => {
+      if (link.href === navigationRoutes.dashboard.href) {
+        return isAuthenticated;
+      }
+      return true;
+    });
+  }, [isAuthenticated]);
 
   const handleToggleTheme = () => {
     setIsDark(!isDark);
