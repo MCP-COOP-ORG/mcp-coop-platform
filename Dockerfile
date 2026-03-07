@@ -30,6 +30,12 @@ COPY . .
 ENV DATABASE_URL="postgresql://dummy"
 RUN npx prisma generate
 
+# Accept build arguments for Next.js NEXT_PUBLIC variables
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_KANBAN_MFE_URL
+ENV NEXT_PUBLIC_KANBAN_MFE_URL=$NEXT_PUBLIC_KANBAN_MFE_URL
+
 # Build the Next.js app (standalone mode configured in next.config.ts)
 # NOTE: If your Next.js build needs .env variables (like API keys) to embed at build time
 # they should be passed as build args or mounted here. For runtime, we handle it below.

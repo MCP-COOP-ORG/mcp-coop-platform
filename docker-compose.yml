@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+        - NEXT_PUBLIC_KANBAN_MFE_URL=${NEXT_PUBLIC_KANBAN_MFE_URL}
     # Имя контейнера берется из .env, либо используется дефолтное mcp-coop-client
     container_name: ${COMPOSE_PROJECT_NAME:-mcp-coop-client}-next-react
     restart: always
