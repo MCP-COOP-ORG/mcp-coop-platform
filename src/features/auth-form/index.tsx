@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Form, Input, Button } from "@heroui/react";
-import { login, signup } from "@/app/actions/auth";
+import { login, signup } from "@/features/auth/actions/auth.actions";
 import {
   authFormFields,
   authFormButtons,
@@ -10,7 +10,8 @@ import {
   type AuthFormMode,
   type AuthFormData,
 } from "@/common/constants/Form";
-import { authCredentialsSchema, SignupData, signupSchema } from "@/common/validation/auth";
+import { authCredentialsSchema, signupSchema } from "@/features/auth/model/validation";
+import type { SignupData } from "@/features/auth/model/types";
 import { validateWithZod } from "@/common/validation/zod";
 
 interface AuthFormProps {

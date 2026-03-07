@@ -21,6 +21,7 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: protectedRouteKeys.map((route) => `${route.href}/:path*`),
+  // Next.js requires matcher to be statically analyzable literals
+  matcher: ["/dashboard/:path*"],
 };
 

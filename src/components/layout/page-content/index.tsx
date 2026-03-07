@@ -1,6 +1,8 @@
+"use client";
+
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/react";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 import { getPageContent } from "@/app/actions/page-content";
 import ContentUnavailable from "@/components/ui/content-unavailable";
@@ -10,15 +12,22 @@ interface PageContentLayoutProps {
   language?: string;
 }
 
-const PageContentLayout = async ({
+export default function PageContentLayout({
   pageKey,
   language = "en",
-}: PageContentLayoutProps) => {
-  let content = null;
+}: PageContentLayoutProps) {
+  const [content, setContent] = useState<any>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  try {
-    content = await getPageContent({ page: pageKey, language });
-  } catch (error) {
+  useEffect(() => {
+    getPageContent({ page: pageKey, language })
+      .then(setContent)
+      .catch(setError)
+      .finally(() => setIsLoading(false));
+  }, [pageKey, language]);
+
+  if (error) {
     console.error("Failed to load PageContent", {
       pageKey,
       language,
@@ -33,8 +42,17 @@ const PageContentLayout = async ({
     );
   }
 
-  if (!content) {
-    notFound();
+  if (!isLoading && !content) {
+    return (
+      <ContentUnavailable
+        title="Page not found"
+        description={`The content for "${pageKey}" could not be found or has not been created yet.`}
+      />
+    );
+  }
+
+  if (isLoading) {
+    return null;
   }
 
   return (
@@ -80,7 +98,5 @@ const PageContentLayout = async ({
       </Card>
     </div>
   );
-};
-
-export default PageContentLayout;
+}
 

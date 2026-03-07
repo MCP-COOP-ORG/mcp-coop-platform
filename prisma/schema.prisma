@@ -4,21 +4,11 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
-
-model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  password  String
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  provider = "postgresql"
 }
 
 model PageContent {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   page        String   @unique
   language    String
   title       String
@@ -32,7 +22,7 @@ model PageContent {
 }
 
 model Article {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   title       String
   subtitle    String
   image       String
@@ -42,7 +32,7 @@ model Article {
 }
 
 model CoopItem {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   address     String
   name        String
   description String

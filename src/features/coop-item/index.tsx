@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardBody } from "@heroui/react";
 
 import type { CoopItemDto } from "@/app/actions/coops";

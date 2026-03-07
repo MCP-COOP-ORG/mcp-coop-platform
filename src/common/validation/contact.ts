@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { contactFormErrors } from "@/common/constants/Form";
-import { emailSchema } from "@/common/validation/auth";
+import { emailSchema } from "@/features/auth/model/validation";
 
 /**
  * Client/server validation schema for the contact form.

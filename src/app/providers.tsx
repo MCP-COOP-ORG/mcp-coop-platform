@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { HeroUIProvider } from "@heroui/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { Session } from "next-auth";
 
 type ProvidersProps = {
@@ -12,38 +13,16 @@ type ProvidersProps = {
 
 export function Providers({ children, session }: ProvidersProps) {
   const router = useRouter();
-  const [isDark, setIsDark] = React.useState(true);
-
-  React.useEffect(() => {
-    const html = document.documentElement;
-    if (isDark) {
-      html.classList.add("dark");
-    } else {
-      html.classList.remove("dark");
-    }
-  }, [isDark]);
 
   return (
     <HeroUIProvider navigate={router.push}>
-      <ThemeContext.Provider value={{ isDark, setIsDark }}>
+      <NextThemesProvider attribute="class" defaultTheme="dark">
         <SessionContext.Provider value={{ session }}>
           {children}
         </SessionContext.Provider>
-      </ThemeContext.Provider>
+      </NextThemesProvider>
     </HeroUIProvider>
   );
-}
-
-const ThemeContext = React.createContext<{
-  isDark: boolean;
-  setIsDark: (isDark: boolean) => void;
-}>({
-  isDark: true,
-  setIsDark: () => {},
-});
-
-export function useTheme() {
-  return React.useContext(ThemeContext);
 }
 
 const SessionContext = React.createContext<{
@@ -55,4 +34,3 @@ const SessionContext = React.createContext<{
 export function useSession() {
   return React.useContext(SessionContext);
 }
-

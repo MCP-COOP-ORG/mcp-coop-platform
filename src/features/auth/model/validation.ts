@@ -28,8 +28,6 @@ export const authCredentialsSchema = z.object({
   password: passwordSchema,
 });
 
-export type AuthCredentials = z.infer<typeof authCredentialsSchema>;
-
 /**
  * Signup schema (email + password + confirmPassword + optional name).
  * Can be reused on client and server for signup flows.
@@ -46,5 +44,3 @@ export const signupSchema = authCredentialsSchema
       message: authFormErrors.passwordsMismatch,
     }
   );
-
-export type SignupData = z.infer<typeof signupSchema>;

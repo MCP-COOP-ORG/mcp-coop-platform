@@ -1,21 +1,30 @@
+"use client";
+
 import { Card, CardHeader, CardBody } from "@heroui/react";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
-import { getArticles } from "@/app/actions/articles";
+import { getArticles, type ArticleDto } from "@/app/actions/articles";
 import ContentUnavailable from "@/components/ui/content-unavailable";
 
 interface ArticlesLayoutProps {
   limit?: number;
 }
 
-const ArticlesLayout = async ({ limit = 6 }: ArticlesLayoutProps) => {
-  let articles = [];
+export default function ArticlesLayout({ limit = 6 }: ArticlesLayoutProps) {
+  const [articles, setArticles] = useState<ArticleDto[]>([]);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  try {
-    articles = await getArticles({ limit });
-  } catch (error) {
+  useEffect(() => {
+    getArticles({ limit })
+      .then(setArticles)
+      .catch(setError)
+      .finally(() => setIsLoading(false));
+  }, [limit]);
+
+  if (error) {
     console.error("Failed to load articles", { error });
-
     return (
       <ContentUnavailable
         title="Articles temporarily unavailable"
@@ -24,7 +33,7 @@ const ArticlesLayout = async ({ limit = 6 }: ArticlesLayoutProps) => {
     );
   }
 
-  if (!articles.length) {
+  if (isLoading || !articles.length) {
     return null;
   }
 
@@ -49,7 +58,7 @@ const ArticlesLayout = async ({ limit = 6 }: ArticlesLayoutProps) => {
                 </div>
               )}
               <p className="text-xs text-default-400">
-                {article.createdAt.toLocaleDateString()}
+                {new Date(article.createdAt).toLocaleDateString()}
               </p>
             </CardBody>
           </Card>
@@ -57,7 +66,5 @@ const ArticlesLayout = async ({ limit = 6 }: ArticlesLayoutProps) => {
       </div>
     </div>
   );
-};
-
-export default ArticlesLayout;
+}
 

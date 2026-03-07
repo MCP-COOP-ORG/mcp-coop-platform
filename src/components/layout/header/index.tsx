@@ -19,11 +19,12 @@ import {
   navigationRoutes,
   navbarAuth,
 } from "@/common/constants/Header";
-import { useTheme, useSession } from "@/app/providers";
+import { useSession } from "@/app/providers";
+import { useTheme } from "next-themes";
 import AppModal, { useModal } from "@/components/ui/modal";
 import AuthForm from "@/features/auth-form";
 import { authFormModes, authFormTitles, type AuthFormMode } from "@/common/constants/Form";
-import { logout } from "@/app/actions/auth";
+import { logout } from "@/features/auth/actions/auth.actions";
 
 interface HeaderProps {
   session: Session | null;
@@ -31,8 +32,15 @@ interface HeaderProps {
 
 export default function Header({ session: initialSession }: HeaderProps) {
   const router = useRouter();
-  const { isDark, setIsDark } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  const { theme, setTheme } = useTheme();
   const { session } = useSession();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = theme === "dark";
   const { isOpen, onOpen, onClose } = useModal();
   const [authMode, setAuthMode] = React.useState<AuthFormMode>(authFormModes.login);
   
@@ -48,7 +56,7 @@ export default function Header({ session: initialSession }: HeaderProps) {
   }, [isAuthenticated]);
 
   const handleToggleTheme = () => {
-    setIsDark(!isDark);
+    setTheme(isDark ? "light" : "dark");
   };
 
   const handleModeChange = (mode: AuthFormMode) => {
@@ -120,7 +128,7 @@ export default function Header({ session: initialSession }: HeaderProps) {
             onPress={handleToggleTheme}
             aria-label={navbarAuth.themeToggleLabel}
           >
-            {isDark ? "🌙" : "☀️"}
+            {mounted ? (isDark ? "🌙" : "☀️") : null}
           </Button>
         </NavbarItem>
       </NavbarContent>
