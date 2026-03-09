@@ -1,4 +1,4 @@
-import PageContentLayout from "@/components/layout/page-content";
+import PageContentLayout from "@/shared/ui/layout/page-content";
 import KanbanMicrofrontend from "@/features/kanban";
 
 export default function DashboardPage() {

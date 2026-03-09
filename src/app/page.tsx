@@ -1,5 +1,5 @@
-import PageContentLayout from "@/components/layout/page-content";
-import ArticlesLayout from "@/components/layout/articles";
+import PageContentLayout from "@/shared/ui/layout/page-content";
+import ArticlesLayout from "@/shared/ui/layout/articles";
 
 export default function Home() {
   return (

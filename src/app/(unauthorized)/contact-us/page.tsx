@@ -1,5 +1,5 @@
 import ContactForm from "@/features/contact-form";
-import PageContentLayout from "@/components/layout/page-content";
+import PageContentLayout from "@/shared/ui/layout/page-content";
 
 export default function ContactsPage() {
   return (

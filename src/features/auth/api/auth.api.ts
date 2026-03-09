@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import setCookieParser from "set-cookie-parser";
-import type { AuthCredentials, SignupData } from "../model/types";
+import type { AuthCredentials, SignupData } from "../types";
 
 const API_URL = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 

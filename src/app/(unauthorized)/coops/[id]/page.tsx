@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { getCoopByAddress } from "@/app/actions/coops";
-import CoopItem from "@/features/coop-item";
+import { getCoopByAddress } from "@/features/coop/actions/coops.actions";
+import CoopItem from "@/features/coop/components/coop-item";
 
 interface CoopDetailsPageProps {
   params: {

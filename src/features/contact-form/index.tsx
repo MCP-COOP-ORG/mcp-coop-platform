@@ -7,9 +7,9 @@ import {
   contactFormCheckbox,
   contactFormButton,
   type ContactFormData,
-} from "@/common/constants/Form";
-import { contactFormSchema } from "@/common/validation/contact";
-import { validateWithZod } from "@/common/validation/zod";
+} from "@/shared/constants/Form";
+import { contactFormSchema } from "@/shared/validation/contact";
+import { validateWithZod } from "@/shared/validation/zod";
 
 const initialFormData: ContactFormData = {
   firstName: "",

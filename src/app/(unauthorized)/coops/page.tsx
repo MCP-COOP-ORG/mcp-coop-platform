@@ -1,6 +1,6 @@
-import PageContentLayout from "@/components/layout/page-content";
-import { getCoops } from "@/app/actions/coops";
-import CoopList from "@/features/coop-list";
+import PageContentLayout from "@/shared/ui/layout/page-content";
+import { getCoops } from "@/features/coop/actions/coops.actions";
+import CoopList from "@/features/coop/components/coop-list";
 
 export default async function CoopsPage() {
   const coops = await getCoops();

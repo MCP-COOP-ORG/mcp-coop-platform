@@ -1,10 +1,10 @@
 "use server";
 
 import { AuthError } from "next-auth";
-import { signIn, signOut } from "@/auth";
-import { signupSchema, authCredentialsSchema } from "../model/validation";
-import type { SignupData, AuthCredentials, AuthResult, SignupResult } from "../model/types";
-import { authFormErrors } from "@/common/constants/Form";
+import { signIn, signOut } from "@/core/configs/auth";
+import { signupSchema, authCredentialsSchema } from "../validation";
+import type { SignupData, AuthCredentials, AuthResult, SignupResult } from "../types";
+import { authFormErrors } from "@/shared/constants/Form";
 import { AuthService } from "../api/auth.api";
 
 /**
