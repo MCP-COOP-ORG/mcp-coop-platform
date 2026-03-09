@@ -23,6 +23,7 @@ model PageContent {
 
 model Article {
   id          String   @id @default(uuid())
+  language    String
   title       String
   subtitle    String
   image       String
@@ -33,6 +34,7 @@ model Article {
 
 model CoopItem {
   id          String   @id @default(uuid())
+  language    String
   address     String
   name        String
   description String

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { commonFormErrors, authFormErrors } from "@/shared/constants/Form";
+import { commonFormErrors, authFormErrors } from "@/shared/constants/form";
 
 /**
  * Base schema for validating email.

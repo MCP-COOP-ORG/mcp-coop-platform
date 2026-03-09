@@ -30,6 +30,7 @@ async function main() {
   const articles = await Promise.all([
     prisma.article.create({
       data: {
+        language: "en",
         title: "Understanding Next.js 15 Server Components",
         subtitle: "A deep dive into the new App Router architecture",
         image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop",
@@ -38,6 +39,7 @@ async function main() {
     }),
     prisma.article.create({
       data: {
+        language: "en",
         title: "Dockerizing Node Applications",
         subtitle: "Best practices for multi-stage builds",
         image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800&auto=format&fit=crop",
@@ -51,6 +53,7 @@ async function main() {
   const coops = await Promise.all([
     prisma.coopItem.create({
       data: {
+        language: "en",
         name: "EcoFarm Collective",
         address: "0x1234...abcd",
         description: "A cooperative focused on sustainable and organic farming practices within the blockchain ecosystem.",
@@ -59,6 +62,7 @@ async function main() {
     }),
     prisma.coopItem.create({
       data: {
+        language: "en",
         name: "Tech DAO Builders",
         address: "0x9876...efab",
         description: "Building open source tools for decentralized autonomous organizations.",

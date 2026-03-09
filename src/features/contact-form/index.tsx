@@ -7,7 +7,7 @@ import {
   contactFormCheckbox,
   contactFormButton,
   type ContactFormData,
-} from "@/shared/constants/Form";
+} from "@/shared/constants/form";
 import { contactFormSchema } from "@/shared/validation/contact";
 import { validateWithZod } from "@/shared/validation/zod";
 

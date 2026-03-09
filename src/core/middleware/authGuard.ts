@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { navigationRoutes, protectedRouteKeys } from "@/shared/constants/Header";
+import { navigationRoutes, protectedRouteKeys } from "@/shared/constants/header";
 
 /**
  * Auth Guard Middleware Logic

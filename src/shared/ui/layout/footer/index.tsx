@@ -1,6 +1,6 @@
 import React from "react";
 
-import { footerTexts, footerCopyrightYear } from "@/shared/constants/Footer";
+import { footerTexts, footerCopyrightYear } from "@/shared/constants/footer";
 
 const Footer: React.FC = () => {
   return (

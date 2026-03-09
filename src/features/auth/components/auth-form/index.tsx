@@ -9,7 +9,7 @@ import {
   authFormErrors,
   type AuthFormMode,
   type AuthFormData,
-} from "@/shared/constants/Form";
+} from "@/shared/constants/form";
 import { authCredentialsSchema, signupSchema } from "@/features/auth/validation";
 import type { SignupData } from "@/features/auth/types";
 import { validateWithZod } from "@/shared/validation/zod";

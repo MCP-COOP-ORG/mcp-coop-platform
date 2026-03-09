@@ -6,6 +6,7 @@ export interface MfeConfig {
   url: string;
   elementId: string;
   name?: string;
+  locale?: string;
 }
 
 /**
@@ -17,7 +18,7 @@ export function withDynamicMfe<P extends object>(
 ) {
   return function WithDynamicMfeComponent(props: P) {
     const resolvedConfig = typeof config === "function" ? config(props) : config;
-    const { url, elementId, name = "Microfrontend" } = resolvedConfig;
+    const { url, elementId, name = "Microfrontend", locale } = resolvedConfig;
 
     const { ready, failed } = useDynamicScript({ url });
 
@@ -48,7 +49,7 @@ export function withDynamicMfe<P extends object>(
           </div>
         )}
         {/* The microapp will render its React tree inside this div */}
-        <div id={elementId} className="w-full h-full min-h-[500px]" />
+        <div id={elementId} data-locale={locale} className="w-full h-full min-h-[500px]" />
       </div>
     );
   };

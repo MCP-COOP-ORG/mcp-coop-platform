@@ -1,0 +1,11 @@
+{
+  "Header": {
+    "login": "Login",
+    "logout": "Logout",
+    "themeToggleLabel": "Toggle theme"
+  },
+  "Locale": {
+    "en": "English",
+    "ru": "Russian"
+  }
+}

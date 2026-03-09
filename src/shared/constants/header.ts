@@ -16,10 +16,3 @@ export const headerNavigationLinks: NavigationLink[] = Object.values(navigationR
 
 export const protectedRouteKeys = [navigationRoutes.dashboard] as const;
 
-
-export const navbarAuth = {
-  login: "Login",
-  logout: "Logout",
-  modalTitle: "Login",
-  themeToggleLabel: "Toggle theme",
-} as const;

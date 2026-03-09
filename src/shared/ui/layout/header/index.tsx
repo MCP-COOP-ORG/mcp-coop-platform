@@ -17,14 +17,15 @@ import {
   NavigationLink,
   headerNavigationLinks,
   navigationRoutes,
-  navbarAuth,
-} from "@/shared/constants/Header";
+} from "@/shared/constants/header";
 import { useSession } from "@/core/providers/providers";
 import { useTheme } from "next-themes";
 import AppModal, { useModal } from "@/shared/ui/components/modal";
 import AuthForm from "@/features/auth/components/auth-form";
-import { authFormModes, authFormTitles, type AuthFormMode } from "@/shared/constants/Form";
+import LanguageSelector from "@/shared/ui/components/language-selector";
+import { authFormModes, authFormTitles, type AuthFormMode } from "@/shared/constants/form";
 import { logout } from "@/features/auth/actions/auth.actions";
+import { useTranslations } from "next-intl";
 
 interface HeaderProps {
   session: Session | null;
@@ -35,6 +36,7 @@ export default function Header({ session: initialSession }: HeaderProps) {
   const [mounted, setMounted] = React.useState(false);
   const { theme, setTheme } = useTheme();
   const { session } = useSession();
+  const t = useTranslations("Header");
 
   React.useEffect(() => {
     setMounted(true);
@@ -108,25 +110,31 @@ export default function Header({ session: initialSession }: HeaderProps) {
               variant="bordered"
               color="danger"
               onPress={handleLogout}
+              className="h-10"
             >
-              {navbarAuth.logout}
+              {t("logout")}
             </Button>
           ) : (
             <Button
               variant="bordered"
               color="primary"
               onPress={onOpen}
+              className="h-10"
             >
-              {navbarAuth.login}
+              {t("login")}
             </Button>
           )}
+        </NavbarItem>
+        <NavbarItem>
+          <LanguageSelector />
         </NavbarItem>
         <NavbarItem>
           <Button
             isIconOnly
             variant="bordered"
             onPress={handleToggleTheme}
-            aria-label={navbarAuth.themeToggleLabel}
+            aria-label={t("themeToggleLabel")}
+            className="h-10 w-10 min-w-10"
           >
             {mounted ? (isDark ? "🌙" : "☀️") : null}
           </Button>

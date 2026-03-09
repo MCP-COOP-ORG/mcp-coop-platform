@@ -1,4 +1,4 @@
-import { handlers } from "@/core/configs/auth";
+import { handlers } from "@/core/configs/auth/auth";
 
 export const { GET, POST } = handlers;
 

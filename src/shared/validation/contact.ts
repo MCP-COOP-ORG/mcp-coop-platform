@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { contactFormErrors } from "@/shared/constants/Form";
+import { contactFormErrors } from "@/shared/constants/form";
 import { emailSchema } from "@/features/auth/validation";
 
 /**
