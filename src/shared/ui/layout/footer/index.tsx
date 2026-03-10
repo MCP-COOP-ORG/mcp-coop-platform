@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { Link } from "@/core/configs/i18n/routing";
 import { useTranslations } from "next-intl";
+import { Link as HeroLink } from "@heroui/react";
 import { navigationRoutes } from "@/shared/constants/header";
 import { footerTexts, footerCopyrightYear } from "@/shared/constants/footer";
 
@@ -15,12 +18,14 @@ const Footer: React.FC = () => {
           {footerTexts.projectName}
         </p>
         <div className="flex items-center gap-4">
-          <Link
+          <HeroLink
+            as={Link}
+            color="foreground"
             href={navigationRoutes.contacts.href}
-            className="text-sm text-default-600 hover:text-default-900 transition-colors"
+            className="text-sm transition-colors"
           >
             {navT(navigationRoutes.contacts.translationKey as never)}
-          </Link>
+          </HeroLink>
         </div>
       </div>
     </footer>

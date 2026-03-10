@@ -10,6 +10,11 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log("Start seeding...");
 
+  console.log("Clearing existing data...");
+  await prisma.article.deleteMany();
+  await prisma.coopItem.deleteMany();
+  await prisma.pageContent.deleteMany();
+
   // 1. Seed Home Page Content
   const homeContent = await prisma.pageContent.upsert({
     where: { page: "home" },

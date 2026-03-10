@@ -2,7 +2,7 @@
 
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getPageContent } from "@/features/page-content/actions/page-content.actions";
 import ContentUnavailable from "@/shared/ui/components/content-unavailable";
