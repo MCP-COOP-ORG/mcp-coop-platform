@@ -2,6 +2,6 @@ export const footerCopyrightYear = 2006 as const;
 
 export const footerTexts = {
   copyrightPrefix: "©",
-  projectName: "MCP COOP Blockchain",
+  projectName: "MCP COOP DAO",
 } as const;
 

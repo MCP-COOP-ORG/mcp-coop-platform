@@ -2,10 +2,19 @@
   "Header": {
     "login": "Войти",
     "logout": "Выйти",
-    "themeToggleLabel": "Переключить тему"
+    "themeToggleLabel": "Переключить тему",
+    "signedInAs": "Вы вошли как"
   },
   "Locale": {
     "en": "Английский",
     "ru": "Русский"
+  },
+  "Navigation": {
+    "home": "Главная",
+    "docs": "Документация",
+    "status": "Блокчейн",
+    "coops": "Кооперативы",
+    "contacts": "Контакты",
+    "dashboard": "Дашборд"
   }
 }

@@ -1,26 +1,27 @@
 import { DefaultSession, DefaultUser } from "next-auth";
 
+export interface MyProfile {
+  id: string;
+  email: string;
+  fullName: string | null;
+  username: string | null;
+  tgId: string | null;
+  settings: Record<string, any> | null;
+}
+
 declare module "next-auth" {
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {
-    user: {
-      profileId: string;
-      tgId?: string | null;
-    } & DefaultSession["user"];
+  interface Session extends Omit<DefaultSession, "user"> {
+    myProfile?: MyProfile;
   }
 
   interface User extends DefaultUser {
-    profileId: string;
-    tgId?: string | null;
+    myProfile?: MyProfile;
   }
 }
 
 declare module "next-auth/jwt" {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
-    profileId: string;
-    tgId?: string | null;
+    myProfile?: MyProfile;
   }
 }

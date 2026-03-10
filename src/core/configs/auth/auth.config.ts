@@ -1,5 +1,6 @@
 import Credentials from "next-auth/providers/credentials";
 import type { NextAuthConfig } from "next-auth";
+import type { MyProfile } from "@/shared/types/next-auth";
 
 /**
  * Edge-compatible Auth.js configuration.
@@ -19,17 +20,18 @@ export default {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.profileId = user.profileId;
-        token.tgId = user.tgId;
+      if (user && user.myProfile) {
+        token.myProfile = user.myProfile;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.profileId = token.profileId as string;
-        session.user.tgId = token.tgId as string | null | undefined;
+      if (token.myProfile) {
+        session.myProfile = token.myProfile as MyProfile;
       }
+      // Strip default NextAuth user object entirely per user request
+      // @ts-ignore
+      delete session.user;
       return session;
     },
   },

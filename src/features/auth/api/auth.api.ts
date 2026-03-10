@@ -30,6 +30,20 @@ export class AuthService {
   }
 
   /**
+   * Helper to map base login raw data to MyProfile structure
+   */
+  private static mapLoginDataToProfile(data: any, emailFallback: string) {
+    return {
+      id: data.user?.profileId || "",
+      email: data.user?.email || emailFallback,
+      fullName: data.user?.fullName || null,
+      username: data.user?.username || null,
+      tgId: data.user?.tgId || null,
+      settings: null,
+    };
+  }
+
+  /**
    * Reaches out to the backend to authenticate the user and sync nested HttpOnly cookies.
    */
   static async login(credentials: AuthCredentials) {
@@ -44,8 +58,31 @@ export class AuthService {
     }
 
     await this.syncCookies(res.headers.getSetCookie()?.join(",") || null);
-    
+
     const data = await res.json();
+    
+    // 1. Initial fallback profile from login response
+    let myProfile = this.mapLoginDataToProfile(data, credentials.email);
+
+    // 2. Try to fetch full profile and merge if successful
+    try {
+      const cookieStore = await cookies();
+      const allCookies = cookieStore.getAll();
+      const cookieString = allCookies.map(c => `${c.name}=${c.value}`).join('; ');
+
+      const profileRes = await fetch(`${API_URL}/profiles/me`, {
+        headers: { "Cookie": cookieString },
+      });
+      if (profileRes.ok) {
+        const fetchedProfile = await profileRes.json();
+        myProfile = { ...myProfile, ...fetchedProfile };
+      }
+    } catch (e) {
+      console.warn("Profile fetch failed, using login fallback data", e);
+    }
+
+    data.myProfile = myProfile;
+    delete data.user; // Remove the original redundant user object
     return data;
   }
 
@@ -63,7 +100,7 @@ export class AuthService {
       const errorData = await res.json().catch(() => null);
       throw new Error(errorData?.message || "Registration failed. User may already exist.");
     }
-    
+
     return true; // Optionally return newly created user data if needed
   }
 

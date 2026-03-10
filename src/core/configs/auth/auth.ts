@@ -24,16 +24,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             password: credentials?.password as string,
           });
           
-          if (!data || !data.user || !data.user.profileId) {
+          if (!data || !data.myProfile || !data.myProfile.id) {
              throw new CredentialsSignin("Invalid response from server");
           }
 
           return {
-            id: data.user.profileId,
-            profileId: data.user.profileId,
-            tgId: data.user.tgId,
-            email: data.user.email,
-            name: data.user.fullName || data.user.email, // Best effort for name
+            id: data.myProfile.id,
+            myProfile: data.myProfile,
           };
         } catch (error) {
           if (error instanceof CredentialsSignin) {

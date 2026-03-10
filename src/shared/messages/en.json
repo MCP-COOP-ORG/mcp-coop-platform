@@ -2,10 +2,19 @@
   "Header": {
     "login": "Login",
     "logout": "Logout",
-    "themeToggleLabel": "Toggle theme"
+    "themeToggleLabel": "Toggle theme",
+    "signedInAs": "Signed in as"
   },
   "Locale": {
     "en": "English",
     "ru": "Russian"
+  },
+  "Navigation": {
+    "home": "Home",
+    "docs": "Documentation",
+    "status": "Blockchain",
+    "coops": "Coops",
+    "contacts": "Contact Us",
+    "dashboard": "Dashboard"
   }
 }
