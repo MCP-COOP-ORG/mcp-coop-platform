@@ -1,11 +1,9 @@
 import PageContentLayout from "@/shared/ui/layout/page-content";
-import ArticlesLayout from "@/shared/ui/layout/articles";
 
-export default function Home() {
+export default async function Home(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params;
+  
   return (
-    <>
-      <PageContentLayout pageKey="home" language="en" />
-      <ArticlesLayout />
-    </>
+    <PageContentLayout pageKey="home" language={params.locale} />
   );
 }

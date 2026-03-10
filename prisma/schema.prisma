@@ -8,8 +8,8 @@ datasource db {
 }
 
 model PageContent {
-  id          String   @id @default(uuid())
-  page        String   @unique
+  id          String    @id @default(uuid())
+  page        String
   language    String
   title       String
   subtitle    String?
@@ -17,19 +17,24 @@ model PageContent {
   image       String?
   video       String?
   jsonContent Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  articles    Article[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([page, language])
 }
 
 model Article {
-  id          String   @id @default(uuid())
-  language    String
-  title       String
-  subtitle    String
-  image       String
-  jsonContent Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String       @id @default(uuid())
+  language      String
+  title         String
+  subtitle      String
+  image         String
+  jsonContent   Json
+  pageContentId String?
+  pageContent   PageContent? @relation(fields: [pageContentId], references: [id], onDelete: SetNull)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model CoopItem {
