@@ -15,14 +15,12 @@ export function useDynamicScript({ url }: DefaultDynamicScriptOptions) {
       return;
     }
 
-    // Check if the script is already loaded
-    if (document.querySelector(`script[src="${url}"]`)) {
-      setReady(true);
-      return;
-    }
+    // Append a unique timestamp to force the browser to treat it as a new module and execute it again
+    const cacheBuster = `t=${Date.now()}`;
+    const scriptUrl = url.includes("?") ? `${url}&${cacheBuster}` : `${url}?${cacheBuster}`;
 
     const script = document.createElement("script");
-    script.src = url;
+    script.src = scriptUrl;
     script.type = "module";
     script.async = true;
 
@@ -43,9 +41,11 @@ export function useDynamicScript({ url }: DefaultDynamicScriptOptions) {
     document.body.appendChild(script);
 
     return () => {
-      // In a real MFE, you might want to clean up the script tag or the mounted React instance
-      // But for a single page app, leaving the script tag is usually fine for caching.
-      // document.body.removeChild(script);
+      // Clean up the script tag on unmount to prevent polluting the document head
+      // during SPA navigation
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
   }, [url]);
 
