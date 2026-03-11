@@ -92,19 +92,9 @@ jobs:
             # Configure Docker auth on the VM using the VM's default service account
             gcloud auth configure-docker ${GAR_LOCATION} --quiet || true
 
-            # Rename config for standard convenience
-            mv docker-compose.prod.yml docker-compose.yml
-            
-            # Inject IMAGE_URI into the server's .env file so docker-compose sees it explicitly
-            if grep -q "^IMAGE_URI=" ~/.env 2>/dev/null; then
-              sed -i "s|^IMAGE_URI=.*|IMAGE_URI=${IMAGE_URI}|" ~/.env
-            else
-              echo "IMAGE_URI=${IMAGE_URI}" >> ~/.env
-            fi
-
             # Pull the new image and recreate containers
-            docker-compose pull
-            docker-compose up -d
+            IMAGE_URI=${IMAGE_URI} docker-compose pull
+            IMAGE_URI=${IMAGE_URI} docker-compose up -d
 
             # Clean up old images to explicitly save disk space
             docker image prune -a -f
