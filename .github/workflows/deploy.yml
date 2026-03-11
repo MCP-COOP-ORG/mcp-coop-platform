@@ -92,9 +92,12 @@ jobs:
             # Configure Docker auth on the VM using the VM's default service account
             gcloud auth configure-docker ${GAR_LOCATION} --quiet || true
 
+            # Rename config for standard convenience
+            mv docker-compose.prod.yml docker-compose.yml
+
             # Pull the new image and recreate containers
-            IMAGE_URI=${IMAGE_URI} docker-compose pull
-            IMAGE_URI=${IMAGE_URI} docker-compose up -d
+            IMAGE_URI=${IMAGE_URI} docker compose pull
+            IMAGE_URI=${IMAGE_URI} docker compose up -d
 
             # Clean up old images to explicitly save disk space
             docker image prune -a -f
