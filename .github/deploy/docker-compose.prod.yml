@@ -6,7 +6,7 @@ services:
     container_name: mcp-coop-next-react
     restart: always
     ports:
-      - "${PORT:-8080}:8080"
+      - "${PORT:-80}:8080"
     env_file:
       - .env
     environment:
