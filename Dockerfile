@@ -61,6 +61,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
+# Copy Prisma schema and generated client for the setup-db migration container
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
+
 # (Optional) If you want the Docker container to pick up a local .env file when running,
 # you can copy it here. However, best practice in Docker is to pass env vars via
 # docker-compose.yml or cloud orchestration (ECS/K8s) rather than baking the file into the image.
