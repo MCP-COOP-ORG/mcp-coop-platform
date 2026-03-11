@@ -35,9 +35,9 @@ services:
     env_file:
       - .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${MCP_COOP_PLARFORM}
+      POSTGRES_PASSWORD: ${MCP_COOP_PLARFORM_PASSWORD}
+      POSTGRES_DB: ${MCP_COOP_PLARFORM_DB}
     ports:
       - "${EXTERNAL_DB_PORT:-5001}:5001"
     volumes:
