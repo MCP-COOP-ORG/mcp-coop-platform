@@ -61,7 +61,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. Copy the production docker-compose file to the VM
+      # 1. Copy the production docker-compose file to the VM root
       - name: Copy docker-compose via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -69,7 +69,7 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: ".github/deploy/docker-compose.prod.yml"
-          target: "~/mcp-coop-platform"
+          target: "~/"
           strip_components: 2
 
       # 2. Execute SSH commands to update and restart containers
@@ -84,9 +84,8 @@ jobs:
             # Compute full image URI
             export IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
             
-            # Navigate to the app directory
-            mkdir -p ~/mcp-coop-platform
-            cd ~/mcp-coop-platform
+            # Navigate to the root directory
+            cd ~/
 
             # Configure Docker auth on the VM using the VM's default service account
             gcloud auth configure-docker ${GAR_LOCATION} --quiet || true
