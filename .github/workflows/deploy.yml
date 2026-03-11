@@ -81,6 +81,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME
           script: |
+            set -e # Make the script fail immediately if any command fails, so GitHub shows the RED error!
+
             # Compute full image URI
             export IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
             
@@ -93,7 +95,14 @@ jobs:
             # Rename config for standard convenience
             mv docker-compose.prod.yml docker-compose.yml
             
-            # Pull the new image and recreate containers using older docker-compose syntax
+            # Inject IMAGE_URI into the server's .env file so docker-compose sees it explicitly
+            if grep -q "^IMAGE_URI=" ~/.env 2>/dev/null; then
+              sed -i "s|^IMAGE_URI=.*|IMAGE_URI=${IMAGE_URI}|" ~/.env
+            else
+              echo "IMAGE_URI=${IMAGE_URI}" >> ~/.env
+            fi
+
+            # Pull the new image and recreate containers
             docker-compose pull
             docker-compose up -d
 
