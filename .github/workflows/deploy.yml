@@ -31,9 +31,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
-          # NOTE: If your WIF is bound to a specific service account, specify it below. 
-          # You might need to add GCP_SA_EMAIL to secrets if it's required.
-          # service_account: ${{ secrets.GCP_SA_EMAIL }} 
+          service_account: 'mcp-coop-github-actions@project-ad4d3791-fa38-4a8b-9cc.iam.gserviceaccount.com' 
 
       # 2. Configure Docker for Google Artifact Registry
       - name: Configure Docker for GAR
