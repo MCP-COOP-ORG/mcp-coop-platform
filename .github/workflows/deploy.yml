@@ -10,7 +10,7 @@ env:
   PROJECT_ID: 'project-ad4d3791-fa38-4a8b-9cc'
   REGION: 'europe-central2'
   REPO_NAME: 'mcp-coop-artifacts'
-  IMAGE_NAME: 'mcp-coop-client'
+  IMAGE_NAME: 'mcp-coop-platform'
   GAR_LOCATION: 'europe-central2-docker.pkg.dev'
 
 jobs:
