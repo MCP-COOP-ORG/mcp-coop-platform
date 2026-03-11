@@ -93,9 +93,9 @@ jobs:
             # Rename config for standard convenience
             mv docker-compose.prod.yml docker-compose.yml
             
-            # Pull the new image and recreate containers
-            docker compose pull
-            docker compose up -d
+            # Pull the new image and recreate containers using older docker-compose syntax
+            docker-compose pull
+            docker-compose up -d
 
             # Clean up old images to explicitly save disk space
             docker image prune -a -f
