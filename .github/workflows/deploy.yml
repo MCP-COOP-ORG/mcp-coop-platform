@@ -6,7 +6,7 @@ on:
       - main
   workflow_dispatch:
 
-          env:
+env:
   PROJECT_ID: 'project-ad4d3791-fa38-4a8b-9cc'
   REGION: 'europe-central2'
   REPO_NAME: 'mcp-coop-artifacts'
@@ -90,13 +90,13 @@ jobs:
       # 2. Execute SSH commands to update and restart containers
       - name: Run Deploy scripts via SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST
-          env:
-            VPS_HOST: ${{ secrets.VPS_HOST }}
           script: |
             set -e # Make the script fail immediately if any command fails, so GitHub shows the RED error!
 
