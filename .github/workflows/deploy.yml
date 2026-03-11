@@ -106,10 +106,12 @@ jobs:
             # Navigate to the root directory
             cd ~/
 
-            # Dynamically inject NEXTAUTH_URL into the .env file 
-            # using the VPS_HOST secret (IP or domain)
+            # Dynamically inject or overwrite NEXTAUTH_URL into the .env file 
+            # using the VPS_HOST secret (IP or domain) and hardcoded 80 port
             sed -i '/^NEXTAUTH_URL=/d' .env || true
+            sed -i '/^PORT=/d' .env || true
             echo "NEXTAUTH_URL=http://${VPS_HOST}" >> .env
+            echo "PORT=80" >> .env
 
             # Configure Docker auth on the VM using the VM's default service account
             gcloud auth configure-docker ${GAR_LOCATION} --quiet || true
