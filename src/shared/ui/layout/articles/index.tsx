@@ -44,25 +44,25 @@ export default function ArticlesLayout({ limit = 6, language, pageKey }: Article
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => {
-          const iconName = article.image 
-            ? article.image.charAt(0).toUpperCase() + article.image.slice(1) 
+          const iconName = article.image
+            ? article.image.charAt(0).toUpperCase() + article.image.slice(1)
             : "Layers";
           const Icon = (LucideIcons as any)[iconName] || LucideIcons.Layers;
 
           return (
-            <Card 
-              key={article.id} 
+            <Card
+              key={article.id}
               className="p-6 shadow-none border border-default-200 bg-background flex flex-col items-start text-left h-full"
             >
               <CardBody className="flex flex-col p-0 h-full w-full gap-5 overflow-visible">
                 {/* Header: Icon + Title & Subtitle */}
-                <div className="flex gap-4 items-start w-full overflow-hidden">
-                  <div className="w-12 h-12 flex items-center justify-center border-2 border-primary rounded-xl text-primary flex-shrink-0">
-                    <Icon className="w-6 h-6" />
+                <div className="flex gap-4 items-start w-full">
+                  <div className="w-16 h-16 flex items-center justify-center border-2 border-primary rounded-xl text-primary flex-shrink-0">
+                    <Icon className="w-8 h-8" />
                   </div>
-                  <div className="flex flex-col gap-1 mt-0.5 overflow-hidden w-full">
-                    <h3 className="text-xl font-bold text-primary/80 leading-tight truncate">{article.title}</h3>
-                    <p className="text-sm font-medium text-default-600 truncate">{article.subtitle}</p>
+                  <div className="flex flex-col gap-1 w-full overflow-hidden">
+                    <h3 className="text-base font-bold text-primary/80 leading-tight">{article.title}</h3>
+                    <p className="text-sm font-medium text-default-600 line-clamp-2">{article.subtitle}</p>
                   </div>
                 </div>
 

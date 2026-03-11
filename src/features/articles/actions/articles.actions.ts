@@ -30,7 +30,7 @@ export async function getArticles(
       ...(language ? { language } : {}),
       ...(pageKey ? { pageContent: { page: pageKey } } : {}),
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "asc" },
     take: limit,
   });
 

@@ -8,8 +8,21 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
-  title: "MCP COOP Blockchain",
-  description: "MCP COOP Blockchain",
+  title: "MCP COOP DAO",
+  description: "Decentralized infrastructure for AI engineers and product teams. Create cooperatives, find partners, and launch onchain products.",
+  keywords: ["DAO", "MCP COOP", "Blockchain", "Cooperative", "AI Engineers", "Web3", "Smart Contracts", "Decentralized", "Crypto"],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "MCP COOP DAO",
+    description: "Decentralized infrastructure for AI engineers and product teams.",
+    siteName: "MCP COOP DAO",
+    images: [{ url: "/logo.png" }],
+    type: "website",
+  },
 };
 
 export default async function RootLayout(props: {

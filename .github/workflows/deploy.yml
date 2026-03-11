@@ -1,0 +1,104 @@
+name: Deploy to GCP VM
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: 'project-ad4d3791-fa38-4a8b-9cc'
+  REGION: 'europe-central2'
+  REPO_NAME: 'mcp-coop-artifacts'
+  IMAGE_NAME: 'mcp-coop-client'
+  GAR_LOCATION: 'europe-central2-docker.pkg.dev'
+
+jobs:
+  build-and-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for Workload Identity Federation
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 1. Authenticate to Google Cloud without JSON keys (WIF)
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          # NOTE: If your WIF is bound to a specific service account, specify it below. 
+          # You might need to add GCP_SA_EMAIL to secrets if it's required.
+          # service_account: ${{ secrets.GCP_SA_EMAIL }} 
+
+      # 2. Configure Docker for Google Artifact Registry
+      - name: Configure Docker for GAR
+        run: |
+          gcloud auth configure-docker ${GAR_LOCATION} --quiet
+
+      # 3. Build and Push 
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
+          # We pass environment variables for Next.js build time here
+          docker build \
+            --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
+            --build-arg NEXT_PUBLIC_KANBAN_MFE_URL=${{ secrets.NEXT_PUBLIC_KANBAN_MFE_URL }} \
+            -t $IMAGE_URI:latest \
+            -t $IMAGE_URI:${{ github.sha }} \
+            .
+          docker push $IMAGE_URI:latest
+          docker push $IMAGE_URI:${{ github.sha }}
+
+  deploy-to-vm:
+    name: Deploy to VM via SSH
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 1. Copy the production docker-compose file to the VM
+      - name: Copy docker-compose via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ".github/deploy/docker-compose.prod.yml"
+          target: "~/mcp-coop-platform"
+          strip_components: 2
+
+      # 2. Execute SSH commands to update and restart containers
+      - name: Run Deploy scripts via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME
+          script: |
+            # Compute full image URI
+            export IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
+            
+            # Navigate to the app directory
+            mkdir -p ~/mcp-coop-platform
+            cd ~/mcp-coop-platform
+
+            # Configure Docker auth on the VM using the VM's default service account
+            gcloud auth configure-docker ${GAR_LOCATION} --quiet || true
+
+            # Rename config for standard convenience
+            mv docker-compose.prod.yml docker-compose.yml
+            
+            # Pull the new image and recreate containers
+            docker compose pull
+            docker compose up -d
+
+            # Clean up old images to explicitly save disk space
+            docker image prune -a -f
