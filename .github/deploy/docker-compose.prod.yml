@@ -18,6 +18,7 @@ services:
   setup-db:
     image: ${IMAGE_URI}:latest
     container_name: mcp-coop-setup-db
+    user: "root"
     env_file:
       - .env
     environment:
