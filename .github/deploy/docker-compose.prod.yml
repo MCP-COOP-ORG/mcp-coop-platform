@@ -26,7 +26,7 @@ services:
     env_file:
       - ~/.env
     environment:
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
+      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres-platform:5432/${MCP_COOP_PLARFORM_DB}?schema=public
       - INTERNAL_API_URL=http://${BACKEND_CONTAINER_NAME:-mcp-coop-backend}-app:3001/api
     depends_on:
       setup-db:
@@ -40,16 +40,16 @@ services:
     env_file:
       - ~/.env
     environment:
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
+      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres-platform:5432/${MCP_COOP_PLARFORM_DB}?schema=public
     depends_on:
-      postgres:
+      postgres-platform:
         condition: service_healthy
     command: >
       sh -c "npx prisma db push --accept-data-loss && npx prisma db seed"
     networks:
       - mcp-network
 
-  postgres:
+  postgres-platform:
     image: postgres:16
     container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-db
     restart: always
