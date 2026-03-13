@@ -27,6 +27,7 @@ services:
       - ~/.env
     environment:
       - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
+      - INTERNAL_API_URL=http://${BACKEND_CONTAINER_NAME:-mcp-coop-backend}-app:3001/api
     depends_on:
       setup-db:
         condition: service_completed_successfully
@@ -78,3 +79,4 @@ volumes:
 networks:
   mcp-network:
     name: mcp-network
+    external: true
