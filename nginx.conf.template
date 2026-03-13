@@ -27,16 +27,16 @@ server {
     # 2. Kanban MFE - Микрофронтенд (JS файл)
     # Файл должен отдаваться из корня MFE контейнера
     # location /kanban-mfe.js {
-    #     proxy_pass http://${MFE_CONTAINER_NAME}:${MFE_PORT:-5173}/kanban-mfe.js;
+    #     proxy_pass http://${MFE_CONTAINER_NAME}:${MFE_PORT}/kanban-mfe.js;
     # }
 
     # 3. Kanban MFE - Ассеты
     # location /assets/ {
-    #     proxy_pass http://${MFE_CONTAINER_NAME}:${MFE_PORT:-5173}/assets/;
+    #     proxy_pass http://${MFE_CONTAINER_NAME}:${MFE_PORT}/assets/;
     # }
 
     # 4. Frontend - Next.js (Всё остальное)
     location / {
-        proxy_pass http://${PLATFORM_CONTAINER_NAME}:${PLATFORM_PORT:-80};
+        proxy_pass http://${PLATFORM_CONTAINER_NAME}:${PLATFORM_PORT};
     }
 }
