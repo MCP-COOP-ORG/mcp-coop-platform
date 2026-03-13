@@ -59,7 +59,7 @@ services:
       POSTGRES_PASSWORD: ${MCP_COOP_PLARFORM_PASSWORD}
       POSTGRES_DB: ${MCP_COOP_PLARFORM_DB}
     ports:
-      - "${EXTERNAL_DB_PORT:-5001}:5001"
+      - "${EXTERNAL_DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -73,6 +73,7 @@ services:
 
 volumes:
   postgres_data:
+
 
 networks:
   mcp-network:
