@@ -78,4 +78,3 @@ volumes:
 networks:
   mcp-network:
     name: mcp-network
-    external: true
