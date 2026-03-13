@@ -26,7 +26,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
     depends_on:
       setup-db:
         condition: service_completed_successfully
@@ -39,7 +39,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
     depends_on:
       postgres:
         condition: service_healthy
