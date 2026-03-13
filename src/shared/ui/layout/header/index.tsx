@@ -60,7 +60,7 @@ export default function Header({ session: initialSession }: HeaderProps) {
 
   const links: NavigationLink[] = React.useMemo(() => {
     return headerNavigationLinks.filter((link) => {
-      if (link.href === navigationRoutes.dashboard.href) {
+      if (link.href === navigationRoutes.workspace.href) {
         return isAuthenticated;
       }
       return true;

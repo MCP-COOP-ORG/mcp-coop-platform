@@ -1,4 +1,4 @@
-export type NavigationRouteKey = "home" | "docs" | "status" | "coops" | "contacts" | "dashboard";
+export type NavigationRouteKey = "home" | "docs" | "status" | "coops" | "contacts" | "workspace";
 
 export interface NavigationLink {
   href: string;
@@ -11,7 +11,7 @@ export const navigationRoutes = {
   status: { href: "/blockchain-status", translationKey: "status" },
   coops: { href: "/coops", translationKey: "coops" },
   contacts: { href: "/contact-us", translationKey: "contacts" },
-  dashboard: { href: "/dashboard", translationKey: "dashboard" },
+  workspace: { href: "/workspace", translationKey: "workspace" },
 } as const;
 
 export const headerNavigationLinks: NavigationLink[] = [
@@ -19,9 +19,9 @@ export const headerNavigationLinks: NavigationLink[] = [
   navigationRoutes.docs,
   navigationRoutes.status,
   navigationRoutes.coops,
-  navigationRoutes.dashboard,
+  navigationRoutes.workspace,
 ];
 
-export const protectedRouteKeys = [navigationRoutes.dashboard] as const;
+export const protectedRouteKeys = [navigationRoutes.workspace] as const;
 
 export const APP_NAME = "MCP COOP";

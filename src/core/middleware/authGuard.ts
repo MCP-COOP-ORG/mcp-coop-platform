@@ -9,8 +9,8 @@ export const authGuard = (req: NextRequest & { auth?: any }) => {
   const { pathname } = req.nextUrl;
 
   const isProtectedRoute = protectedRouteKeys.some((route) => {
-    // Check if the path is exactly the protected route, or starts with it (e.g. /dashboard or /dashboard/settings),
-    // OR if it has a 2-letter locale prefix followed by the protected route (e.g. /ru/dashboard, /en/dashboard)
+    // Check if the path is exactly the protected route, or starts with it (e.g. /workspace or /workspace/settings),
+    // OR if it has a 2-letter locale prefix followed by the protected route (e.g. /ru/workspace, /en/workspace)
     const normalizedPath = pathname.match(/^\/[a-z]{2}(\/.*)?$/i) 
       ? pathname.replace(/^\/[a-z]{2}/i, "") 
       : pathname;

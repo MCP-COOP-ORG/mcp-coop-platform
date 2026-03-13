@@ -20,9 +20,9 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
     # 1. API - NestJS Backend
-    # location /api/ {
-    #     proxy_pass http://${BACKEND_CONTAINER_NAME}:3001;
-    # }
+    location /api/ {
+        proxy_pass http://${BACKEND_CONTAINER_NAME}-app:3001;
+    }
 
     # 2. Kanban MFE - Микрофронтенд (JS файл)
     # Файл должен отдаваться из корня MFE контейнера
