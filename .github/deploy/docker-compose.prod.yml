@@ -9,7 +9,7 @@ services:
       - "80:80"
       - "443:443"
     env_file:
-      - .env
+      - ~/.env
     volumes:
       - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
       - ./certs:/etc/nginx/certs:ro
@@ -24,7 +24,7 @@ services:
     restart: always
     # Убран маппинг портов наружу, доступ только через nginx
     env_file:
-      - .env
+      - ~/.env
     environment:
       - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
     depends_on:
@@ -37,7 +37,7 @@ services:
     image: ${IMAGE_URI}-builder:latest
     container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-setup-db
     env_file:
-      - .env
+      - ~/.env
     environment:
       - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
     depends_on:
@@ -53,7 +53,7 @@ services:
     container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-db
     restart: always
     env_file:
-      - .env
+      - ~/.env
     environment:
       POSTGRES_USER: ${MCP_COOP_PLARFORM}
       POSTGRES_PASSWORD: ${MCP_COOP_PLARFORM_PASSWORD}
