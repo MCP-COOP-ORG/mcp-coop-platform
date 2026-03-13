@@ -87,16 +87,28 @@ jobs:
           target: "~/"
           strip_components: 2
 
+      # 1.5. Copy Nginx template to the VM root
+      - name: Copy Nginx Config via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "nginx.conf.template"
+          target: "~/"
+
       # 2. Execute SSH commands to update and restart containers
       - name: Run Deploy scripts via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
+          CLOUDFLARE_SSL_CERT: ${{ secrets.CLOUDFLARE_SSL_CERT }}
+          CLOUDFLARE_SSL_KEY: ${{ secrets.CLOUDFLARE_SSL_KEY }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST
+          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY
           script: |
             set -e # Make the script fail immediately if any command fails, so GitHub shows the RED error!
 
@@ -106,11 +118,18 @@ jobs:
             # Navigate to the root directory
             cd ~/
 
+            # --- SSL CERTIFICATES SETUP ---
+            # Создаем папку certs и безопасно записываем сертификаты из секретов GitHub
+            mkdir -p certs
+            echo "$CLOUDFLARE_SSL_CERT" > certs/cert.pem
+            echo "$CLOUDFLARE_SSL_KEY" > certs/key.pem
+            chmod 600 certs/key.pem
+
             # Dynamically inject or overwrite NEXTAUTH_URL into the .env file 
             # using the VPS_HOST secret (IP or domain) and hardcoded 80 port
             sed -i '/^NEXTAUTH_URL=/d' .env || true
             sed -i '/^PORT=/d' .env || true
-            echo "NEXTAUTH_URL=http://${VPS_HOST}" >> .env
+            echo "NEXTAUTH_URL=https://mcpcoop.org" >> .env
             echo "PORT=80" >> .env
 
             # Configure Docker auth on the VM using the VM's default service account

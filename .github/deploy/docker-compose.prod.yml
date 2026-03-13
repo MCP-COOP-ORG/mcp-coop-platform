@@ -1,12 +1,28 @@
 version: '3.8'
 
 services:
-  client:
-    image: ${IMAGE_URI}:latest
-    container_name: mcp-coop-next-react
+  nginx:
+    image: nginx:alpine
+    container_name: mcp-coop-nginx
     restart: always
     ports:
       - "80:80"
+      - "443:443"
+    env_file:
+      - .env
+    volumes:
+      - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - client
+    networks:
+      - mcp-network
+
+  client:
+    image: ${IMAGE_URI}:latest
+    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}
+    restart: always
+    # Убран маппинг портов наружу, доступ только через nginx
     env_file:
       - .env
     environment:
@@ -14,10 +30,12 @@ services:
     depends_on:
       setup-db:
         condition: service_completed_successfully
+    networks:
+      - mcp-network
 
   setup-db:
     image: ${IMAGE_URI}-builder:latest
-    container_name: mcp-coop-setup-db
+    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-setup-db
     env_file:
       - .env
     environment:
@@ -27,10 +45,12 @@ services:
         condition: service_healthy
     command: >
       sh -c "npx prisma db push --accept-data-loss && npx prisma db seed"
+    networks:
+      - mcp-network
 
   postgres:
     image: postgres:16
-    container_name: mcp-coop-postgres-db
+    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-db
     restart: always
     env_file:
       - .env
@@ -48,6 +68,14 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+    networks:
+      - mcp-network
 
 volumes:
   postgres_data:
+
+networks:
+  mcp-network:
+    name: mcp-network
+    # Если эта сеть уже создана другим docker-compose (например backend), раскомментируйте external: true
+    # external: true

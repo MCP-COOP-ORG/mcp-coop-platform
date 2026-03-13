@@ -1,6 +1,21 @@
 version: '3.8'
 
 services:
+  nginx:
+    image: nginx:alpine
+    container_name: mcp-coop-nginx
+    restart: always
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    volumes:
+      - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    depends_on:
+      - client
+    networks:
+      - mcp-network
+
   client:
     build:
       context: .
@@ -9,11 +24,9 @@ services:
         - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
         - NEXT_PUBLIC_KANBAN_MFE_URL=${NEXT_PUBLIC_KANBAN_MFE_URL}
     # Имя контейнера берется из .env, либо используется дефолтное mcp-coop-client
-    container_name: ${COMPOSE_PROJECT_NAME:-mcp-coop}-next-react
+    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-next-react}
     restart: always
-    ports:
-      # Пробрасываем порт из переменной окружения
-      - "${PORT:-80}:80"
+    # Убран маппинг портов наружу, доступ только через nginx
     env_file:
       - .env
     environment:
@@ -21,13 +34,15 @@ services:
     depends_on:
       setup-db:
         condition: service_completed_successfully
+    networks:
+      - mcp-network
 
   setup-db:
     build:
       context: .
       dockerfile: Dockerfile
       target: builder
-    container_name: ${COMPOSE_PROJECT_NAME:-mcp-coop}-setup-db
+    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-next-react}-setup-db
     environment:
       - DATABASE_URL=${DATABASE_URL}
     depends_on:
@@ -35,6 +50,8 @@ services:
         condition: service_healthy
     command: >
       sh -c "npx prisma db push --accept-data-loss && npx prisma db seed"
+    networks:
+      - mcp-network
 
   postgres:
     image: postgres:16
@@ -54,6 +71,12 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+    networks:
+      - mcp-network
 
 volumes:
   postgres_data:
+
+networks:
+  mcp-network:
+    name: mcp-network

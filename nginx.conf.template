@@ -1,0 +1,42 @@
+server {
+    listen 80;
+    server_name _;
+
+    # Перенаправляем весь HTTP трафик на HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name _;
+
+    # Пути внутри контейнера до сертификатов Cloudflare (пробрасываются через volumes)
+    ssl_certificate /etc/nginx/certs/cert.pem;
+    ssl_certificate_key /etc/nginx/certs/key.pem;
+
+    # Глобальные заголовки проксирования (важно для NextAuth и правильного IP)
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    # 1. API - NestJS Backend
+    # location /api/ {
+    #     proxy_pass http://${BACKEND_CONTAINER_NAME}:3001;
+    # }
+
+    # 2. Kanban MFE - Микрофронтенд (JS файл)
+    # Файл должен отдаваться из корня MFE контейнера
+    # location /kanban-mfe.js {
+    #     proxy_pass http://${MFE_CONTAINER_NAME}:5173/kanban-mfe.js;
+    # }
+
+    # 3. Kanban MFE - Ассеты
+    # location /assets/ {
+    #     proxy_pass http://${MFE_CONTAINER_NAME}:5173/assets/;
+    # }
+
+    # 4. Frontend - Next.js (Всё остальное)
+    location / {
+        proxy_pass http://${PLATFORM_CONTAINER_NAME}:80;
+    }
+}
