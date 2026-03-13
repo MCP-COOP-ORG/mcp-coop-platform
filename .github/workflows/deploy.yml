@@ -116,43 +116,39 @@ jobs:
             # Compute full image URI
             export IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
             
-            # Navigate to the root directory
-            cd ~/
+            # Ensure the platform directory exists (SCP creates it if missing, but just in case)
+            mkdir -p ~/mcp-coop-platform
+            cd ~/mcp-coop-platform
 
             # --- ENV SETUP ---
-            # Убеждаемся, что файл .env существует (хотя он уже создан вами вручную)
-            touch .env
+            # We strictly use the root .env file at ~/.env. Creating it if it doesn't exist.
+            touch ~/.env
+            
+            # Dynamically inject or overwrite NEXTAUTH_URL into the global .env file 
+            # using the NEXTAUTH_URL secret and hardcoded 80 port for container routing
+            sed -i '/^NEXTAUTH_URL=/d' ~/.env || true
+            sed -i '/^PORT=/d' ~/.env || true
+            echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> ~/.env
+            echo "PORT=80" >> ~/.env
 
             # --- SSL CERTIFICATES SETUP ---
-            # Создаем папку certs и безопасно записываем сертификаты из секретов GitHub
+            # Создаем папку certs внутри директории платформы и записываем сертификаты
             mkdir -p certs
             echo "$CLOUDFLARE_SSL_CERT" > certs/cert.pem
             echo "$CLOUDFLARE_SSL_KEY" > certs/key.pem
             chmod 600 certs/key.pem
 
-            # Dynamically inject or overwrite NEXTAUTH_URL into the .env file 
-            # using the NEXTAUTH_URL secret and hardcoded 80 port for container routing
-            sed -i '/^NEXTAUTH_URL=/d' .env || true
-            sed -i '/^PORT=/d' .env || true
-            echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env
-            echo "PORT=80" >> .env
-
             # Configure Docker auth on the VM using the VM's default service account
             gcloud auth configure-docker ${GAR_LOCATION} --quiet || true
 
-            # Rename config for standard convenience
-            mv docker-compose.prod.yml docker-compose.yml || true
-
-            # Загружаем переменные из общего .env (создаем симлинк как на бэкенде)
-            ln -sf ../.env .env
-            set -a; source ../.env; set +a
-
-            # Жестко убиваем старые контейнеры от платформы, чтобы избежать проблем с именами
-            docker rm -f ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-db ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-setup-db ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-nginx || true
+            # Rename config for standard convenience (SCP puts it here)
+            mv ~/docker-compose.prod.yml ./docker-compose.yml || true
+            mv ~/nginx.conf.template ./nginx.conf.template || true
 
             # Pull the new image and recreate containers using dynamic project name
-            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ../.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} pull
-            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ../.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} up -d --remove-orphans
+            # We explicitly point to the global ~/.env file so no symlinks are needed
+            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} pull
+            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} up -d --remove-orphans
 
             # Clean up old images to explicitly save disk space
             docker image prune -a -f
