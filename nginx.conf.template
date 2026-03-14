@@ -24,16 +24,21 @@ server {
         proxy_pass http://${BACKEND_CONTAINER_NAME}-app:${BACKEND_PORT};
     }
 
-    # 2. Kanban MFE - Микрофронтенд (JS файл)
-    # Файл должен отдаваться из корня MFE контейнера
-    # location /kanban-mfe.js {
-    #     proxy_pass http://${MFE_CONTAINER_NAME}:${MFE_PORT}/kanban-mfe.js;
-    # }
+    # 2. Kanban MFE - Standalone SPA (Telegram Mini App)
+    location /mcp-coop-kanban-mfe/ {
+        proxy_pass http://${KANBAN_MFE_CONTAINER_NAME}:${MFE_PORT}/;
+    }
 
-    # 3. Kanban MFE - Ассеты
-    # location /assets/ {
-    #     proxy_pass http://${MFE_CONTAINER_NAME}:${MFE_PORT}/assets/;
-    # }
+    # 3. Kanban MFE - Микрофронтенд (JS файл)
+    # Файл должен отдаваться из корня MFE контейнера
+    location /kanban-mfe.js {
+        proxy_pass http://${KANBAN_MFE_CONTAINER_NAME}:${MFE_PORT}/kanban-mfe.js;
+    }
+
+    # 4. Kanban MFE - Ассеты
+    location /assets/ {
+        proxy_pass http://${KANBAN_MFE_CONTAINER_NAME}:${MFE_PORT}/assets/;
+    }
 
     # 4. Frontend - Next.js (Всё остальное)
     location / {
