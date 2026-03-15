@@ -1,36 +1,53 @@
 version: '3.8'
 
 services:
-  nginx:
-    image: nginx:alpine
-    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-nginx
-    restart: always
-    ports:
-      - "80:80"
+  postgres-platform:
+    image: postgres:16
+    container_name: mcp-coop-platform-db-local
+    restart: unless-stopped
     env_file:
-      - .env
+      - .env.local
+    environment:
+      POSTGRES_USER: ${MCP_COOP_PLARFORM:-postgres}
+      POSTGRES_PASSWORD: ${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}
+      POSTGRES_DB: ${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}
+    ports:
+      - "5435:5432"
     volumes:
-      - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
-    depends_on:
-      - client
+      - mcp_platform_postgres_data_local:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     networks:
       - mcp-network
 
-  client:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-        - NEXT_PUBLIC_KANBAN_MFE_URL=${NEXT_PUBLIC_KANBAN_MFE_URL}
-    # Имя контейнера берется из .env, либо используется дефолтное mcp-coop-platform
-    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}
-    restart: always
-    # Убран маппинг портов наружу, доступ только через nginx
+      target: deps
+    container_name: mcp-coop-platform-app-local
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
     env_file:
-      - .env
+      - .env.local
     environment:
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
+      - NODE_ENV=development
+      - INTERNAL_API_URL=http://mcp-coop-backend-app-local:3001/api
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+      - NEXT_PUBLIC_KANBAN_MFE_URL=http://localhost:8081/kanban-mfe.js
+      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM:-postgres}:${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}@mcp-coop-platform-db-local:5432/${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}?schema=public
+    ports:
+      - "3000:3000"
+    command: >
+      sh -c "npx prisma generate && npx next dev -p 3000"
     depends_on:
       setup-db:
         condition: service_completed_successfully
@@ -41,43 +58,28 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: builder
-    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-setup-db
+      target: deps
+    container_name: mcp-coop-platform-setup-db-local
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    env_file:
+      - .env.local
     environment:
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres:5432/${MCP_COOP_PLARFORM_DB}?schema=public
+      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM:-postgres}:${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}@mcp-coop-platform-db-local:5432/${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}?schema=public
     depends_on:
-      postgres:
+      postgres-platform:
         condition: service_healthy
     command: >
-      sh -c "npx prisma db push --accept-data-loss && npx prisma db seed"
-    networks:
-      - mcp-network
-
-  postgres:
-    image: postgres:16
-    container_name: ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}-db
-    restart: always
-    environment:
-      POSTGRES_USER: ${MCP_COOP_PLARFORM}
-      POSTGRES_PASSWORD: ${MCP_COOP_PLARFORM_PASSWORD}
-      POSTGRES_DB: ${MCP_COOP_PLARFORM_DB}
-    ports:
-      - "${EXTERNAL_DB_PORT:-5435}:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      sh -c "npx prisma generate && npx prisma db push --accept-data-loss && npx prisma db seed"
     networks:
       - mcp-network
 
 volumes:
-  postgres_data:
-
+  mcp_platform_postgres_data_local:
 
 networks:
   mcp-network:
     name: mcp-network
+    external: true

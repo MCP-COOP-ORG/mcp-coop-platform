@@ -78,5 +78,5 @@ volumes:
 
 networks:
   mcp-network:
-    name: mcp-network
+    name: ${MCP_COOP_NETWORK:-mcp-network}
     external: true
