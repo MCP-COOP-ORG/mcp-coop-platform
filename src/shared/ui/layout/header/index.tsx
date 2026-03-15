@@ -112,7 +112,7 @@ export default function Header({ session: initialSession }: HeaderProps) {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="max-sm:hidden sm:flex gap-4" justify="center">
         {links.map((link) => {
           const isActive = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
           return (
