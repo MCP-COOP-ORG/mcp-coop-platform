@@ -93,7 +93,11 @@ export class AuthService {
     const res = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: data.email, password: data.password }),
+      body: JSON.stringify({ 
+        email: data.email, 
+        password: data.password,
+        ...(data.name ? { username: data.name } : {})
+      }),
     });
 
     if (!res.ok) {
