@@ -31,7 +31,7 @@ export function Providers({ children, session }: ProvidersProps) {
 
   return (
     <HeroUIProvider navigate={router.push}>
-      <NextThemesProvider attribute="class" defaultTheme="dark">
+      <NextThemesProvider attribute="class" defaultTheme="light">
         <SessionContext.Provider value={{ session }}>
           {children}
         </SessionContext.Provider>

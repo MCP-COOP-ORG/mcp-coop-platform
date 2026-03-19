@@ -6,6 +6,7 @@ import { signupSchema, authCredentialsSchema } from "../validation";
 import type { SignupData, AuthCredentials, AuthResult, SignupResult } from "../types";
 import { authFormErrors } from "@/shared/constants/form";
 import { AuthService } from "../api/auth.api";
+import { cookies } from "next/headers"; // Added import for cookies
 
 /**
  * Shared error handler for Server Actions
@@ -88,5 +89,17 @@ export async function logout(): Promise<AuthResult> {
     return { success: true };
   } catch (error) {
     return handleAuthActionError(error);
+  }
+}
+
+/**
+ * Server Action for updating user profile.
+ */
+export async function updateProfileAction(data: any): Promise<{ success: boolean; data?: any; error?: string }> {
+  try {
+    const updatedProfile = await AuthService.updateProfile(data);
+    return { success: true, data: updatedProfile };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : "Failed to update profile" };
   }
 }

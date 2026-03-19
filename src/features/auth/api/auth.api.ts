@@ -60,7 +60,7 @@ export class AuthService {
     await this.syncCookies(res.headers.getSetCookie()?.join(",") || null);
 
     const data = await res.json();
-    
+
     // 1. Initial fallback profile from login response
     let myProfile = this.mapLoginDataToProfile(data, credentials.email);
 
@@ -87,14 +87,35 @@ export class AuthService {
   }
 
   /**
+   * Reaches out to the backend to update the user profile.
+   */
+  static async updateProfile(data: any) {
+    const cookieStore = await cookies();
+    const allCookies = cookieStore.getAll();
+    const cookieString = allCookies.map(c => `${c.name}=${c.value}`).join('; ');
+
+    const res = await fetch(`${API_URL}/profiles/me`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update profile");
+    }
+
+    return res.json();
+  }
+
+  /**
    * Reaches out to the backend to register the user.
    */
   static async signup(data: SignupData) {
     const res = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        email: data.email, 
+      body: JSON.stringify({
+        email: data.email,
         password: data.password,
         ...(data.name ? { username: data.name } : {})
       }),

@@ -34,6 +34,7 @@ import LanguageSelector from "@/shared/ui/components/language-selector";
 import { authFormModes, authFormTitles, type AuthFormMode } from "@/shared/constants/form";
 import { logout } from "@/features/auth/actions/auth.actions";
 import { useTranslations } from "next-intl";
+import { updateProfileAction } from "@/features/auth/actions/auth.actions";
 
 interface HeaderProps {
   session: Session | null;
@@ -68,7 +69,17 @@ export default function Header({ session: initialSession }: HeaderProps) {
   }, [isAuthenticated]);
 
   const handleToggleTheme = () => {
-    setTheme(isDark ? "light" : "dark");
+    const newTheme = isDark ? "light" : "dark";
+    setTheme(newTheme);
+
+    if (session?.myProfile) {
+      updateProfileAction({
+        settings: {
+          ...(session.myProfile.settings as Record<string, any> || {}),
+          theme: newTheme
+        }
+      }).catch((err: any) => console.error("Failed to sync theme", err));
+    }
   };
 
   const handleModeChange = (mode: AuthFormMode) => {
