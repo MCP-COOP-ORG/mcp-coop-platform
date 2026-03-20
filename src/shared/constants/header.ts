@@ -1,14 +1,16 @@
-export type NavigationRouteKey = "home" | "docs" | "status" | "coops" | "contacts" | "workspace";
+export type NavigationRouteKey = "home" | "docs" | "status" | "networkStatus" | "coops" | "contacts" | "workspace";
 
 export interface NavigationLink {
-  href: string;
+  href?: string;
   translationKey: NavigationRouteKey;
+  children?: NavigationLink[];
 }
 
 export const navigationRoutes = {
   home: { href: "/", translationKey: "home" },
   docs: { href: "/docs", translationKey: "docs" },
   status: { href: "/blockchain-status", translationKey: "status" },
+  networkStatus: { href: "/blockchain-status", translationKey: "networkStatus" },
   coops: { href: "/coops", translationKey: "coops" },
   contacts: { href: "/contact-us", translationKey: "contacts" },
   workspace: { href: "/workspace", translationKey: "workspace" },
@@ -16,8 +18,13 @@ export const navigationRoutes = {
 
 export const headerNavigationLinks: NavigationLink[] = [
   navigationRoutes.home,
-  navigationRoutes.docs,
-  navigationRoutes.status,
+  {
+    translationKey: "status",
+    children: [
+      navigationRoutes.docs,
+      navigationRoutes.networkStatus,
+    ],
+  },
   navigationRoutes.coops,
   navigationRoutes.workspace,
 ];

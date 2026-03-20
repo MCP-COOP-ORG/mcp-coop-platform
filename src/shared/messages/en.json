@@ -13,15 +13,15 @@
     "home": "Home",
     "docs": "Documentation",
     "status": "Blockchain",
+    "networkStatus": "Network Status",
     "coops": "All COOPs",
     "contacts": "Contact Us",
     "workspace": "Workspace"
   },
   "Workspace": {
     "kanban": "Task Board",
-    "personal": "My Teams",
     "coops": "My COOPs",
-    "management": "Management",
+    "finance": "Finance",
     "comingSoon": "This section will appear in the future"
   }
 }

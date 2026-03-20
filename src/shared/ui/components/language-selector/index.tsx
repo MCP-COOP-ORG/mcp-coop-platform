@@ -3,7 +3,11 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/core/configs/i18n/routing";
 import { localeConfigs } from "@/shared/constants/locale";
 
-export default function LanguageSelector() {
+interface LanguageSelectorProps {
+  onAction?: () => void;
+}
+
+export default function LanguageSelector({ onAction }: LanguageSelectorProps) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -12,6 +16,7 @@ export default function LanguageSelector() {
     const nextLocale = e.target.value;
     if (nextLocale && nextLocale !== locale) {
       router.replace(pathname, { locale: nextLocale });
+      onAction?.();
     }
   };
 

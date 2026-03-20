@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin '../shared/constants/hero.ts';
 
+/* Explicitly tell Tailwind v4 to scan components outside the src/app/ directory */
+@source '../';
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
 

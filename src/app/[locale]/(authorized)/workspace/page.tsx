@@ -1,28 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, Tab, Card, CardBody } from "@heroui/react";
+import { Tabs, Tab } from "@heroui/react";
 import KanbanMicrofrontend from "@/features/kanban";
 import { useTranslations, useLocale } from "next-intl";
-
-const TABS = ["kanban", "personal", "coops", "management"] as const;
+import { WORKSPACE_TABS, WorkspaceTabKey } from "@/shared/constants/workspace";
 
 export default function WorkspacePage() {
   const t = useTranslations("Workspace");
   const locale = useLocale();
-  const [selectedTab, setSelectedTab] = useState<string>("kanban");
+  const [selectedTab, setSelectedTab] = useState<WorkspaceTabKey>("kanban");
 
   return (
-    <div className="flex w-full flex-col gap-6 pt-6">
-      <Tabs 
-        aria-label="Workspace Tabs" 
+    <div className="flex w-full flex-col gap-3 pt-3">
+      <Tabs
+        aria-label="Workspace Tabs"
         selectedKey={selectedTab}
-        onSelectionChange={(key) => setSelectedTab(key.toString())}
+        onSelectionChange={(key) => setSelectedTab(key as WorkspaceTabKey)}
         classNames={{
           base: "w-full flex justify-center",
           tabList: "mx-auto",
         }}
-        items={TABS.map((id) => ({ id, label: t(id) }))}
+        items={WORKSPACE_TABS.map((id) => ({ id, label: t(id as never) }))}
       >
         {(item) => (
           <Tab key={item.id} title={item.label} />
@@ -30,11 +29,10 @@ export default function WorkspacePage() {
       </Tabs>
 
       <div className="w-full px-4 max-w-[1400px] mx-auto pb-10">
-        <div className="w-full p-[20px]">
+        <div className="w-full">
           {selectedTab === "kanban" && <KanbanMicrofrontend locale={locale} />}
-          {selectedTab === "personal" && <PlaceholderTab title={t("personal")} description={t("comingSoon")} />}
           {selectedTab === "coops" && <PlaceholderTab title={t("coops")} description={t("comingSoon")} />}
-          {selectedTab === "management" && <PlaceholderTab title={t("management")} description={t("comingSoon")} />}
+          {selectedTab === "finance" && <PlaceholderTab title={t("finance")} description={t("comingSoon")} />}
         </div>
       </div>
     </div>
