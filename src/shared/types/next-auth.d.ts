@@ -1,12 +1,19 @@
 import { DefaultSession, DefaultUser } from "next-auth";
 
+export interface ProfileSettings {
+  language?: string;
+  theme?: string;
+  lastActiveWorkspaceId?: string;
+  [key: string]: any;
+}
+
 export interface MyProfile {
   id: string;
   email: string;
   fullName: string | null;
   username: string | null;
   tgId: string | null;
-  settings: Record<string, any> | null;
+  settings: ProfileSettings | null;
 }
 
 declare module "next-auth" {

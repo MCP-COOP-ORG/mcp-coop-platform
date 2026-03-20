@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { Tabs, Tab, Card, CardBody } from "@heroui/react";
 import KanbanMicrofrontend from "@/features/kanban";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 const TABS = ["kanban", "personal", "coops", "management"] as const;
 
 export default function WorkspacePage() {
   const t = useTranslations("Workspace");
+  const locale = useLocale();
   const [selectedTab, setSelectedTab] = useState<string>("kanban");
 
   return (
@@ -30,7 +31,7 @@ export default function WorkspacePage() {
 
       <div className="w-full px-4 max-w-[1400px] mx-auto pb-10">
         <div className="w-full p-[20px]">
-          {selectedTab === "kanban" && <KanbanMicrofrontend />}
+          {selectedTab === "kanban" && <KanbanMicrofrontend locale={locale} />}
           {selectedTab === "personal" && <PlaceholderTab title={t("personal")} description={t("comingSoon")} />}
           {selectedTab === "coops" && <PlaceholderTab title={t("coops")} description={t("comingSoon")} />}
           {selectedTab === "management" && <PlaceholderTab title={t("management")} description={t("comingSoon")} />}
