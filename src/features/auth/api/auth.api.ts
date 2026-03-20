@@ -86,26 +86,7 @@ export class AuthService {
     return data;
   }
 
-  /**
-   * Reaches out to the backend to update the user profile.
-   */
-  static async updateProfile(data: any) {
-    const cookieStore = await cookies();
-    const allCookies = cookieStore.getAll();
-    const cookieString = allCookies.map(c => `${c.name}=${c.value}`).join('; ');
 
-    const res = await fetch(`${API_URL}/profiles/me`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to update profile");
-    }
-
-    return res.json();
-  }
 
   /**
    * Reaches out to the backend to register the user.

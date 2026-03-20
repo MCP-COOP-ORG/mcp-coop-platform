@@ -91,15 +91,3 @@ export async function logout(): Promise<AuthResult> {
     return handleAuthActionError(error);
   }
 }
-
-/**
- * Server Action for updating user profile.
- */
-export async function updateProfileAction(data: any): Promise<{ success: boolean; data?: any; error?: string }> {
-  try {
-    const updatedProfile = await AuthService.updateProfile(data);
-    return { success: true, data: updatedProfile };
-  } catch (error) {
-    return { success: false, error: error instanceof Error ? error.message : "Failed to update profile" };
-  }
-}
