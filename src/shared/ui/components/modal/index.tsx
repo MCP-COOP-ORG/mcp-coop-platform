@@ -8,7 +8,7 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-} from "@heroui/react";
+} from "@/shared/ui/components/hero-ui";
 
 export interface ModalProps {
   isOpen: boolean;

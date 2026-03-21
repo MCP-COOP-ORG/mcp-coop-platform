@@ -1,9 +1,7 @@
-"use client";
+import { Link } from "@/core/configs/i18n/routing";
+import { Card, CardHeader, CardBody } from "@/shared/ui/components/hero-ui";
 
-import Link from "next/link";
-import { Card, CardHeader, CardBody } from "@heroui/react";
-
-import type { CoopItemDto } from "@/features/coop/actions/coops.actions";
+import type { CoopItemDto } from "@/entities/coop/types";
 
 interface CoopListProps {
   coops: CoopItemDto[];
@@ -45,4 +43,3 @@ const CoopList: React.FC<CoopListProps> = ({ coops }) => {
 };
 
 export default CoopList;
-

@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
-
-export const APP_NAME = "MCP COOP DAO";
-export const APP_DESCRIPTION = "Decentralized infrastructure for AI engineers and product teams. Create cooperatives, find partners, and launch onchain products.";
+import { APP_INFO } from "@/shared/constants/app-info";
 
 export const viewportConfig: Viewport = {
   width: "device-width",
@@ -11,8 +9,8 @@ export const viewportConfig: Viewport = {
 };
 
 export const metadataConfig: Metadata = {
-  title: APP_NAME,
-  description: APP_DESCRIPTION,
+  title: APP_INFO.fullName,
+  description: APP_INFO.description,
   keywords: [
     "DAO",
     "MCP COOP",
@@ -25,15 +23,15 @@ export const metadataConfig: Metadata = {
     "Crypto",
   ],
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: APP_INFO.logo,
+    shortcut: APP_INFO.logo,
+    apple: APP_INFO.logo,
   },
   openGraph: {
-    title: APP_NAME,
-    description: "Decentralized infrastructure for AI engineers and product teams.",
-    siteName: APP_NAME,
-    images: [{ url: "/logo.png" }],
+    title: APP_INFO.fullName,
+    description: APP_INFO.description,
+    siteName: APP_INFO.fullName,
+    images: [{ url: APP_INFO.logo }],
     type: "website",
   },
 };

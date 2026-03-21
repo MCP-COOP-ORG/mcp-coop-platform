@@ -1,24 +1,18 @@
 "use server";
 
 import { prisma } from "@/core/api/prisma";
-
-export interface CoopItemDto {
-  id: string;
-  address: string;
-  name: string;
-  description: string;
-  image: string;
-}
+import { DEFAULT_ORDER_BY } from "@/shared/constants/query";
+import type { CoopItemDto } from "@/entities/coop/types";
 
 /**
  * Fetch all cooperatives for the public coops list.
  */
 export async function getCoops(): Promise<CoopItemDto[]> {
   const coops = await prisma.coopItem.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: DEFAULT_ORDER_BY.newest,
   });
 
-  return coops.map((coop: any) => ({
+  return coops.map((coop) => ({
     id: coop.id,
     address: coop.address,
     name: coop.name,

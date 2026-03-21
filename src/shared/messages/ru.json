@@ -3,7 +3,9 @@
     "login": "Войти",
     "logout": "Выйти",
     "themeToggleLabel": "Переключить тему",
-    "signedInAs": "Вы вошли как"
+    "signedInAs": "Вы вошли как",
+    "closeMenu": "Закрыть меню",
+    "openMenu": "Открыть меню"
   },
   "Locale": {
     "en": "Английский",
@@ -16,12 +18,64 @@
     "networkStatus": "Статус сети",
     "coops": "Команды",
     "contacts": "Контакты",
-    "workspace": "Воркспейс"
+    "workspace": "Воркспейс",
+    "cooperatives": "Кооперативы",
+    "cooperativesDescription": "Выберите кооператив для просмотра деталей."
   },
   "Workspace": {
     "kanban": "Доска задач",
     "coops": "Мои Команды",
     "finance": "Финансы",
     "comingSoon": "Этот раздел появится в будущем"
+  },
+  "Form": {
+    "email": "Email",
+    "emailPlaceholder": "Введите ваш email",
+    "emailRequired": "Требуется указать email",
+    "emailInvalid": "Пожалуйста, введите корректный email",
+    "firstName": "Имя",
+    "firstNamePlaceholder": "Введите ваше имя",
+    "lastName": "Фамилия",
+    "lastNamePlaceholder": "Введите вашу фамилию",
+    "message": "Сообщение",
+    "messagePlaceholder": "Введите ваше сообщение",
+    "useCurrentAccount": "Использовать текущий аккаунт",
+    "submit": "Отправить",
+    "firstNameRequired": "Требуется указать имя",
+    "firstNameNoSpaces": "Имя не может содержать пробелы",
+    "messageRequired": "Требуется сообщение",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите ваш пароль",
+    "confirmPassword": "Подтверждение пароля",
+    "confirmPasswordPlaceholder": "Подтвердите пароль",
+    "name": "Имя пользователя",
+    "namePlaceholder": "Введите имя пользователя",
+    "login": "Войти",
+    "signup": "Зарегистрироваться",
+    "switchToSignup": "Нет аккаунта? Зарегистрироваться",
+    "switchToLogin": "Уже есть аккаунт? Войти",
+    "passwordMinLength": "Пароль должен состоять минимум из 8 символов",
+    "nameRequired": "Требуется указать имя",
+    "passwordsMismatch": "Пароли должны совпадать",
+    "emailAlreadyExists": "Email уже существует",
+    "invalidCredentials": "Неверный email или пароль",
+    "validationFailed": "Ошибка валидации",
+    "internalServerError": "Внутренняя ошибка сервера"
+  },
+  "System": {
+    "notConfigured": "{name} не настроен",
+    "provideValidUrl": "Пожалуйста, предоставьте корректный MFE URL.",
+    "error": "Ошибка в {name}",
+    "failedToLoad": "Не удалось загрузить приложение с: {url}",
+    "ensureContainerRunning": "Убедитесь, что контейнер запущен и путь верен.",
+    "loading": "Загрузка {name}...",
+    "contentUnavailable": "Контент временно недоступен",
+    "couldNotLoad": "Мы не смогли загрузить этот контент сейчас. Пожалуйста, попробуйте позже.",
+    "pageNotFound": "Страница не найдена",
+    "contentNotFound": "Контент для '{pageKey}' не найден или еще не создан.",
+    "preAlpha": "Пре-альфа версия",
+    "imageGoesHere": "Здесь будет изображение",
+    "watchVideo": "Смотреть связанное видео",
+    "failedSubmit": "Не удалось отправить форму. Попробуйте еще раз."
   }
 }

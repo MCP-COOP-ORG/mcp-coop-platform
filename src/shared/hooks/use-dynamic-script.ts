@@ -9,13 +9,19 @@ export interface DefaultDynamicScriptOptions {
 export function useDynamicScript({ url }: DefaultDynamicScriptOptions) {
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState(url);
+
+  if (url !== currentUrl) {
+    setCurrentUrl(url);
+    setReady(false);
+    setFailed(false);
+  }
 
   useEffect(() => {
     if (!url) {
       return;
     }
 
-    // Append a unique timestamp to force the browser to treat it as a new module and execute it again
     const cacheBuster = `t=${Date.now()}`;
     const scriptUrl = url.includes("?") ? `${url}&${cacheBuster}` : `${url}?${cacheBuster}`;
 
@@ -23,9 +29,6 @@ export function useDynamicScript({ url }: DefaultDynamicScriptOptions) {
     script.src = scriptUrl;
     script.type = "module";
     script.async = true;
-
-    setReady(false);
-    setFailed(false);
 
     script.onload = () => {
       console.log(`Dynamic Script Loaded: ${url}`);

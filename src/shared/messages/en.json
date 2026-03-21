@@ -3,7 +3,9 @@
     "login": "Login",
     "logout": "Logout",
     "themeToggleLabel": "Toggle theme",
-    "signedInAs": "Signed in as"
+    "signedInAs": "Signed in as",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu"
   },
   "Locale": {
     "en": "English",
@@ -16,12 +18,64 @@
     "networkStatus": "Network Status",
     "coops": "All COOPs",
     "contacts": "Contact Us",
-    "workspace": "Workspace"
+    "workspace": "Workspace",
+    "cooperatives": "Cooperatives",
+    "cooperativesDescription": "Select a cooperative to view its on-chain details."
   },
   "Workspace": {
     "kanban": "Task Board",
     "coops": "My COOPs",
     "finance": "Finance",
     "comingSoon": "This section will appear in the future"
+  },
+  "Form": {
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "message": "Message",
+    "messagePlaceholder": "Enter your message",
+    "useCurrentAccount": "Use current account",
+    "submit": "Submit",
+    "firstNameRequired": "First name is required",
+    "firstNameNoSpaces": "First name cannot contain spaces",
+    "messageRequired": "Message is required",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "login": "Login",
+    "signup": "Sign Up",
+    "switchToSignup": "Don't have an account? Sign Up",
+    "switchToLogin": "Already have an account? Login",
+    "passwordMinLength": "Password must be at least 8 characters long",
+    "nameRequired": "Name is required",
+    "passwordsMismatch": "Passwords must match",
+    "emailAlreadyExists": "Email already exists",
+    "invalidCredentials": "Invalid email or password",
+    "validationFailed": "Validation failed",
+    "internalServerError": "Internal server error"
+  },
+  "System": {
+    "notConfigured": "{name} Not Configured",
+    "provideValidUrl": "Please provide a valid MFE URL.",
+    "error": "{name} Error",
+    "failedToLoad": "Failed to load the application bundle from: {url}",
+    "ensureContainerRunning": "Ensure the container is running and the bundle path is correct.",
+    "loading": "Loading {name}...",
+    "contentUnavailable": "Content temporarily unavailable",
+    "couldNotLoad": "We could not load this content right now. Please try again later.",
+    "pageNotFound": "Page not found",
+    "contentNotFound": "The content for '{pageKey}' could not be found or has not been created yet.",
+    "preAlpha": "Pre-Alpha Version",
+    "imageGoesHere": "Image goes here",
+    "watchVideo": "Watch related video",
+    "failedSubmit": "Failed to submit form. Please try again."
   }
 }

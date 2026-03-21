@@ -1,14 +1,15 @@
 import React from "react";
-import { NavbarMenu, NavbarMenuItem, Link as HeroLink } from "@heroui/react";
+import { NavbarMenu, NavbarMenuItem, HeroLink } from "@/shared/ui/components/hero-ui";
 import { Link } from "@/core/configs/i18n/routing";
 import { NavigationLink } from "@/shared/constants/header";
 import { HeaderActions } from "./header-actions";
+import { isNavLinkActive } from "../utils";
 import type { Session } from "next-auth";
 
 interface HeaderMobileMenuProps {
   links: NavigationLink[];
   pathname: string;
-  navT: (key: any) => string;
+  navT: (key: never) => string;
   session: Session | null;
   onOpenLogin: () => void;
   onLogout: () => void;
@@ -24,10 +25,6 @@ export function HeaderMobileMenu({
   onLogout,
   onAction,
 }: HeaderMobileMenuProps) {
-  // Premium Layout: 
-  // - Added backdrop support (in case NavbarMenu is slightly transparent).
-  // - Separated the Actions Bar from the Links using a clean Divider-like border.
-  // - Increased typography size to text-2xl for better visual hierarchy and touch targets.
   return (
     <NavbarMenu
       className="pb-4 px-4 pt-4 z-[99999] border-t border-divider"
@@ -39,7 +36,7 @@ export function HeaderMobileMenu({
       }}
     >
 
-      {/* Action Bar (Top) - Wrapped in foolproof padding block to force perfectly symmetrical margin from top line and the links below */}
+      {/* Action Bar (Top) */}
       <div className="w-full">
         <HeaderActions
           isMobile={true}
@@ -62,7 +59,7 @@ export function HeaderMobileMenu({
                   </span>
                 </NavbarMenuItem>
                 {link.children.map((child) => {
-                  const isChildActive = child.href ? (child.href === "/" ? pathname === "/" : pathname.startsWith(child.href)) : false;
+                  const isChildActive = isNavLinkActive(child.href, pathname);
                   return (
                     <NavbarMenuItem key={child.translationKey} isActive={isChildActive}>
                       <HeroLink
@@ -83,7 +80,7 @@ export function HeaderMobileMenu({
             );
           }
 
-          const isActive = link.href ? (link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)) : false;
+          const isActive = isNavLinkActive(link.href, pathname);
           return (
             <NavbarMenuItem key={link.translationKey} isActive={isActive}>
               <HeroLink

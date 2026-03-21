@@ -27,7 +27,7 @@ export default async function RootLayout(props: {
         <NextIntlClientProvider messages={messages}>
           <Providers session={session}>
             <div className="app min-h-screen flex flex-col">
-              <Header session={session} />
+              <Header />
               <main className="flex-1">
                 {children}
               </main>

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import setCookieParser from "set-cookie-parser";
-import type { AuthCredentials, SignupData } from "../types";
+import type { AuthCredentials, SignupData, CookieSameSite, LoginRawData } from "../types";
+import { authCookiePatterns } from "../constants";
 
 const API_URL = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
@@ -23,7 +24,7 @@ export class AuthService {
         expires: cookie.expires,
         httpOnly: cookie.httpOnly,
         secure: cookie.secure,
-        sameSite: cookie.sameSite as any,
+        sameSite: cookie.sameSite as CookieSameSite,
         maxAge: cookie.maxAge,
       });
     }
@@ -32,7 +33,7 @@ export class AuthService {
   /**
    * Helper to map base login raw data to MyProfile structure
    */
-  private static mapLoginDataToProfile(data: any, emailFallback: string) {
+  private static mapLoginDataToProfile(data: LoginRawData, emailFallback: string) {
     return {
       id: data.user?.profileId || "",
       email: data.user?.email || emailFallback,
@@ -134,7 +135,10 @@ export class AuthService {
     // omitting next-auth's own cookies which are managed by NextAuth signOut(). 
     for (const c of cookieStore.getAll()) {
       const name = c.name.toLowerCase();
-      if ((name.includes('token') || name.includes('auth') || name.includes('session')) && !name.includes('next-auth')) {
+      const isAuthRelated = authCookiePatterns.includes.some((pattern: string) => name.includes(pattern));
+      const isExcluded = authCookiePatterns.excludes.some((pattern: string) => name.includes(pattern));
+
+      if (isAuthRelated && !isExcluded) {
         cookieStore.delete(c.name);
       }
     }

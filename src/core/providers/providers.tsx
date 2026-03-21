@@ -7,6 +7,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { Session } from "next-auth";
 import { logout } from "@/features/auth/actions/auth.actions";
 import { APP_EVENTS } from "@/shared/constants/events";
+import { SessionProvider } from "@/shared/hooks/use-session";
+import { THEME } from "@/shared/constants/theme";
 
 type ProvidersProps = {
   children: React.ReactNode;
@@ -31,21 +33,11 @@ export function Providers({ children, session }: ProvidersProps) {
 
   return (
     <HeroUIProvider navigate={router.push}>
-      <NextThemesProvider attribute="class" defaultTheme="light">
-        <SessionContext.Provider value={{ session }}>
+      <NextThemesProvider attribute="class" defaultTheme={THEME.light}>
+        <SessionProvider session={session}>
           {children}
-        </SessionContext.Provider>
+        </SessionProvider>
       </NextThemesProvider>
     </HeroUIProvider>
   );
-}
-
-const SessionContext = React.createContext<{
-  session: Session | null;
-}>({
-  session: null,
-});
-
-export function useSession() {
-  return React.useContext(SessionContext);
 }

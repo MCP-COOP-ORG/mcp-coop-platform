@@ -1,22 +1,8 @@
 "use server";
 
 import { prisma } from "@/core/api/prisma";
-
-export interface PageContentDto {
-  page: string;
-  language: string;
-  title: string;
-  subtitle?: string | null;
-  description: string;
-  image?: string | null;
-  video?: string | null;
-  jsonContent: unknown;
-}
-
-interface GetPageContentParams {
-  page: string;
-  language?: string;
-}
+import { Locales } from "@/shared/constants/locale";
+import type { PageContentDto, GetPageContentParams } from "@/entities/page-content/types";
 
 /**
  * Server Action to fetch static page content by page key and language.
@@ -28,7 +14,7 @@ interface GetPageContentParams {
 export async function getPageContent(
   params: GetPageContentParams,
 ): Promise<PageContentDto | null> {
-  const { page, language = "en" } = params;
+  const { page, language = Locales.EN } = params;
 
   const content = await prisma.pageContent.findFirst({
     where: {

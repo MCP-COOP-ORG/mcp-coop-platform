@@ -1,19 +1,14 @@
-import React, { useState } from "react";
-import { NavbarContent, NavbarItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@heroui/react";
+import { NavbarContent, NavbarItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@/shared/ui/components/hero-ui";
 import { Link } from "@/core/configs/i18n/routing";
 import { NavigationLink } from "@/shared/constants/header";
+import { isNavLinkActive } from "../utils";
+import { ChevronDownIcon } from "@/shared/ui/icons/chevron-down";
 
 interface HeaderDesktopNavProps {
   links: NavigationLink[];
   pathname: string;
-  navT: (key: any) => string;
+  navT: (key: never) => string;
 }
-
-const ChevronDownIcon = ({ className }: { className?: string }) => (
-  <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="m19.92 8.95-6.52 6.52c-.77.77-2.03.77-2.8 0L4.08 8.95" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="1.5"/>
-  </svg>
-);
 
 export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProps) {
   return (
@@ -21,8 +16,8 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
       {links.map((link) => {
 
         if (link.children) {
-          const isDropdownActive = link.children.some(child => 
-            child.href ? (child.href === "/" ? pathname === "/" : pathname.startsWith(child.href)) : false
+          const isDropdownActive = link.children.some(child =>
+            isNavLinkActive(child.href, pathname)
           );
 
           return (
@@ -31,9 +26,8 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
                 <DropdownTrigger>
                   <Button
                     disableRipple
-                    className={`p-0 bg-transparent data-[hover=true]:bg-transparent transition-colors tracking-tight text-medium ${
-                      isDropdownActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
-                    }`}
+                    className={`p-0 bg-transparent data-[hover=true]:bg-transparent transition-colors tracking-tight text-medium ${isDropdownActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
+                      }`}
                     radius="sm"
                     variant="light"
                     endContent={<ChevronDownIcon className="w-4 h-4" />}
@@ -50,15 +44,14 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
                 }}
               >
                 {link.children.map((child) => {
-                  const isChildActive = child.href ? (child.href === "/" ? pathname === "/" : pathname.startsWith(child.href)) : false;
+                  const isChildActive = isNavLinkActive(child.href, pathname);
                   return (
                     <DropdownItem
                       key={child.translationKey}
                       textValue={navT(child.translationKey as never)}
                     >
-                      <Link href={child.href!} className={`w-full h-full flex items-center transition-colors ${
-                        isChildActive ? "text-primary font-bold" : "text-foreground"
-                      }`}>
+                      <Link href={child.href!} className={`w-full h-full flex items-center transition-colors ${isChildActive ? "text-primary font-bold" : "text-foreground"
+                        }`}>
                         {navT(child.translationKey as never)}
                       </Link>
                     </DropdownItem>
@@ -69,14 +62,13 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
           );
         }
 
-        const isActive = link.href ? (link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)) : false;
+        const isActive = isNavLinkActive(link.href, pathname);
         return (
           <NavbarItem key={link.translationKey} isActive={isActive}>
             <Link
               href={link.href!}
-              className={`text-medium whitespace-nowrap transition-colors tracking-tight ${
-                isActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
-              }`}
+              className={`text-medium whitespace-nowrap transition-colors tracking-tight ${isActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
+                }`}
             >
               {navT(link.translationKey as never)}
             </Link>

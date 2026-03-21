@@ -4,7 +4,7 @@ export interface ProfileSettings {
   language?: string;
   theme?: string;
   lastActiveWorkspaceId?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface MyProfile {

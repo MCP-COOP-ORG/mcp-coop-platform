@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { contactFormErrors } from "@/shared/constants/form";
+import { formErrors } from "@/shared/constants/form";
 import { emailSchema } from "@/features/auth/validation";
 
 /**
@@ -11,16 +11,16 @@ export const contactFormSchema = z.object({
   firstName: z
     .string()
     .trim()
-    .min(1, contactFormErrors.firstNameRequired)
+    .min(1, formErrors.firstNameRequired)
     .refine(
       (value) => !value.includes(" "),
-      { message: contactFormErrors.firstNameNoSpaces }
+      { message: formErrors.firstNameNoSpaces }
     ),
   lastName: z.string().trim().optional().or(z.literal("")),
   email: emailSchema,
   message: z.string().trim().optional(),
   useCurrentAccount: z.boolean(),
-  file: z.any().nullable(),
+  file: z.unknown().nullable(),
 });
 
 export type ContactFormValidationData = z.infer<typeof contactFormSchema>;

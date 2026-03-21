@@ -1,6 +1,9 @@
 import PageContentLayout from "@/shared/ui/layout/page-content";
+import { PAGE_KEYS } from "@/shared/constants/page-keys";
 
-export default function DocsPage() {
-  return <PageContentLayout pageKey="docs" language="en" />;
+export default async function DocsPage(props: { params: Promise<{ locale: string }> }) {
+  const { locale } = await props.params;
+
+  return <PageContentLayout pageKey={PAGE_KEYS.docs} language={locale} />;
 }
 

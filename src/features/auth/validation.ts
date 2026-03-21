@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { commonFormErrors, authFormErrors } from "@/shared/constants/form";
+import { formErrors } from "@/shared/constants/form";
 
 /**
  * Base schema for validating email.
@@ -8,8 +8,8 @@ import { commonFormErrors, authFormErrors } from "@/shared/constants/form";
 export const emailSchema = z
   .string()
   .trim()
-  .min(1, commonFormErrors.emailRequired)
-  .email(commonFormErrors.emailInvalid);
+  .min(1, formErrors.emailRequired)
+  .email(formErrors.emailInvalid);
 
 /**
  * Base schema for validating password.
@@ -17,7 +17,7 @@ export const emailSchema = z
  */
 export const passwordSchema = z
   .string()
-  .min(8, authFormErrors.passwordMinLength);
+  .min(8, formErrors.passwordMinLength);
 
 /**
  * Common auth credentials schema (email + password).
@@ -35,12 +35,12 @@ export const authCredentialsSchema = z.object({
 export const signupSchema = authCredentialsSchema
   .extend({
     confirmPassword: passwordSchema,
-    name: z.string().trim().min(1, authFormErrors.nameRequired).optional(),
+    name: z.string().trim().min(1, formErrors.nameRequired).optional(),
   })
   .refine(
     (data) => data.password === data.confirmPassword,
     {
       path: ["confirmPassword"],
-      message: authFormErrors.passwordsMismatch,
+      message: formErrors.passwordsMismatch,
     }
   );

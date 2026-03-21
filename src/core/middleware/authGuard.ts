@@ -5,7 +5,7 @@ import { navigationRoutes, protectedRouteKeys } from "@/shared/constants/header"
  * Auth Guard Middleware Logic
  * Extracted from root middleware.ts to keep the entry point clean.
  */
-export const authGuard = (req: NextRequest & { auth?: any }) => {
+export const authGuard = (req: NextRequest & { auth?: unknown }) => {
   const { pathname } = req.nextUrl;
 
   const isProtectedRoute = protectedRouteKeys.some((route) => {

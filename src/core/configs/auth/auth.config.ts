@@ -29,9 +29,9 @@ export default {
       if (token.myProfile) {
         session.myProfile = token.myProfile as MyProfile;
       }
-      // Strip default NextAuth user object entirely per user request
-      // @ts-ignore
-      delete session.user;
+      // Strip default NextAuth user object entirely per user request safely
+      delete (session as unknown as { user?: unknown }).user;
+      
       return session;
     },
   },

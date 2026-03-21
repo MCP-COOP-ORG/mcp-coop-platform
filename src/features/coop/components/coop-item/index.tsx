@@ -1,8 +1,6 @@
-"use client";
+import { Card, CardHeader, CardBody } from "@/shared/ui/components/hero-ui";
 
-import { Card, CardHeader, CardBody } from "@heroui/react";
-
-import type { CoopItemDto } from "@/features/coop/actions/coops.actions";
+import type { CoopItemDto } from "@/entities/coop/types";
 
 interface CoopItemProps {
   coop: CoopItemDto;
@@ -29,4 +27,3 @@ const CoopItem: React.FC<CoopItemProps> = ({ coop }) => {
 };
 
 export default CoopItem;
-

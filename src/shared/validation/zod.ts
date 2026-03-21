@@ -11,7 +11,7 @@ export type ZodFieldErrors<TSchema extends z.ZodTypeAny> = Partial<
 interface ZodValidationSuccess<TSchema extends z.ZodTypeAny> {
   success: true;
   data: z.infer<TSchema>;
-  errors: {};
+  errors: Record<string, never>;
 }
 
 interface ZodValidationFailure<TSchema extends z.ZodTypeAny> {

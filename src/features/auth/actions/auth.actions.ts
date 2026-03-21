@@ -2,11 +2,11 @@
 
 import { AuthError } from "next-auth";
 import { signIn, signOut } from "@/core/configs/auth/auth";
+import { AUTH_PROVIDER } from "@/shared/constants/auth";
 import { signupSchema, authCredentialsSchema } from "../validation";
 import type { SignupData, AuthCredentials, AuthResult, SignupResult } from "../types";
-import { authFormErrors } from "@/shared/constants/form";
+import { formErrors } from "@/shared/constants/form";
 import { AuthService } from "../api/auth.api";
-import { cookies } from "next/headers"; // Added import for cookies
 
 /**
  * Shared error handler for Server Actions
@@ -20,16 +20,16 @@ function handleAuthActionError(error: unknown): AuthResult {
 
   if (error instanceof AuthError) {
     if (error.type === "CredentialsSignin") {
-      return { success: false, error: authFormErrors.invalidCredentials };
+      return { success: false, error: formErrors.invalidCredentials };
     }
-    return { success: false, error: error.message || authFormErrors.invalidCredentials };
+    return { success: false, error: error.message || formErrors.invalidCredentials };
   }
 
   if (error instanceof Error) {
     return { success: false, error: error.message };
   }
   
-  return { success: false, error: authFormErrors.internalServerError };
+  return { success: false, error: formErrors.internalServerError };
 }
 
 /**
@@ -39,15 +39,15 @@ export async function login(credentials: AuthCredentials): Promise<AuthResult> {
   try {
     const parsed = authCredentialsSchema.safeParse(credentials);
     if (!parsed.success) {
-      return { success: false, error: parsed.error.issues[0]?.message || authFormErrors.validationFailed };
+      return { success: false, error: parsed.error.issues[0]?.message || formErrors.validationFailed };
     }
     
     // Convert to FormData for NextAuth credentials provider
     const formData = new FormData();
-    formData.append("email", parsed.data.email);
-    formData.append("password", parsed.data.password);
+    formData.append(AUTH_PROVIDER.fieldNames.email, parsed.data.email);
+    formData.append(AUTH_PROVIDER.fieldNames.password, parsed.data.password);
 
-    await signIn("credentials", formData);
+    await signIn(AUTH_PROVIDER.name.toLowerCase(), formData);
     return { success: true };
   } catch (error) {
     return handleAuthActionError(error);
@@ -61,12 +61,12 @@ export async function signup(data: SignupData): Promise<SignupResult> {
   try {
     const parsed = signupSchema.safeParse(data);
     if (!parsed.success) {
-      return { success: false, error: parsed.error.issues[0]?.message || authFormErrors.validationFailed };
+      return { success: false, error: parsed.error.issues[0]?.message || formErrors.validationFailed };
     }
 
     const { email, password } = parsed.data;
 
-    // Use pure FSD API service
+    // Use Auth API service
     await AuthService.signup(parsed.data);
 
     // Auto-login

@@ -1,6 +1,7 @@
 "use client";
-import { Spinner } from "@heroui/react";
+import { Spinner } from "@/shared/ui/components/hero-ui";
 import { useDynamicScript } from "@/shared/hooks/use-dynamic-script";
+import { useTranslations } from "next-intl";
 
 export interface MfeConfig {
   url: string;
@@ -17,6 +18,7 @@ export function withDynamicMfe<P extends object>(
   config: MfeConfig | ((props: P) => MfeConfig)
 ) {
   return function WithDynamicMfeComponent(props: P) {
+    const t = useTranslations("System");
     const resolvedConfig = typeof config === "function" ? config(props) : config;
     const { url, elementId, name = "Microfrontend", locale } = resolvedConfig;
 
@@ -25,8 +27,8 @@ export function withDynamicMfe<P extends object>(
     if (!url) {
       return (
         <div className="p-4 bg-warning/10 text-warning rounded-lg border border-warning/20">
-          <p className="font-semibold">{name} Not Configured</p>
-          <p className="text-sm">Please provide a valid MFE URL.</p>
+          <p className="font-semibold">{t("notConfigured", { name })}</p>
+          <p className="text-sm">{t("provideValidUrl")}</p>
         </div>
       );
     }
@@ -34,18 +36,18 @@ export function withDynamicMfe<P extends object>(
     if (failed) {
       return (
         <div className="p-4 bg-danger/10 text-danger rounded-lg border border-danger/20">
-          <p className="font-semibold">{name} Error</p>
-          <p className="text-sm">Failed to load the application bundle from: {url}</p>
-          <p className="text-xs opacity-70 mt-2">Ensure the container is running and the bundle path is correct.</p>
+          <p className="font-semibold">{t("error", { name })}</p>
+          <p className="text-sm">{t("failedToLoad", { url })}</p>
+          <p className="text-xs opacity-70 mt-2">{t("ensureContainerRunning")}</p>
         </div>
       );
     }
 
     return (
-      <div className="w-full h-full flex flex-col relative rounded-xl overflow-hidden border border-divider bg-content1 mfe-container">
+      <div className="w-full h-full flex flex-col relative overflow-hidden border-t border-dashed border-divider bg-content1 mfe-container">
         {!ready && (
           <div className="absolute inset-0 flex items-center justify-center bg-content1/80 z-10 backdrop-blur-sm min-h-[500px]">
-            <Spinner size="lg" color="primary" label={`Loading ${name}...`} />
+            <Spinner size="lg" color="primary" label={t("loading", { name })} />
           </div>
         )}
         {/* The microapp will render its React tree inside this div */}

@@ -1,35 +1,28 @@
-"use client";
-
-import { Card, CardHeader, CardBody, CardFooter, Snippet } from "@heroui/react";
+import { Card, CardBody, CardFooter, Snippet } from "@/shared/ui/components/hero-ui";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-
 import { getPageContent } from "@/features/page-content/actions/page-content.actions";
+import type { PageContentDto } from "@/entities/page-content/types";
 import ContentUnavailable from "@/shared/ui/components/content-unavailable";
-
 import ArticlesLayout from "@/shared/ui/layout/articles";
+import { getTranslations } from "next-intl/server";
+import { Locales } from "@/shared/constants/locale";
 
 interface PageContentLayoutProps {
   pageKey: string;
   language?: string;
 }
 
-export default function PageContentLayout({
+export default async function PageContentLayout({
   pageKey,
-  language = "en",
+  language = Locales.EN,
 }: PageContentLayoutProps) {
-  const [content, setContent] = useState<any>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const t = await getTranslations("System");
 
-  useEffect(() => {
-    getPageContent({ page: pageKey, language })
-      .then(setContent)
-      .catch(setError)
-      .finally(() => setIsLoading(false));
-  }, [pageKey, language]);
+  let content: PageContentDto | null;
 
-  if (error) {
+  try {
+    content = await getPageContent({ page: pageKey, language });
+  } catch (error) {
     console.error("Failed to load PageContent", {
       pageKey,
       language,
@@ -38,62 +31,36 @@ export default function PageContentLayout({
 
     return (
       <ContentUnavailable
-        title="Content temporarily unavailable"
-        description={`We could not load content for page "${pageKey}" right now. Please try again later.`}
+        title={t("contentUnavailable")}
+        description={t("couldNotLoad")}
       />
     );
   }
 
-  if (!isLoading && !content) {
+  if (!content) {
     return (
       <ContentUnavailable
-        title="Page not found"
-        description={`The content for "${pageKey}" could not be found or has not been created yet.`}
+        title={t("pageNotFound")}
+        description={t("contentNotFound", { pageKey })}
       />
     );
   }
 
-  if (isLoading) {
-    return null;
-  }
-
-  const renderBlocks = () => {
-    if (!content.jsonContent?.blocks || !Array.isArray(content.jsonContent.blocks)) {
-      return null;
-    }
-
-    return content.jsonContent.blocks.map((block: any, index: number) => {
-      switch (block.type) {
-        case "heading":
-          const Tag = `h${block.level || 2}` as keyof React.JSX.IntrinsicElements;
-          return (
-            <Tag key={index} className="text-3xl font-bold mb-8 mt-12">
-              {block.text}
-            </Tag>
-          );
-        case "articles":
-          return (
-            <div key={index} className="w-full">
-              <ArticlesLayout language={language} pageKey={pageKey} />
-            </div>
-          );
-        default:
-          return null;
-      }
-    });
-  };
+  const jsonContent = content.jsonContent as {
+    blocks?: Array<Record<string, unknown>>;
+  } | null;
 
   return (
     <div className="max-w-7xl mx-auto py-8 px-4">
       <Card className="relative overflow-visible">
-        <Snippet 
-          color="primary" 
-          variant="flat" 
-          hideCopyButton 
-          hideSymbol 
+        <Snippet
+          color="primary"
+          variant="flat"
+          hideCopyButton
+          hideSymbol
           className="absolute top-6 left-6 z-10 font-medium"
         >
-          Pre-Alpha Version
+          {t("preAlpha")}
         </Snippet>
         <CardBody className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start p-8 pt-20">
           <div className="flex flex-col items-start gap-4 md:col-span-3">
@@ -108,19 +75,29 @@ export default function PageContentLayout({
             {content.description && (
               <div className="flex flex-col gap-3 mt-4 w-full">
                 {content.description
-                  .split('.')
+                  .split(".")
                   .map((sentence: string) => sentence.trim())
                   .filter((sentence: string) => sentence.length > 0)
                   .map((sentence: string, index: number) => (
-                    <Card 
-                      key={index} 
-                      shadow="sm" 
+                    <Card
+                      key={index}
+                      shadow="sm"
                       className="bg-content2/50 backdrop-blur-md border border-default-200/50 hover:border-primary/50 transition-colors"
                     >
                       <CardBody className="flex flex-row items-start gap-4 p-4">
                         <div className="mt-1 flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary">
-                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          <svg
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2.5}
+                            className="w-4 h-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
                           </svg>
                         </div>
                         <p className="text-base text-foreground/90 font-medium leading-relaxed">
@@ -138,14 +115,14 @@ export default function PageContentLayout({
               <div className="relative w-full aspect-square max-w-md">
                 <Image
                   src={content.image}
-                  alt={content.title}
+                  alt={content.title || "Image"}
                   fill
                   className="object-contain"
                 />
               </div>
             ) : (
               <div className="w-full aspect-square max-w-md rounded-2xl bg-default-100 flex items-center justify-center">
-                <span className="text-default-400">Image goes here</span>
+                <span className="text-default-400">{t("imageGoesHere")}</span>
               </div>
             )}
           </div>
@@ -159,14 +136,33 @@ export default function PageContentLayout({
               rel="noopener noreferrer"
               className="text-primary underline text-sm"
             >
-              Watch related video
+              {t("watchVideo")}
             </a>
           </CardFooter>
         )}
       </Card>
 
-      { renderBlocks() }
+      {/* Render JSON content blocks */}
+      {jsonContent?.blocks?.map((block, index) => {
+        switch (block.type) {
+          case "heading": {
+            const Tag = `h${block.level || 2}` as keyof React.JSX.IntrinsicElements;
+            return (
+              <Tag key={index} className="text-3xl font-bold mb-8 mt-12">
+                {block.text as React.ReactNode}
+              </Tag>
+            );
+          }
+          case "articles":
+            return (
+              <div key={index} className="w-full">
+                <ArticlesLayout language={language} pageKey={pageKey} />
+              </div>
+            );
+          default:
+            return null;
+        }
+      })}
     </div>
   );
 }
-

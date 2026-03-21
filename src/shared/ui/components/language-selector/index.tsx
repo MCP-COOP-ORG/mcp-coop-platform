@@ -1,4 +1,4 @@
-import { Select, SelectItem, Avatar } from "@heroui/react";
+import { Select, SelectItem, Avatar } from "@/shared/ui/components/hero-ui";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/core/configs/i18n/routing";
 import { localeConfigs } from "@/shared/constants/locale";

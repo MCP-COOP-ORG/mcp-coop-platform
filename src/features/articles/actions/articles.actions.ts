@@ -1,21 +1,8 @@
 "use server";
 
 import { prisma } from "@/core/api/prisma";
-
-export interface ArticleDto {
-  id: string;
-  title: string;
-  subtitle: string;
-  image: string;
-  content: string | null;
-  createdAt: Date;
-}
-
-interface GetArticlesParams {
-  limit?: number;
-  language?: string;
-  pageKey?: string;
-}
+import { DEFAULT_ORDER_BY } from "@/shared/constants/query";
+import type { ArticleDto, GetArticlesParams } from "@/entities/article/types";
 
 /**
  * Server Action to fetch latest articles for the home page.
@@ -30,16 +17,16 @@ export async function getArticles(
       ...(language ? { language } : {}),
       ...(pageKey ? { pageContent: { page: pageKey } } : {}),
     },
-    orderBy: { createdAt: "asc" },
+    orderBy: DEFAULT_ORDER_BY.oldest,
     take: limit,
   });
 
-  return articles.map((article: any) => ({
+  return articles.map((article) => ({
     id: article.id,
     title: article.title,
     subtitle: article.subtitle,
-    image: article.image,
-    content: article.jsonContent?.content || null,
+    image: article.image ?? "",
+    content: (article.jsonContent as { content?: string })?.content || null,
     createdAt: article.createdAt,
   }));
 }

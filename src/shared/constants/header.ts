@@ -31,4 +31,10 @@ export const headerNavigationLinks: NavigationLink[] = [
 
 export const protectedRouteKeys = [navigationRoutes.workspace] as const;
 
-export const APP_NAME = "MCP COOP";
+/**
+ * i18n keys for the Header namespace (not user-facing, used with useTranslations("Header")).
+ */
+export const headerI18nKeys = {
+  openMenu: "openMenu",
+  closeMenu: "closeMenu",
+} as const;

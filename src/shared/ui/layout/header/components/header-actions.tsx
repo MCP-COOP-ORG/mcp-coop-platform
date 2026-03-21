@@ -1,19 +1,11 @@
 "use client";
 
 import React from "react";
-import {
-  NavbarItem,
-  Button,
-  Tooltip,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  User,
-} from "@heroui/react";
+import { NavbarItem, Button, Tooltip, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User } from "@/shared/ui/components/hero-ui";
 import { LogIn, LogOut, Sun, Moon, User as UserIcon } from "lucide-react";
 import type { Session } from "next-auth";
 import { useTheme } from "next-themes";
+import { THEME } from "@/shared/constants/theme";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "@/shared/ui/components/language-selector";
 
@@ -34,11 +26,11 @@ export function HeaderActions({ session, onOpenLogin, onLogout, isMobile = false
     setMounted(true);
   }, []);
 
-  const isDark = theme === "dark";
+  const isDark = theme === THEME.dark;
   const isAuthenticated = !!session?.myProfile;
 
   const handleToggleTheme = () => {
-    setTheme(isDark ? "light" : "dark");
+    setTheme(isDark ? THEME.light : THEME.dark);
     onAction?.();
   };
 

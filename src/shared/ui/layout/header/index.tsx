@@ -2,43 +2,40 @@
 
 import React from "react";
 import { Link, useRouter, usePathname } from "@/core/configs/i18n/routing";
-import type { Session } from "next-auth";
-import { Navbar as HeroNavbar, NavbarBrand, NavbarContent, NavbarMenuToggle } from "@heroui/react";
+import { Navbar as HeroNavbar, NavbarBrand, NavbarContent, NavbarMenuToggle } from "@/shared/ui/components/hero-ui";
 import Image from "next/image";
 
 import {
   NavigationLink,
   headerNavigationLinks,
   navigationRoutes,
-  APP_NAME,
+  headerI18nKeys,
 } from "@/shared/constants/header";
-import { useSession } from "@/core/providers/providers";
+import { APP_INFO } from "@/shared/constants/app-info";
+import { useSession } from "@/shared/hooks/use-session";
 import AppModal, { useModal } from "@/shared/ui/components/modal";
 import AuthForm from "@/features/auth/components/auth-form";
 import { authFormModes, authFormTitles, type AuthFormMode } from "@/shared/constants/form";
 import { logout } from "@/features/auth/actions/auth.actions";
 import { useTranslations } from "next-intl";
 
-// FSD Sub-components
+// Sub-components
 import { HeaderDesktopNav } from "./components/header-desktop-nav";
 import { HeaderActions } from "./components/header-actions";
 import { HeaderMobileMenu } from "./components/header-mobile-menu";
 
-interface HeaderProps {
-  session: Session | null;
-}
-
-export default function Header({ session: initialSession }: HeaderProps) {
+export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const { session } = useSession();
   const navT = useTranslations("Navigation");
+  const headerT = useTranslations("Header");
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { isOpen, onOpen, onClose } = useModal();
   const [authMode, setAuthMode] = React.useState<AuthFormMode>(authFormModes.login);
 
-  const isAuthenticated = !!session?.myProfile || !!initialSession?.myProfile;
+  const isAuthenticated = !!session?.myProfile;
 
   // Best Practice Next.js: Wait for navigation to complete before closing the menu.
   // This prevents animation glitches ("пидалит") by relying on actual route layout updates.
@@ -91,14 +88,14 @@ export default function Header({ session: initialSession }: HeaderProps) {
         <NavbarBrand>
           <Link href="/" className="flex items-center gap-4">
             <Image
-              src="/logo.png"
-              alt={APP_NAME}
+              src={APP_INFO.logo}
+              alt={APP_INFO.shortName}
               width={40}
               height={40}
               priority
               className="object-contain"
             />
-            <p className="font-bold text-inherit text-[28px] leading-none tracking-tight">{APP_NAME}</p>
+            <p className="font-bold text-inherit text-[28px] leading-none tracking-tight">{APP_INFO.shortName}</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -106,15 +103,14 @@ export default function Header({ session: initialSession }: HeaderProps) {
       {/* Desktop Navigation Links (Center) */}
       <HeaderDesktopNav links={links} pathname={pathname} navT={navT} />
 
-      {/* Right Side (Desktop Actions & Mobile Toggle) */}
       <NavbarContent justify="end">
         <HeaderActions
-          session={session || initialSession}
+          session={session}
           onOpenLogin={onOpen}
           onLogout={handleLogout}
         />
         <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMenuOpen ? headerT(headerI18nKeys.closeMenu) : headerT(headerI18nKeys.openMenu)}
           className="max-lg:!flex lg:!hidden"
         />
       </NavbarContent>
@@ -124,7 +120,7 @@ export default function Header({ session: initialSession }: HeaderProps) {
         links={links}
         pathname={pathname}
         navT={navT}
-        session={session || initialSession}
+        session={session}
         onOpenLogin={onOpen}
         onLogout={handleLogout}
         onAction={() => setIsMenuOpen(false)}

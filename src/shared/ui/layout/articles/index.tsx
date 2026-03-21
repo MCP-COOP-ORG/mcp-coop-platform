@@ -1,11 +1,9 @@
-"use client";
-
-import { Card, CardBody } from "@heroui/react";
-import { ArrowRight } from "lucide-react";
+import { Card, CardBody } from "@/shared/ui/components/hero-ui";
 import * as LucideIcons from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { getArticles, type ArticleDto } from "@/features/articles/actions/articles.actions";
+import { getArticles } from "@/features/articles/actions/articles.actions";
+import type { ArticleDto } from "@/entities/article/types";
 import ContentUnavailable from "@/shared/ui/components/content-unavailable";
 
 interface ArticlesLayoutProps {
@@ -14,19 +12,19 @@ interface ArticlesLayoutProps {
   pageKey: string;
 }
 
-export default function ArticlesLayout({ limit = 6, language, pageKey }: ArticlesLayoutProps) {
-  const [articles, setArticles] = useState<ArticleDto[]>([]);
-  const [error, setError] = useState<Error | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+/** Map an article.image string to a Lucide icon component. */
+function getIconComponent(iconName: string): React.ElementType {
+  const capitalizedName = iconName.charAt(0).toUpperCase() + iconName.slice(1);
+  const icons = LucideIcons as unknown as Record<string, React.ElementType>;
+  return icons[capitalizedName] || LucideIcons.Layers;
+}
 
-  useEffect(() => {
-    getArticles({ limit, language, pageKey })
-      .then(setArticles)
-      .catch(setError)
-      .finally(() => setIsLoading(false));
-  }, [limit]);
+export default async function ArticlesLayout({ limit = 6, language, pageKey }: ArticlesLayoutProps) {
+  let articles: ArticleDto[];
 
-  if (error) {
+  try {
+    articles = await getArticles({ limit, language, pageKey });
+  } catch (error) {
     console.error("Failed to load articles", { error });
     return (
       <ContentUnavailable
@@ -36,7 +34,7 @@ export default function ArticlesLayout({ limit = 6, language, pageKey }: Article
     );
   }
 
-  if (isLoading || !articles.length) {
+  if (!articles.length) {
     return null;
   }
 
@@ -44,10 +42,7 @@ export default function ArticlesLayout({ limit = 6, language, pageKey }: Article
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => {
-          const iconName = article.image
-            ? article.image.charAt(0).toUpperCase() + article.image.slice(1)
-            : "Layers";
-          const Icon = (LucideIcons as any)[iconName] || LucideIcons.Layers;
+          const Icon = getIconComponent(article.image || "Layers");
 
           return (
             <Card
@@ -80,4 +75,3 @@ export default function ArticlesLayout({ limit = 6, language, pageKey }: Article
     </div>
   );
 }
-

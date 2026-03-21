@@ -1,6 +1,4 @@
-"use client";
-
-import { Card, CardHeader, CardBody } from "@heroui/react";
+import { Card, CardHeader, CardBody } from "@/shared/ui/components/hero-ui";
 
 interface ContentUnavailableProps {
   title?: string;
@@ -29,4 +27,3 @@ const ContentUnavailable: React.FC<ContentUnavailableProps> = ({
 };
 
 export default ContentUnavailable;
-

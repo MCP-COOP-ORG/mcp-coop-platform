@@ -2,6 +2,8 @@ import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import authConfig from "./auth.config";
 import { AuthService } from "@/features/auth/api/auth.api";
+import { authCredentialsSchema } from "@/features/auth/validation";
+import { AUTH_PROVIDER, AUTH_ERRORS } from "@/shared/constants/auth";
 
 /**
  * Full Auth.js configuration.
@@ -11,21 +13,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
+      name: AUTH_PROVIDER.name,
+      credentials: AUTH_PROVIDER.fields,
       authorize: async (credentials) => {
         try {
+          // Validate credentials with Zod instead of unsafe `as string` casts
+          const parsed = authCredentialsSchema.safeParse(credentials);
+          if (!parsed.success) {
+            throw new CredentialsSignin(AUTH_ERRORS.invalidCredentialsFormat);
+          }
+
           // AuthService handles the API fetch and HttpOnly cookie proxying automatically.
           const data = await AuthService.login({
-            email: credentials?.email as string,
-            password: credentials?.password as string,
+            email: parsed.data.email,
+            password: parsed.data.password,
           });
           
           if (!data || !data.myProfile || !data.myProfile.id) {
-             throw new CredentialsSignin("Invalid response from server");
+             throw new CredentialsSignin(AUTH_ERRORS.invalidServerResponse);
           }
 
           return {
@@ -37,7 +42,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             throw error;
           }
           console.error("Auth Error:", error);
-          throw new CredentialsSignin("Authentication service unavailable");
+          throw new CredentialsSignin(AUTH_ERRORS.serviceUnavailable);
         }
       },
     }),

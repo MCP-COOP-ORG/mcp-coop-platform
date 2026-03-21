@@ -4,14 +4,14 @@ import { getCoopByAddress } from "@/features/coop/actions/coops.actions";
 import CoopItem from "@/features/coop/components/coop-item";
 
 interface CoopDetailsPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+    locale: string;
+  }>;
 }
 
 export default async function CoopDetailsPage({ params }: CoopDetailsPageProps) {
-  const { id } = params;
-
+  const { id } = await params;
   const coop = await getCoopByAddress(id);
 
   if (!coop) {
@@ -24,4 +24,5 @@ export default async function CoopDetailsPage({ params }: CoopDetailsPageProps) 
     </div>
   );
 }
+
 
