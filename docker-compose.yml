@@ -8,9 +8,9 @@ services:
     env_file:
       - .env.local
     environment:
-      POSTGRES_USER: ${MCP_COOP_PLARFORM:-postgres}
-      POSTGRES_PASSWORD: ${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}
-      POSTGRES_DB: ${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}
+      POSTGRES_USER: ${MCP_COOP_PLATFORM:-postgres}
+      POSTGRES_PASSWORD: ${MCP_COOP_PLATFORM_PASSWORD:-CHANGE_ME}
+      POSTGRES_DB: ${MCP_COOP_PLATFORM_DB:-mcp_coop_platform}
     ports:
       - "5435:5432"
     volumes:
@@ -43,7 +43,7 @@ services:
       - INTERNAL_API_URL=http://mcp-coop-backend-app-local:3001/api
       - NEXT_PUBLIC_API_URL=http://localhost:3001/api
       - NEXT_PUBLIC_KANBAN_MFE_URL=http://localhost:8081/kanban-mfe.js
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM:-postgres}:${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}@mcp-coop-platform-db-local:5432/${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}?schema=public
+      - DATABASE_URL=postgresql://${MCP_COOP_PLATFORM:-postgres}:${MCP_COOP_PLATFORM_PASSWORD:-CHANGE_ME}@mcp-coop-platform-db-local:5432/${MCP_COOP_PLATFORM_DB:-mcp_coop_platform}?schema=public
     ports:
       - "3000:3000"
     command: >
@@ -67,7 +67,7 @@ services:
     env_file:
       - .env.local
     environment:
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM:-postgres}:${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}@mcp-coop-platform-db-local:5432/${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}?schema=public
+      - DATABASE_URL=postgresql://${MCP_COOP_PLATFORM:-postgres}:${MCP_COOP_PLATFORM_PASSWORD:-CHANGE_ME}@mcp-coop-platform-db-local:5432/${MCP_COOP_PLATFORM_DB:-mcp_coop_platform}?schema=public
     depends_on:
       postgres-platform:
         condition: service_healthy
