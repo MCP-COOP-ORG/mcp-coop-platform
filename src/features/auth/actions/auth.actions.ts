@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { signIn, signOut } from "@/core/configs/auth/auth";
 import { AUTH_PROVIDER } from "@/shared/constants/auth";
@@ -7,6 +8,7 @@ import { signupSchema, authCredentialsSchema } from "../validation";
 import type { SignupData, AuthCredentials, AuthResult, SignupResult } from "../types";
 import { formErrors } from "@/shared/constants/form";
 import { AuthService } from "../api/auth.api";
+import type { OAuthProvider } from "../constants";
 
 /**
  * Shared error handler for Server Actions
@@ -90,4 +92,12 @@ export async function logout(): Promise<AuthResult> {
   } catch (error) {
     return handleAuthActionError(error);
   }
+}
+
+/**
+ * Server Action for OAuth login redirects.
+ */
+export async function oauthLogin(provider: OAuthProvider): Promise<void> {
+  const url = AuthService.getOAuthLoginUrl(provider);
+  redirect(url);
 }

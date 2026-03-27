@@ -59,6 +59,9 @@
     "passwordsMismatch": "Пароли должны совпадать",
     "emailAlreadyExists": "Email уже существует",
     "invalidCredentials": "Неверный email или пароль",
+    "loginWithGithub": "Войти через GitHub",
+    "loginWithGoogle": "Войти через Google",
+    "loginWithTelegram": "Войти через Telegram",
     "validationFailed": "Ошибка валидации",
     "internalServerError": "Внутренняя ошибка сервера"
   },

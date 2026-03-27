@@ -28,6 +28,9 @@ export const authFormButtons = {
   signup: "signup",
   switchToSignup: "switchToSignup",
   switchToLogin: "switchToLogin",
+  loginWithGithub: "loginWithGithub",
+  loginWithGoogle: "loginWithGoogle",
+  loginWithTelegram: "loginWithTelegram",
 } as const;
 
 export const authFormTitles = {

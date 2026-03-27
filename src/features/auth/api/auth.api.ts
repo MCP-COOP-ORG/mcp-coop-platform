@@ -143,4 +143,12 @@ export class AuthService {
       }
     }
   }
+
+  /**
+   * Generates the OAuth login URL for the given provider.
+   * Returns a relative path so the browser correctly goes through Nginx public domain.
+   */
+  static getOAuthLoginUrl(provider: string): string {
+    return `/api/auth/oauth/${provider}`;
+  }
 }

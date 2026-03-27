@@ -59,6 +59,9 @@
     "passwordsMismatch": "Passwords must match",
     "emailAlreadyExists": "Email already exists",
     "invalidCredentials": "Invalid email or password",
+    "loginWithGithub": "Login with GitHub",
+    "loginWithGoogle": "Login with Google",
+    "loginWithTelegram": "Login with Telegram",
     "validationFailed": "Validation failed",
     "internalServerError": "Internal server error"
   },
