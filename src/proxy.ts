@@ -30,9 +30,7 @@ export default async function middleware(req: NextRequest) {
   const isAuthenticated = await verifyAccessToken(req);
 
   const guardResponse = authGuard(req, isAuthenticated);
-  if (guardResponse.redirected) {
-    return guardResponse;
-  }
+  if (guardResponse) return guardResponse;
 
   return handleI18nRouting(req);
 }

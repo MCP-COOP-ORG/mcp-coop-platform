@@ -23,6 +23,4 @@ export const authGuard = (req: NextRequest, isAuthenticated: boolean) => {
     const homeUrl = new URL(navigationRoutes.home.href, req.nextUrl.origin);
     return NextResponse.redirect(homeUrl);
   }
-
-  return NextResponse.next();
 };
