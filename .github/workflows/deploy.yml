@@ -46,6 +46,7 @@ jobs:
           docker build \
             --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
             --build-arg NEXT_PUBLIC_KANBAN_MFE_URL=${{ secrets.NEXT_PUBLIC_KANBAN_MFE_URL }} \
+            --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME }} \
             -t $IMAGE_URI:latest \
             -t $IMAGE_URI:${{ github.sha }} \
             .
@@ -55,6 +56,7 @@ jobs:
             --target builder \
             --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
             --build-arg NEXT_PUBLIC_KANBAN_MFE_URL=${{ secrets.NEXT_PUBLIC_KANBAN_MFE_URL }} \
+            --build-arg NEXT_PUBLIC_TELEGRAM_BOT_NAME=${{ secrets.NEXT_PUBLIC_TELEGRAM_BOT_NAME }} \
             -t $IMAGE_URI-builder:latest \
             -t $IMAGE_URI-builder:${{ github.sha }} \
             .

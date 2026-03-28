@@ -48,7 +48,8 @@ export class AuthService {
     });
 
     if (!res.ok) {
-      throw new Error(AUTH_ERRORS.invalidCredentials);
+      const errorData = await res.json().catch(() => null);
+      throw new Error(errorData?.message || errorData?.error || `API Error ${res.status}: ${res.statusText}`);
     }
 
     await this.syncCookies(res.headers.getSetCookie()?.join(",") || null);
@@ -133,5 +134,48 @@ export class AuthService {
    */
   static getOAuthLoginUrl(provider: string): string {
     return `/api/auth/oauth/${provider}`;
+  }
+
+  /**
+   * Authenticates against the backend via Telegram initData and syncs cookies.
+   */
+  static async loginTelegram(initData: string): Promise<{ success: boolean }> {
+    const res = await fetch(`${INTERNAL_API_URL}/auth/telegram`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ initData }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      throw new Error(errorData?.message || errorData?.error || `API Error ${res.status}: ${res.statusText}`);
+    }
+
+    await this.syncCookies(res.headers.getSetCookie()?.join(",") || null);
+    return { success: true };
+  }
+
+  /**
+   * Links a Telegram account to the currently authenticated user.
+   */
+  static async linkTelegram(initData: string): Promise<{ success: boolean }> {
+    const cookieString = await this.buildCookieString();
+    
+    const res = await fetch(`${INTERNAL_API_URL}/auth/link-telegram`, {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Cookie": cookieString
+      },
+      body: JSON.stringify({ initData }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      throw new Error(errorData?.message || errorData?.error || `API Error ${res.status}: ${res.statusText}`);
+    }
+
+    await this.syncCookies(res.headers.getSetCookie()?.join(",") || null);
+    return { success: true };
   }
 }

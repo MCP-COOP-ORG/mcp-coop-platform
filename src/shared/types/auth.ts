@@ -4,9 +4,8 @@
  */
 
 export interface ProfileSettings {
-  language?: string;
-  theme?: string;
   lastActiveWorkspaceId?: string;
+  avatarUrl?: string;
   [key: string]: unknown;
 }
 

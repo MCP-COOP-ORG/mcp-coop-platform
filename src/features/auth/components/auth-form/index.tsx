@@ -15,6 +15,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GithubIcon, GoogleIcon, TelegramIcon } from "@/shared/ui/icons/social";
 import { oauthLogin } from "@/features/auth/actions/auth.actions";
 import { OAUTH_PROVIDERS, type OAuthProvider } from "@/features/auth/constants";
+import { TelegramAuthModal } from "@/features/auth/components/telegram-auth-modal";
+import { useTelegramLoginController } from "@/features/auth/hooks/use-telegram";
+import { useModal } from "@/shared/ui/components/modal";
 
 interface AuthFormProps {
   mode: AuthFormMode;
@@ -30,6 +33,17 @@ export default function AuthForm({
   const t = useTranslations("Form");
   const { formData, errors, isLoading, handleInputChange, handleSubmit } = useAuthForm(mode, onSuccess);
   const [isPending, startTransition] = useTransition();
+  const { handleLogin, isPending: isTelegramPending } = useTelegramLoginController();
+  const { isOpen, onOpen, onClose, onOpenChange } = useModal();
+
+  const handleTelegramAuth = async (initData: string) => {
+    const res = await handleLogin(initData);
+    if (res?.success) {
+      onClose();
+      if (onSuccess) onSuccess();
+    }
+    return res;
+  };
 
   const handleModeSwitch = () => {
     if (onModeChange) {
@@ -139,7 +153,7 @@ export default function AuthForm({
               isIconOnly
               radius="full"
               variant="bordered"
-              onPress={() => handleOAuthLogin(OAUTH_PROVIDERS.TELEGRAM)}
+              onPress={onOpen}
               isDisabled={isLoading || isPending}
               aria-label={t(authFormButtons.loginWithTelegram)}
             >
@@ -171,6 +185,14 @@ export default function AuthForm({
           </Button>
         )}
       </div>
+
+      <TelegramAuthModal 
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange} 
+        title={t(authFormButtons.loginWithTelegram)} 
+        onAuth={handleTelegramAuth} 
+        isPending={isTelegramPending} 
+      />
     </Form>
   );
 }

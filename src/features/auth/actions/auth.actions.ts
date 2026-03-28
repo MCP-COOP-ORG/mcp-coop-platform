@@ -84,3 +84,28 @@ export async function oauthLogin(provider: OAuthProvider): Promise<void> {
   const url = AuthService.getOAuthLoginUrl(provider);
   redirect(url);
 }
+
+/**
+ * Server Action for Telegram Login via InitData.
+ */
+export async function loginWithTelegramAction(initData: string): Promise<AuthResult> {
+  try {
+    await AuthService.loginTelegram(initData);
+    return { success: true };
+  } catch (error) {
+    return handleAuthActionError(error);
+  }
+}
+
+/**
+ * Server Action for Linking Telegram.
+ */
+export async function linkTelegramAction(initData: string): Promise<AuthResult> {
+  try {
+    await AuthService.linkTelegram(initData);
+    return { success: true };
+  } catch (error) {
+    return handleAuthActionError(error);
+  }
+}
+
