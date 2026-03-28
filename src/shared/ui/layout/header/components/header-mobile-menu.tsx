@@ -4,13 +4,13 @@ import { Link } from "@/core/configs/i18n/routing";
 import { NavigationLink } from "@/shared/constants/header";
 import { HeaderActions } from "./header-actions";
 import { isNavLinkActive } from "../utils";
-import type { Session } from "next-auth";
+import type { AppSession } from "@/shared/types/auth";
 
 interface HeaderMobileMenuProps {
   links: NavigationLink[];
   pathname: string;
   navT: (key: never) => string;
-  session: Session | null;
+  session: AppSession;
   onOpenLogin: () => void;
   onLogout: () => void;
   onAction?: () => void;

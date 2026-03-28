@@ -1,4 +1,3 @@
-import { auth } from "@/core/configs/auth/auth";
 import { metadataConfig, viewportConfig } from "@/core/configs/seo/seo.config";
 import "../globals.css";
 import { Providers } from "@/core/providers/providers";
@@ -6,6 +5,8 @@ import Header from "@/shared/ui/layout/header";
 import Footer from "@/shared/ui/layout/footer";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { AuthService } from "@/features/auth/api/auth.api";
+import type { AppSession } from "@/shared/types/auth";
 
 export const metadata = metadataConfig;
 export const viewport = viewportConfig;
@@ -14,12 +15,15 @@ export default async function RootLayout(props: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const params = await props.params;
-  const { locale } = params;
+  const { locale } = await props.params;
   const { children } = props;
 
-  const session = await auth();
-  const messages = await getMessages();
+  const [myProfile, messages] = await Promise.all([
+    AuthService.getMyProfile(),
+    getMessages(),
+  ]);
+
+  const session: AppSession = { myProfile };
 
   return (
     <html lang={locale} suppressHydrationWarning>

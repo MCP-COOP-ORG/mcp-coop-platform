@@ -6,7 +6,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
  * Global Prisma client singleton.
  *
  * - Avoids creating a new DB connection on every hot-reload in development.
- * - Safe to import and use from both API routes and NextAuth configuration.
+ * - Safe to import and use from API routes and server components.
  */
 const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;

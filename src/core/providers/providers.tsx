@@ -4,16 +4,16 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { HeroUIProvider } from "@heroui/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import type { Session } from "next-auth";
+import type { AppSession } from "@/shared/types/auth";
 import { logout } from "@/features/auth/actions/auth.actions";
 import { APP_EVENTS } from "@/shared/constants/events";
 import { SessionProvider } from "@/shared/hooks/use-session";
 import { THEME } from "@/shared/constants/theme";
 
-type ProvidersProps = {
+interface ProvidersProps {
   children: React.ReactNode;
-  session: Session | null;
-};
+  session: AppSession;
+}
 
 export function Providers({ children, session }: ProvidersProps) {
   const router = useRouter();

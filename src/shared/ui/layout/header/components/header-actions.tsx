@@ -3,14 +3,14 @@
 import React from "react";
 import { NavbarItem, Button, Tooltip, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User } from "@/shared/ui/components/hero-ui";
 import { LogIn, LogOut, Sun, Moon, User as UserIcon } from "lucide-react";
-import type { Session } from "next-auth";
+import type { AppSession } from "@/shared/types/auth";
 import { useTheme } from "next-themes";
 import { THEME } from "@/shared/constants/theme";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "@/shared/ui/components/language-selector";
 
 interface HeaderActionsProps {
-  session: Session | null;
+  session: AppSession;
   onOpenLogin: () => void;
   onLogout: () => void;
   isMobile?: boolean;

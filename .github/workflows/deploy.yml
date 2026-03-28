@@ -104,12 +104,12 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           CLOUDFLARE_SSL_CERT: ${{ secrets.CLOUDFLARE_SSL_CERT }}
           CLOUDFLARE_SSL_KEY: ${{ secrets.CLOUDFLARE_SSL_KEY }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY, NEXTAUTH_URL
+          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY
           script: |
             set -e # Make the script fail immediately if any command fails, so GitHub shows the RED error!
 
@@ -124,11 +124,8 @@ jobs:
             # We strictly use the root .env file at ~/.env. Creating it if it doesn't exist.
             touch ~/.env
             
-            # Dynamically inject or overwrite NEXTAUTH_URL into the global .env file 
-            # using the NEXTAUTH_URL secret and hardcoded 80 port for container routing
-            sed -i '/^NEXTAUTH_URL=/d' ~/.env || true
+            # JWT_SECRET is already present in ~/.env on VPS (shared with NestJS backend)
             sed -i '/^PORT=/d' ~/.env || true
-            echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> ~/.env
             echo "PORT=80" >> ~/.env
 
             # --- SSL CERTIFICATES SETUP ---

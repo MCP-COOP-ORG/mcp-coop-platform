@@ -1,13 +1,12 @@
 import { cookies } from "next/headers";
 import setCookieParser from "set-cookie-parser";
-import type { AuthCredentials, SignupData, CookieSameSite, LoginRawData } from "../types";
-import { authCookiePatterns } from "../constants";
-
-const API_URL = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+import type { AuthCredentials, SignupData, CookieSameSite } from "../types";
+import type { MyProfile } from "@/shared/types/auth";
+import { AUTH_COOKIE, AUTH_ERRORS, INTERNAL_API_URL } from "@/shared/constants/auth";
 
 export class AuthService {
   /**
-   * Proxies HttpOnly cookies from external API response to the Next.js client.
+   * Proxies HttpOnly cookies from external API response to the Next.js cookie store.
    */
   private static async syncCookies(setCookieHeader: string | null) {
     if (!setCookieHeader || setCookieHeader.length === 0) return;
@@ -31,122 +30,106 @@ export class AuthService {
   }
 
   /**
-   * Helper to map base login raw data to MyProfile structure
+   * Builds a cookie string from the current Next.js cookie store for forwarding.
    */
-  private static mapLoginDataToProfile(data: LoginRawData, emailFallback: string) {
-    return {
-      id: data.user?.profileId || "",
-      email: data.user?.email || emailFallback,
-      fullName: data.user?.fullName || null,
-      username: data.user?.username || null,
-      tgId: data.user?.tgId || null,
-      settings: null,
-    };
+  private static async buildCookieString(): Promise<string> {
+    const cookieStore = await cookies();
+    return cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ');
   }
 
   /**
-   * Reaches out to the backend to authenticate the user and sync nested HttpOnly cookies.
+   * Authenticates against the backend and syncs HttpOnly cookies to Next.js.
    */
-  static async login(credentials: AuthCredentials) {
-    const res = await fetch(`${API_URL}/auth/login`, {
+  static async login(credentials: AuthCredentials): Promise<{ success: boolean }> {
+    const res = await fetch(`${INTERNAL_API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
 
     if (!res.ok) {
-      throw new Error("Invalid credentials");
+      throw new Error(AUTH_ERRORS.invalidCredentials);
     }
 
     await this.syncCookies(res.headers.getSetCookie()?.join(",") || null);
 
-    const data = await res.json();
-
-    // 1. Initial fallback profile from login response
-    let myProfile = this.mapLoginDataToProfile(data, credentials.email);
-
-    // 2. Try to fetch full profile and merge if successful
-    try {
-      const cookieStore = await cookies();
-      const allCookies = cookieStore.getAll();
-      const cookieString = allCookies.map(c => `${c.name}=${c.value}`).join('; ');
-
-      const profileRes = await fetch(`${API_URL}/profiles/me`, {
-        headers: { "Cookie": cookieString },
-      });
-      if (profileRes.ok) {
-        const fetchedProfile = await profileRes.json();
-        myProfile = { ...myProfile, ...fetchedProfile };
-      }
-    } catch (e) {
-      console.warn("Profile fetch failed, using login fallback data", e);
-    }
-
-    data.myProfile = myProfile;
-    delete data.user; // Remove the original redundant user object
-    return data;
+    return { success: true };
   }
 
-
-
   /**
-   * Reaches out to the backend to register the user.
+   * Registers a new user against the backend.
    */
   static async signup(data: SignupData) {
-    const res = await fetch(`${API_URL}/auth/register`, {
+    const res = await fetch(`${INTERNAL_API_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: data.email,
         password: data.password,
-        ...(data.name ? { username: data.name } : {})
+        ...(data.name ? { username: data.name } : {}),
       }),
     });
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => null);
-      throw new Error(errorData?.message || "Registration failed. User may already exist.");
+      throw new Error(errorData?.message || AUTH_ERRORS.registrationFailed);
     }
 
-    return true; // Optionally return newly created user data if needed
+    return true;
   }
 
   /**
-   * Tells backend to drop the refresh token, and manually clears cookies from Next.js server store.
+   * Tells backend to drop the refresh token, and clears auth cookies from Next.js store.
    */
   static async logout() {
     const cookieStore = await cookies();
-    const allCookies = cookieStore.getAll();
-    const cookieString = allCookies.map(c => `${c.name}=${c.value}`).join('; ');
+    const cookieString = await this.buildCookieString();
 
     try {
-      const res = await fetch(`${API_URL}/auth/logout`, {
+      const res = await fetch(`${INTERNAL_API_URL}/auth/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Cookie": cookieString },
       });
 
-      // Explicitly clear cookies that NestJS drops in its Set-Cookie header (Max-Age=0)
       await this.syncCookies(res.headers.getSetCookie()?.join(",") || null);
     } catch (e) {
-      console.warn("Failed to reach external API logout endpoint", e);
+      console.warn(AUTH_ERRORS.serviceUnavailable, e);
     }
 
-    // Force clear any remaining Next.js tracked auth/token cookies as a fallback, 
-    // omitting next-auth's own cookies which are managed by NextAuth signOut(). 
-    for (const c of cookieStore.getAll()) {
-      const name = c.name.toLowerCase();
-      const isAuthRelated = authCookiePatterns.includes.some((pattern: string) => name.includes(pattern));
-      const isExcluded = authCookiePatterns.excludes.some((pattern: string) => name.includes(pattern));
-
-      if (isAuthRelated && !isExcluded) {
-        cookieStore.delete(c.name);
+    // Force clear auth cookies as fallback
+    const authCookieNames = [AUTH_COOKIE.accessToken, AUTH_COOKIE.refreshToken];
+    for (const name of authCookieNames) {
+      if (cookieStore.get(name)) {
+        cookieStore.delete(name);
       }
     }
   }
 
   /**
+   * Fetches the current user profile from backend using forwarded cookies.
+   * Returns null if not authenticated or on any failure.
+   */
+  static async getMyProfile(): Promise<MyProfile | null> {
+    const cookieStore = await cookies();
+    const token = cookieStore.get(AUTH_COOKIE.accessToken);
+    if (!token) return null;
+
+    try {
+      const cookieString = await this.buildCookieString();
+      const res = await fetch(`${INTERNAL_API_URL}/profiles/me`, {
+        headers: { Cookie: cookieString },
+        cache: "no-store",
+      });
+
+      if (!res.ok) return null;
+      return res.json();
+    } catch {
+      return null;
+    }
+  }
+
+  /**
    * Generates the OAuth login URL for the given provider.
-   * Returns a relative path so the browser correctly goes through Nginx public domain.
    */
   static getOAuthLoginUrl(provider: string): string {
     return `/api/auth/oauth/${provider}`;

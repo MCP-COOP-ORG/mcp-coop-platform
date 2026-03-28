@@ -27,7 +27,7 @@ import { HeaderMobileMenu } from "./components/header-mobile-menu";
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const { session } = useSession();
+  const session = useSession();
   const navT = useTranslations("Navigation");
   const headerT = useTranslations("Header");
 

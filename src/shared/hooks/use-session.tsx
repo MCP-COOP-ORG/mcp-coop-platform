@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
-import type { Session } from "next-auth";
+import type { AppSession } from "@/shared/types/auth";
 
-const SessionContext = React.createContext<{
-  session: Session | null;
-}>({
-  session: null,
+const SessionContext = React.createContext<AppSession>({
+  myProfile: null,
 });
 
 export function SessionProvider({
@@ -14,10 +12,10 @@ export function SessionProvider({
   session,
 }: {
   children: React.ReactNode;
-  session: Session | null;
+  session: AppSession;
 }) {
   return (
-    <SessionContext.Provider value={{ session }}>
+    <SessionContext.Provider value={session}>
       {children}
     </SessionContext.Provider>
   );
