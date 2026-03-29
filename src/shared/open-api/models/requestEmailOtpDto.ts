@@ -5,9 +5,7 @@
  * Micro App API
  */
 
-export interface LoginDto {
+export interface RequestEmailOtpDto {
   /** Email address */
   email: string;
-  /** Password */
-  password: string;
 }

@@ -15,7 +15,6 @@ import { APP_INFO } from "@/shared/constants/app-info";
 import { useSession } from "@/shared/hooks/use-session";
 import AppModal, { useModal } from "@/shared/ui/components/modal";
 import AuthForm from "@/features/auth/components/auth-form";
-import { authFormModes, authFormTitles, type AuthFormMode } from "@/shared/constants/form";
 import { logout } from "@/features/auth/actions";
 import { useTranslations } from "next-intl";
 
@@ -33,12 +32,9 @@ export default function Header() {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { isOpen, onOpen, onClose } = useModal();
-  const [authMode, setAuthMode] = React.useState<AuthFormMode>(authFormModes.login);
 
   const isAuthenticated = !!session?.myProfile;
 
-  // Best Practice Next.js: Wait for navigation to complete before closing the menu.
-  // This prevents animation glitches ("пидалит") by relying on actual route layout updates.
   React.useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
@@ -52,12 +48,7 @@ export default function Header() {
     });
   }, [isAuthenticated]);
 
-  const handleModeChange = (mode: AuthFormMode) => {
-    setAuthMode(mode);
-  };
-
   const handleAuthSuccess = () => {
-    setAuthMode(authFormModes.login);
     onClose();
     router.refresh();
   };
@@ -69,13 +60,6 @@ export default function Header() {
     }
   };
 
-  const handleModalClose = (open: boolean) => {
-    if (!open) {
-      setAuthMode(authFormModes.login);
-    }
-    onClose();
-  };
-
   return (
     <HeroNavbar
       maxWidth="xl"
@@ -83,7 +67,7 @@ export default function Header() {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      {/* Logo (Left side) */}
+      {/* Logo */}
       <NavbarContent justify="start">
         <NavbarBrand>
           <Link href="/" className="flex items-center gap-4">
@@ -95,12 +79,14 @@ export default function Header() {
               priority
               className="object-contain"
             />
-            <p className="font-bold text-inherit text-[28px] leading-none tracking-tight">{APP_INFO.shortName}</p>
+            <p className="font-bold text-inherit text-[28px] leading-none tracking-tight">
+              {APP_INFO.shortName}
+            </p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      {/* Desktop Navigation Links (Center) */}
+      {/* Desktop Navigation */}
       <HeaderDesktopNav links={links} pathname={pathname} navT={navT} />
 
       <NavbarContent justify="end">
@@ -115,7 +101,7 @@ export default function Header() {
         />
       </NavbarContent>
 
-      {/* Mobile Menu Dropdown View */}
+      {/* Mobile Menu */}
       <HeaderMobileMenu
         links={links}
         pathname={pathname}
@@ -126,20 +112,15 @@ export default function Header() {
         onAction={() => setIsMenuOpen(false)}
       />
 
-      {/* Auth Modal remains attached to Header container */}
+      {/* Auth Modal */}
       <AppModal
         isOpen={isOpen}
-        onOpenChange={handleModalClose}
-        title={authFormTitles[authMode]}
+        onOpenChange={(open) => { if (!open) onClose(); }}
+        title={headerT("login")}
         size="md"
       >
-        <AuthForm
-          mode={authMode}
-          onModeChange={handleModeChange}
-          onSuccess={handleAuthSuccess}
-        />
+        <AuthForm onSuccess={handleAuthSuccess} />
       </AppModal>
     </HeroNavbar>
   );
 }
-

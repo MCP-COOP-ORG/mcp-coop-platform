@@ -64,7 +64,11 @@
     "loginWithGoogle": "Войти через Google",
     "loginWithTelegram": "Войти через Telegram",
     "validationFailed": "Ошибка валидации",
-    "internalServerError": "Внутренняя ошибка сервера"
+    "internalServerError": "Внутренняя ошибка сервера",
+    "sendCode": "Отправить код",
+    "verify": "Войти",
+    "invalidOtpCode": "Неверный код",
+    "continueWithEmail": "Продолжить с email"
   },
   "System": {
     "notConfigured": "{name} не настроен",

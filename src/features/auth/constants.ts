@@ -5,3 +5,5 @@ export const OAUTH_PROVIDERS = {
 } as const;
 
 export type OAuthProvider = typeof OAUTH_PROVIDERS[keyof typeof OAUTH_PROVIDERS];
+
+export const OTP_CODE_LENGTH = 4 as const;

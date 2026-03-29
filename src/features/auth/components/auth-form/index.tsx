@@ -1,206 +1,215 @@
 "use client";
 
-import { useTransition } from "react";
-import { Form, Button } from "@/shared/ui/components/hero-ui";
-import {
-  authFormFields,
-  authFormButtons,
-  authFormModes,
-  type AuthFormMode,
-} from "@/shared/constants/form";
+import { Form, Button, Input } from "@/shared/ui/components/hero-ui";
+import { motion, AnimatePresence, type Transition } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useAuthForm } from "@/features/auth/hooks/use-auth-form";
-import { FormFieldRenderer } from "@/shared/ui/components/form-field-renderer";
-import { motion, AnimatePresence } from "framer-motion";
-import { GithubIcon, GoogleIcon, TelegramIcon } from "@/shared/ui/icons/social";
-import { oauthLogin } from "@/features/auth/actions";
-import { OAUTH_PROVIDERS, type OAuthProvider } from "@/features/auth/constants";
-import { TelegramAuthModal } from "@/features/auth/components/telegram-auth-modal";
-import { useTelegramLoginController } from "@/features/auth/hooks/use-telegram";
 import { useModal } from "@/shared/ui/components/modal";
+import { ArrowRight } from "lucide-react";
+
+import { OTP_FLOW_STEPS } from "@/features/auth/types";
+import { useEmailOtpForm } from "@/features/auth/hooks/use-email-otp-form";
+import { useTelegramActionController } from "@/features/auth/hooks/use-telegram";
+import { loginWithTelegramAction } from "@/features/auth/actions";
+import { authFormFields } from "@/shared/constants/form";
+
+import { EmailInputRow } from "./email-input-row";
+import { OtpInputRow } from "./otp-input-row";
+import { OAuthButtonGroup } from "./oauth-button-group";
+import { TelegramAuthModal } from "@/features/auth/components/telegram-auth-modal";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface AuthFormProps {
-  mode: AuthFormMode;
-  onModeChange?: (mode: AuthFormMode) => void;
   onSuccess?: () => void;
 }
 
-export default function AuthForm({
-  mode,
-  onModeChange,
-  onSuccess,
-}: AuthFormProps) {
+// ─── Animation variants ───────────────────────────────────────────────────────
+
+const slideVariants = {
+  enter: (direction: number) => ({ x: direction > 0 ? "100%" : "-100%", opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (direction: number) => ({ x: direction < 0 ? "100%" : "-100%", opacity: 0 }),
+};
+
+const slideTransition: Transition = { duration: 0.28, ease: "easeInOut" };
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+/**
+ * AuthForm — thin presenter.
+ * All logic delegated to useEmailOtpForm.
+ */
+export default function AuthForm({ onSuccess }: AuthFormProps) {
   const t = useTranslations("Form");
-  const { formData, errors, serverError, isPending, handleInputChange, handleSubmit } = useAuthForm(mode, onSuccess);
-  const [isOAuthPending, startOAuthTransition] = useTransition();
-  const { handleLogin, isPending: isTelegramPending } = useTelegramLoginController();
   const { isOpen, onOpen, onClose, onOpenChange } = useModal();
+  const { execute: handleLogin, isPending: isTelegramPending } = useTelegramActionController({
+    action: loginWithTelegramAction,
+  });
+
+  const {
+    step,
+    email,
+    code,
+    fullName,
+    errors,
+    expiresAt,
+    isNewUser,
+    canRequestCode,
+    canSubmit,
+    isPending,
+    handleEmailChange,
+    handleEmailBlur,
+    handleCodeChange,
+    handleFullNameChange,
+    handleRequestCode,
+    handleBack,
+    handleSubmit,
+    handleTimerExpired,
+  } = useEmailOtpForm(onSuccess);
+
+  const isOtpStep = step === OTP_FLOW_STEPS.CODE_SENT;
+  const slideDirection = isOtpStep ? 1 : -1;
 
   const handleTelegramAuth = async (initData: string) => {
     const res = await handleLogin(initData);
-    if (res?.success) {
-      onClose();
-      if (onSuccess) onSuccess();
-    }
+    if (res?.success) { onClose(); onSuccess?.(); }
     return res;
   };
 
-  const handleModeSwitch = () => {
-    if (onModeChange) {
-      onModeChange(mode === authFormModes.login ? authFormModes.signup : authFormModes.login);
-    }
-  };
-
-  const handleOAuthLogin = (provider: OAuthProvider) => {
-    startOAuthTransition(() => {
-      oauthLogin(provider);
-    });
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isOtpStep) handleRequestCode();
+    else handleSubmit();
   };
 
   return (
     <Form
-      className="w-full flex flex-col gap-4"
+      className="w-full flex flex-col gap-5"
       validationBehavior="aria"
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
     >
-      <FormFieldRenderer
-        field={authFormFields.email}
-        value={formData.email}
-        t={t}
-        onValueChange={handleInputChange(authFormFields.email.name)}
-        error={errors.email}
-      />
+      {/* ── Input row: email ↔ OTP + Send/Verify button ─────────────────── */}
+      <div className="flex w-full items-start gap-2">
 
-      <AnimatePresence initial={false}>
-        {mode === authFormModes.signup && (
-          <motion.div
-            key="name-field"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="w-full overflow-hidden"
-          >
-            <div className="pb-1">
-              <FormFieldRenderer
-                field={authFormFields.name}
-                value={formData.name || ""}
-                t={t}
-                onValueChange={handleInputChange(authFormFields.name.name)}
-                error={errors.name}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* Left: animated email ↔ OTP */}
+        <div className="flex-1 grid grid-cols-1 grid-rows-1 items-start overflow-hidden">
+          <AnimatePresence initial={false} custom={slideDirection}>
+            {!isOtpStep ? (
+              <motion.div
+                key="email"
+                className="col-start-1 row-start-1 w-full"
+                custom={-slideDirection}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={slideTransition}
+              >
+                <EmailInputRow
+                  value={email}
+                  error={errors.email}
+                  isDisabled={isPending}
+                  onValueChange={handleEmailChange}
+                  onBlur={handleEmailBlur}
+                />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="otp"
+                className="col-start-1 row-start-1 w-full"
+                custom={slideDirection}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={slideTransition}
+              >
+                <OtpInputRow
+                  code={code}
+                  expiresAt={expiresAt!}
+                  error={errors.code}
+                  onCodeChange={handleCodeChange}
+                  onBack={handleBack}
+                  onExpired={handleTimerExpired}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-      <FormFieldRenderer
-        field={authFormFields.password}
-        value={formData.password}
-        t={t}
-        onValueChange={handleInputChange(authFormFields.password.name)}
-        error={errors.password}
-      />
-
-      <AnimatePresence initial={false}>
-        {mode === authFormModes.signup && (
-          <motion.div
-            key="confirm-password-field"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="w-full overflow-hidden"
-          >
-            <div className="pb-1">
-              <FormFieldRenderer
-                field={authFormFields.confirmPassword}
-                value={formData.confirmPassword || ""}
-                t={t}
-                onValueChange={handleInputChange(authFormFields.confirmPassword.name)}
-                error={errors.confirmPassword}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {serverError && (
-        <div
-          role="alert"
-          className="text-danger bg-danger/5 w-full text-sm font-medium p-3 border border-danger/20 rounded-lg"
+        {/* Right: fixed action button */}
+        <Button
+          type="submit"
+          color="primary"
+          isIconOnly
+          isLoading={isPending}
+          isDisabled={isOtpStep ? !canSubmit || isPending : !canRequestCode || isPending}
+          className="shrink-0 h-[44px] w-[44px] rounded-xl data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-0"
+          aria-label={isOtpStep ? t("verify") : t("sendCode")}
         >
-          {serverError}
-        </div>
-      )}
-
-      <div className="flex flex-col gap-2 w-full mt-2">
-        <div className="flex w-full gap-2 mb-2">
-          {/* Social Provider Buttons */}
-          <div className="flex gap-2">
-            <Button
-              isIconOnly
-              radius="full"
-              variant="bordered"
-              onPress={() => handleOAuthLogin(OAUTH_PROVIDERS.GITHUB)}
-              isDisabled={isPending || isOAuthPending}
-              aria-label={t(authFormButtons.loginWithGithub)}
-            >
-              <GithubIcon className="w-5 h-5" />
-            </Button>
-            <Button
-              isIconOnly
-              radius="full"
-              variant="bordered"
-              onPress={() => handleOAuthLogin(OAUTH_PROVIDERS.GOOGLE)}
-              isDisabled={isPending || isOAuthPending}
-              aria-label={t(authFormButtons.loginWithGoogle)}
-            >
-              <GoogleIcon className="w-5 h-5" />
-            </Button>
-            <Button
-              isIconOnly
-              radius="full"
-              variant="bordered"
-              onPress={onOpen}
-              isDisabled={isPending || isOAuthPending}
-              aria-label={t(authFormButtons.loginWithTelegram)}
-            >
-              <TelegramIcon className="w-5 h-5" />
-            </Button>
-          </div>
-          
-          <Button
-            type="submit"
-            color="primary"
-            isLoading={isPending}
-            isDisabled={isPending || isOAuthPending}
-            className="flex-1"
-          >
-            {mode === authFormModes.login ? t(authFormButtons.login) : t(authFormButtons.signup)}
-          </Button>
-        </div>
-
-        {onModeChange && (
-          <Button
-            type="button"
-            variant="light"
-            onPress={handleModeSwitch}
-            className="w-full"
-          >
-            {mode === authFormModes.login
-              ? t(authFormButtons.switchToSignup)
-              : t(authFormButtons.switchToLogin)}
-          </Button>
-        )}
+          <ArrowRight className="w-5 h-5 text-white" />
+        </Button>
       </div>
 
-      <TelegramAuthModal 
-        isOpen={isOpen} 
-        onOpenChange={onOpenChange} 
-        title={t(authFormButtons.loginWithTelegram)} 
-        onAuth={handleTelegramAuth} 
-        isPending={isTelegramPending} 
+      {/* ── New user: fullName (fade-in) ─────────────────────────────────── */}
+      <AnimatePresence initial={false}>
+        {isOtpStep && isNewUser && (
+          <motion.div
+            key="fullname"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="pt-3 pb-1 px-1">
+              <Input
+                id="auth-full-name"
+                type="text"
+                autoComplete="name"
+                label={t(authFormFields.name.label)}
+                placeholder={t(authFormFields.name.placeholder)}
+                description="Это ваш первый вход с данным email. Представьтесь, пожалуйста, чтобы завершить регистрацию."
+                value={fullName}
+                onValueChange={handleFullNameChange}
+                isInvalid={!!errors.fullName}
+                errorMessage={errors.fullName ? t(errors.fullName as any) : undefined}
+                isRequired
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Server error ────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {errors.server && (
+          <motion.div
+            key="server-error"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            role="alert"
+            className="text-danger bg-danger/5 text-sm font-medium p-3 border border-danger/20 rounded-lg"
+          >
+            {t(errors.server as any) || errors.server}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── OAuth — block with equal padding and top shadow ─────────────── */}
+      <div className="flex justify-center w-full pt-2 mt-2 border-t border-divider">
+        <OAuthButtonGroup isDisabled={isPending} onTelegramOpen={onOpen} />
+      </div>
+
+      {/* ── Telegram Modal ───────────────────────────────────────────────── */}
+      <TelegramAuthModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        title={t("loginWithTelegram")}
+        onAuth={handleTelegramAuth}
+        isPending={isTelegramPending}
       />
     </Form>
   );

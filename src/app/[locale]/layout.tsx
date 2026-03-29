@@ -6,7 +6,7 @@ import Footer from "@/shared/ui/layout/footer";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { profilesControllerFindMe } from "@/shared/open-api/profiles/profiles";
-import { type AppSession, isMyProfile } from "@/shared/types/auth";
+import { type AppSession, isMyProfile, MyProfile } from "@/shared/types/auth";
 
 export const metadata = metadataConfig;
 export const viewport = viewportConfig;
@@ -23,7 +23,11 @@ export default async function RootLayout(props: {
     getMessages(),
   ]);
 
-  const myProfile = isMyProfile(profileResponse) ? profileResponse : null;
+  const myProfile: MyProfile | null = 
+    profileResponse?.data && isMyProfile(profileResponse.data) 
+      ? profileResponse.data 
+      : null;
+      
   const session: AppSession = { myProfile };
 
   return (

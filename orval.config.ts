@@ -3,7 +3,7 @@ import { defineConfig } from 'orval';
 export default defineConfig({
   api: {
     input: {
-      target: './swagger.json',
+      target: 'http://localhost:3001/api-json',
       filters: {
         tags: ['Auth', 'Profiles'],
       },

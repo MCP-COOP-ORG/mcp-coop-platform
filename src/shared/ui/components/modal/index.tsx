@@ -49,7 +49,7 @@ export default function AppModal({
         {() => (
           <>
             {title && (
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 items-center text-center">
                 {title}
               </ModalHeader>
             )}

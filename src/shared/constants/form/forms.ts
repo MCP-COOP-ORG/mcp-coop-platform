@@ -2,40 +2,28 @@ import { commonFields } from "./fields";
 
 // ========== Auth Form ==========
 
-export const authFormModes = {
-  login: "login",
-  signup: "signup",
-} as const;
-
-export type AuthFormMode = (typeof authFormModes)[keyof typeof authFormModes];
-
-export interface AuthFormData {
-  email: string;
-  password: string;
-  confirmPassword?: string;
-  name?: string;
-}
-
+/**
+ * Auth form field definitions — only email and name remain.
+ * Password fields are removed: auth is now passwordless (email OTP).
+ */
 export const authFormFields = {
   email: commonFields.email,
-  password: commonFields.password,
-  confirmPassword: commonFields.confirmPassword,
   name: commonFields.name,
 } as const;
 
+/**
+ * i18n keys for auth form buttons.
+ * login/signup mode-switch keys removed — there is no longer a login/signup distinction.
+ */
 export const authFormButtons = {
-  login: "login",
-  signup: "signup",
-  switchToSignup: "switchToSignup",
-  switchToLogin: "switchToLogin",
+  submit: "submit",
   loginWithGithub: "loginWithGithub",
   loginWithGoogle: "loginWithGoogle",
   loginWithTelegram: "loginWithTelegram",
 } as const;
 
 export const authFormTitles = {
-  login: "login",
-  signup: "signup",
+  auth: "auth",
 } as const;
 
 // ========== Contact Form ==========

@@ -64,7 +64,11 @@
     "loginWithGoogle": "Login with Google",
     "loginWithTelegram": "Login with Telegram",
     "validationFailed": "Validation failed",
-    "internalServerError": "Internal server error"
+    "internalServerError": "Internal server error",
+    "sendCode": "Send Code",
+    "verify": "Sign In",
+    "invalidOtpCode": "Invalid code",
+    "continueWithEmail": "Continue with email"
   },
   "System": {
     "notConfigured": "{name} Not Configured",

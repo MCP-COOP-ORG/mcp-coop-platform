@@ -5,12 +5,12 @@
  * Micro App API
  */
 import type {
-  AuthControllerOauthCallbackParams,
   AuthSuccessResponse,
   LinkTelegramDto,
-  LoginDto,
-  RegisterDto,
-  TelegramLoginDto
+  RequestEmailOtpDto,
+  RequestEmailOtpResponseDto,
+  TelegramLoginDto,
+  VerifyEmailOtpDto
 } from '.././models';
 
 import { openApiMutator } from '../../interceptors/open-api.mutator';
@@ -22,13 +22,25 @@ export type authControllerLoginTelegramResponse200 = {
   data: AuthSuccessResponse
   status: 200
 }
+
+export type authControllerLoginTelegramResponse400 = {
+  data: void
+  status: 400
+}
+
+export type authControllerLoginTelegramResponse401 = {
+  data: void
+  status: 401
+}
     
 export type authControllerLoginTelegramResponseSuccess = (authControllerLoginTelegramResponse200) & {
   headers: Headers;
 };
-;
+export type authControllerLoginTelegramResponseError = (authControllerLoginTelegramResponse400 | authControllerLoginTelegramResponse401) & {
+  headers: Headers;
+};
 
-export type authControllerLoginTelegramResponse = (authControllerLoginTelegramResponseSuccess)
+export type authControllerLoginTelegramResponse = (authControllerLoginTelegramResponseSuccess | authControllerLoginTelegramResponseError)
 
 export const getAuthControllerLoginTelegramUrl = () => {
 
@@ -52,152 +64,92 @@ export const authControllerLoginTelegram = async (telegramLoginDto: TelegramLogi
 
 
 /**
- * @summary Register a new web account
+ * @summary Request an OTP code for passwordless login/registration
  */
-export type authControllerRegisterResponse201 = {
-  data: AuthSuccessResponse
-  status: 201
+export type authControllerRequestEmailOtpResponse200 = {
+  data: RequestEmailOtpResponseDto
+  status: 200
+}
+
+export type authControllerRequestEmailOtpResponse400 = {
+  data: void
+  status: 400
 }
     
-export type authControllerRegisterResponseSuccess = (authControllerRegisterResponse201) & {
+export type authControllerRequestEmailOtpResponseSuccess = (authControllerRequestEmailOtpResponse200) & {
   headers: Headers;
 };
-;
+export type authControllerRequestEmailOtpResponseError = (authControllerRequestEmailOtpResponse400) & {
+  headers: Headers;
+};
 
-export type authControllerRegisterResponse = (authControllerRegisterResponseSuccess)
+export type authControllerRequestEmailOtpResponse = (authControllerRequestEmailOtpResponseSuccess | authControllerRequestEmailOtpResponseError)
 
-export const getAuthControllerRegisterUrl = () => {
+export const getAuthControllerRequestEmailOtpUrl = () => {
 
 
   
 
-  return `/api/auth/register`
+  return `/api/auth/email/request`
 }
 
-export const authControllerRegister = async (registerDto: RegisterDto, options?: RequestInit): Promise<authControllerRegisterResponse> => {
+export const authControllerRequestEmailOtp = async (requestEmailOtpDto: RequestEmailOtpDto, options?: RequestInit): Promise<authControllerRequestEmailOtpResponse> => {
   
-  return openApiMutator<authControllerRegisterResponse>(getAuthControllerRegisterUrl(),
+  return openApiMutator<authControllerRequestEmailOtpResponse>(getAuthControllerRequestEmailOtpUrl(),
   {      
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
-      registerDto,)
+      requestEmailOtpDto,)
   }
 );}
 
 
 /**
- * @summary Login with email and password
+ * @summary Verify OTP code and authenticate user
  */
-export type authControllerLoginResponse200 = {
+export type authControllerVerifyEmailOtpResponse200 = {
   data: AuthSuccessResponse
   status: 200
 }
-    
-export type authControllerLoginResponseSuccess = (authControllerLoginResponse200) & {
-  headers: Headers;
-};
-;
 
-export type authControllerLoginResponse = (authControllerLoginResponseSuccess)
-
-export const getAuthControllerLoginUrl = () => {
-
-
-  
-
-  return `/api/auth/login`
+export type authControllerVerifyEmailOtpResponse400 = {
+  data: void
+  status: 400
 }
 
-export const authControllerLogin = async (loginDto: LoginDto, options?: RequestInit): Promise<authControllerLoginResponse> => {
+export type authControllerVerifyEmailOtpResponse401 = {
+  data: void
+  status: 401
+}
+    
+export type authControllerVerifyEmailOtpResponseSuccess = (authControllerVerifyEmailOtpResponse200) & {
+  headers: Headers;
+};
+export type authControllerVerifyEmailOtpResponseError = (authControllerVerifyEmailOtpResponse400 | authControllerVerifyEmailOtpResponse401) & {
+  headers: Headers;
+};
+
+export type authControllerVerifyEmailOtpResponse = (authControllerVerifyEmailOtpResponseSuccess | authControllerVerifyEmailOtpResponseError)
+
+export const getAuthControllerVerifyEmailOtpUrl = () => {
+
+
   
-  return openApiMutator<authControllerLoginResponse>(getAuthControllerLoginUrl(),
+
+  return `/api/auth/email/verify`
+}
+
+export const authControllerVerifyEmailOtp = async (verifyEmailOtpDto: VerifyEmailOtpDto, options?: RequestInit): Promise<authControllerVerifyEmailOtpResponse> => {
+  
+  return openApiMutator<authControllerVerifyEmailOtpResponse>(getAuthControllerVerifyEmailOtpUrl(),
   {      
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
     body: JSON.stringify(
-      loginDto,)
-  }
-);}
-
-
-/**
- * @summary Redirect to OAuth provider authorization page
- */
-export type authControllerOauthRedirectResponse200 = {
-  data: void
-  status: 200
-}
-    
-export type authControllerOauthRedirectResponseSuccess = (authControllerOauthRedirectResponse200) & {
-  headers: Headers;
-};
-;
-
-export type authControllerOauthRedirectResponse = (authControllerOauthRedirectResponseSuccess)
-
-export const getAuthControllerOauthRedirectUrl = (provider: string,) => {
-
-
-  
-
-  return `/api/auth/oauth/${provider}`
-}
-
-export const authControllerOauthRedirect = async (provider: string, options?: RequestInit): Promise<authControllerOauthRedirectResponse> => {
-  
-  return openApiMutator<authControllerOauthRedirectResponse>(getAuthControllerOauthRedirectUrl(provider),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
-
-/**
- * @summary OAuth provider callback — exchanges code for tokens
- */
-export type authControllerOauthCallbackResponse200 = {
-  data: void
-  status: 200
-}
-    
-export type authControllerOauthCallbackResponseSuccess = (authControllerOauthCallbackResponse200) & {
-  headers: Headers;
-};
-;
-
-export type authControllerOauthCallbackResponse = (authControllerOauthCallbackResponseSuccess)
-
-export const getAuthControllerOauthCallbackUrl = (provider: string,
-    params: AuthControllerOauthCallbackParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-    
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/api/auth/oauth/${provider}/callback?${stringifiedParams}` : `/api/auth/oauth/${provider}/callback`
-}
-
-export const authControllerOauthCallback = async (provider: string,
-    params: AuthControllerOauthCallbackParams, options?: RequestInit): Promise<authControllerOauthCallbackResponse> => {
-  
-  return openApiMutator<authControllerOauthCallbackResponse>(getAuthControllerOauthCallbackUrl(provider,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
+      verifyEmailOtpDto,)
   }
 );}
 
@@ -209,13 +161,25 @@ export type authControllerLinkTelegramAccountResponse200 = {
   data: AuthSuccessResponse
   status: 200
 }
+
+export type authControllerLinkTelegramAccountResponse400 = {
+  data: void
+  status: 400
+}
+
+export type authControllerLinkTelegramAccountResponse401 = {
+  data: void
+  status: 401
+}
     
 export type authControllerLinkTelegramAccountResponseSuccess = (authControllerLinkTelegramAccountResponse200) & {
   headers: Headers;
 };
-;
+export type authControllerLinkTelegramAccountResponseError = (authControllerLinkTelegramAccountResponse400 | authControllerLinkTelegramAccountResponse401) & {
+  headers: Headers;
+};
 
-export type authControllerLinkTelegramAccountResponse = (authControllerLinkTelegramAccountResponseSuccess)
+export type authControllerLinkTelegramAccountResponse = (authControllerLinkTelegramAccountResponseSuccess | authControllerLinkTelegramAccountResponseError)
 
 export const getAuthControllerLinkTelegramAccountUrl = () => {
 
@@ -245,13 +209,20 @@ export type authControllerLogoutResponse200 = {
   data: AuthSuccessResponse
   status: 200
 }
+
+export type authControllerLogoutResponse401 = {
+  data: void
+  status: 401
+}
     
 export type authControllerLogoutResponseSuccess = (authControllerLogoutResponse200) & {
   headers: Headers;
 };
-;
+export type authControllerLogoutResponseError = (authControllerLogoutResponse401) & {
+  headers: Headers;
+};
 
-export type authControllerLogoutResponse = (authControllerLogoutResponseSuccess)
+export type authControllerLogoutResponse = (authControllerLogoutResponseSuccess | authControllerLogoutResponseError)
 
 export const getAuthControllerLogoutUrl = () => {
 
@@ -280,13 +251,20 @@ export type authControllerRefreshResponse200 = {
   data: AuthSuccessResponse
   status: 200
 }
+
+export type authControllerRefreshResponse401 = {
+  data: void
+  status: 401
+}
     
 export type authControllerRefreshResponseSuccess = (authControllerRefreshResponse200) & {
   headers: Headers;
 };
-;
+export type authControllerRefreshResponseError = (authControllerRefreshResponse401) & {
+  headers: Headers;
+};
 
-export type authControllerRefreshResponse = (authControllerRefreshResponseSuccess)
+export type authControllerRefreshResponse = (authControllerRefreshResponseSuccess | authControllerRefreshResponseError)
 
 export const getAuthControllerRefreshUrl = () => {
 

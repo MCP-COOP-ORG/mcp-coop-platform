@@ -67,65 +67,44 @@ export function useTelegramWidget({ containerRef, onAuth, config }: UseTelegramW
 }
 
 /**
- * Controller for handling Telegram Account Linking interactions.
+ * Options for the unified Telegram Action Controller
  */
-export function useTelegramLinkController({ onSuccess, onClose }: UseTelegramLinkControllerOptions = {}) {
+export interface UseTelegramActionOptions {
+  action: (initData: string) => Promise<AuthResult>;
+  onSuccess?: () => void;
+  onClose?: () => void;
+}
+
+/**
+ * Unified controller for handling Telegram actions (Login or Link)
+ * Wraps the Server Action in a transition and manages the router refresh.
+ */
+export function useTelegramActionController({ action, onSuccess, onClose }: UseTelegramActionOptions) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const handleLink = (initData: string): Promise<AuthResult> => {
+  const execute = (initData: string): Promise<AuthResult> => {
     return new Promise((resolve) => {
       startTransition(async () => {
         try {
-          const result = await linkTelegramAction(initData);
+          const result = await action(initData);
           if (result.success) {
             onClose?.();
             router.refresh();
             onSuccess?.();
             resolve(result);
           } else {
-            console.error("[Auth Error] Telegram link action rejected:", result.error);
+            console.error("[Auth Error] Telegram action rejected:", result.error);
             resolve(result);
           }
         } catch (err: unknown) {
           const msg = err instanceof Error ? err.message : String(err) || "Internal network error";
-          console.error("[Auth Error] Telegram link action exception:", msg);
+          console.error("[Auth Error] Telegram action exception:", msg);
           resolve({ success: false, error: msg });
         }
       });
     });
   };
 
-  return { handleLink, isPending };
-}
-
-/**
- * Controller for handling Telegram Login authentication flow.
- */
-export function useTelegramLoginController() {
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-
-  const handleLogin = (initData: string): Promise<AuthResult> => {
-    return new Promise((resolve) => {
-      startTransition(async () => {
-        try {
-          const result = await loginWithTelegramAction(initData);
-          if (result.success) {
-            router.refresh(); 
-            resolve(result);
-          } else {
-            console.error("[Auth Error] Telegram login action rejected:", result.error);
-            resolve(result);
-          }
-        } catch (err: unknown) {
-          const msg = err instanceof Error ? err.message : String(err) || "Internal network error";
-          console.error("[Auth Error] Telegram login action exception:", msg);
-          resolve({ success: false, error: msg });
-        }
-      });
-    });
-  };
-
-  return { handleLogin, isPending };
+  return { execute, isPending };
 }

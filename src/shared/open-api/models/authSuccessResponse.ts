@@ -6,6 +6,6 @@
  */
 
 export interface AuthSuccessResponse {
-  /** Success flag */
+  /** Operation completed successfully */
   success: boolean;
 }

@@ -69,3 +69,6 @@ export { Tooltip } from "@heroui/react";
 
 // --- User ---
 export { User } from "@heroui/react";
+
+// --- Input OTP ---
+export { InputOtp } from "@heroui/input-otp";

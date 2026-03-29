@@ -9,12 +9,9 @@ export { formErrors } from "./errors";
 
 // Auth form
 export {
-  authFormModes,
   authFormFields,
   authFormButtons,
   authFormTitles,
-  type AuthFormMode,
-  type AuthFormData,
 } from "./forms";
 
 // Contact form

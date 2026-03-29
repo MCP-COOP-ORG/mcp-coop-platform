@@ -9,15 +9,15 @@ export const formErrors = {
   validationFailed: "validationFailed",
   internalServerError: "internalServerError",
 
-  // Auth-specific
-  passwordMinLength: "passwordMinLength",
+  // Auth OTP-specific
   nameRequired: "nameRequired",
-  passwordsMismatch: "passwordsMismatch",
   emailAlreadyExists: "emailAlreadyExists",
-  invalidCredentials: "invalidCredentials",
+  invalidOtpCode: "invalidOtpCode",
 
   // Contact-specific
   firstNameRequired: "firstNameRequired",
   firstNameNoSpaces: "firstNameNoSpaces",
   messageRequired: "messageRequired",
 } as const;
+
+export type FormErrorKey = keyof typeof formErrors;

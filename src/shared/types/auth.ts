@@ -7,7 +7,7 @@ export interface ProfileSettings {
 
 export interface MyProfile {
   id: string;
-  email: string;
+  email: string | null;
   fullName: string | null;
   username: string | null;
   tgId: string | null;
@@ -23,8 +23,6 @@ export function isMyProfile(value: unknown): value is MyProfile {
     value !== null &&
     typeof value === "object" &&
     "id" in value &&
-    typeof (value as Record<string, unknown>).id === "string" &&
-    "email" in value &&
-    typeof (value as Record<string, unknown>).email === "string"
+    typeof (value as Record<string, unknown>).id === "string"
   );
 }

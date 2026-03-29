@@ -111,9 +111,16 @@ async function handleResponse<T>(response: Response): Promise<T> {
   }
 
   const text = await response.text();
+  let data: any;
   try {
-    return (text ? JSON.parse(text) : undefined) as T;
+    data = text ? JSON.parse(text) : undefined;
   } catch {
-    return text as unknown as T;
+    data = text;
   }
+
+  return {
+    data,
+    status: response.status,
+    headers: response.headers,
+  } as unknown as T;
 }

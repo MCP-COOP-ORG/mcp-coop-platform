@@ -1,22 +1,23 @@
-import { z } from "zod";
-import { authCredentialsSchema, signupSchema } from "./validation";
 import { TELEGRAM_WIDGET_CONFIG } from "@/shared/constants/telegram";
 
-export type AuthCredentials = z.infer<typeof authCredentialsSchema>;
-export type SignupData = z.infer<typeof signupSchema>;
+// ─── OTP Flow Steps ───────────────────────────────────────────────────────────
 
-export type CookieSameSite = "lax" | "strict" | "none" | undefined;
+export const OTP_FLOW_STEPS = {
+  IDLE:       "idle",
+  CODE_SENT:  "code_sent",
+} as const;
+
+export type OtpFlowStep = (typeof OTP_FLOW_STEPS)[keyof typeof OTP_FLOW_STEPS];
+
+// ─── Shared Auth Result ───────────────────────────────────────────────────────
 
 export interface AuthResult {
   success: boolean;
   error?: string;
 }
 
-export type SignupResult = AuthResult;
+// ─── Telegram Auth Types ──────────────────────────────────────────────────────
 
-/**
- * Telegram Auth Specific Types
- */
 export interface TelegramUser {
   id: number;
   first_name: string;
