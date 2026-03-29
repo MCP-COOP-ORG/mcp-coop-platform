@@ -16,7 +16,7 @@ import { useSession } from "@/shared/hooks/use-session";
 import AppModal, { useModal } from "@/shared/ui/components/modal";
 import AuthForm from "@/features/auth/components/auth-form";
 import { authFormModes, authFormTitles, type AuthFormMode } from "@/shared/constants/form";
-import { logout } from "@/features/auth/actions/auth.actions";
+import { logout } from "@/features/auth/actions";
 import { useTranslations } from "next-intl";
 
 // Sub-components

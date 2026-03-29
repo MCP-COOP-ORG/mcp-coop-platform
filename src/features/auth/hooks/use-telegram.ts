@@ -3,7 +3,7 @@ import { TELEGRAM_BOT_NAME, TELEGRAM_WIDGET_CONFIG, TELEGRAM_WIDGET_SCRIPT_URL }
 import { TelegramUser, UseTelegramWidgetOptions, UseTelegramLinkControllerOptions, AuthResult } from "@/features/auth/types";
 import { serializeTelegramPayload } from "@/features/auth/utils/telegram.mapper";
 import { useRouter } from "@/core/configs/i18n/routing";
-import { linkTelegramAction, loginWithTelegramAction } from "@/features/auth/actions/auth.actions";
+import { linkTelegramAction, loginWithTelegramAction } from "@/features/auth/actions";
 
 
 interface ExtendedWindow extends Window {

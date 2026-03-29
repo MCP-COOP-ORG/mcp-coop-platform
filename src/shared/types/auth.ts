@@ -1,12 +1,8 @@
-/**
- * Application-level auth types.
- * Decoupled from any auth library — these are OUR domain types.
- */
-
 export interface ProfileSettings {
   lastActiveWorkspaceId?: string;
   avatarUrl?: string;
-  [key: string]: unknown;
+  githubUrl?: string;
+  linkedinUrl?: string;
 }
 
 export interface MyProfile {
@@ -20,4 +16,15 @@ export interface MyProfile {
 
 export interface AppSession {
   myProfile: MyProfile | null;
+}
+
+export function isMyProfile(value: unknown): value is MyProfile {
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    "id" in value &&
+    typeof (value as Record<string, unknown>).id === "string" &&
+    "email" in value &&
+    typeof (value as Record<string, unknown>).email === "string"
+  );
 }

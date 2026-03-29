@@ -5,8 +5,8 @@ import Header from "@/shared/ui/layout/header";
 import Footer from "@/shared/ui/layout/footer";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { AuthService } from "@/features/auth/api/auth.api";
-import type { AppSession } from "@/shared/types/auth";
+import { profilesControllerFindMe } from "@/shared/open-api/profiles/profiles";
+import { type AppSession, isMyProfile } from "@/shared/types/auth";
 
 export const metadata = metadataConfig;
 export const viewport = viewportConfig;
@@ -18,11 +18,12 @@ export default async function RootLayout(props: {
   const { locale } = await props.params;
   const { children } = props;
 
-  const [myProfile, messages] = await Promise.all([
-    AuthService.getMyProfile(),
+  const [profileResponse, messages] = await Promise.all([
+    profilesControllerFindMe().catch(() => null),
     getMessages(),
   ]);
 
+  const myProfile = isMyProfile(profileResponse) ? profileResponse : null;
   const session: AppSession = { myProfile };
 
   return (

@@ -13,7 +13,7 @@ import { useAuthForm } from "@/features/auth/hooks/use-auth-form";
 import { FormFieldRenderer } from "@/shared/ui/components/form-field-renderer";
 import { motion, AnimatePresence } from "framer-motion";
 import { GithubIcon, GoogleIcon, TelegramIcon } from "@/shared/ui/icons/social";
-import { oauthLogin } from "@/features/auth/actions/auth.actions";
+import { oauthLogin } from "@/features/auth/actions";
 import { OAUTH_PROVIDERS, type OAuthProvider } from "@/features/auth/constants";
 import { TelegramAuthModal } from "@/features/auth/components/telegram-auth-modal";
 import { useTelegramLoginController } from "@/features/auth/hooks/use-telegram";
@@ -31,8 +31,8 @@ export default function AuthForm({
   onSuccess,
 }: AuthFormProps) {
   const t = useTranslations("Form");
-  const { formData, errors, isLoading, handleInputChange, handleSubmit } = useAuthForm(mode, onSuccess);
-  const [isPending, startTransition] = useTransition();
+  const { formData, errors, serverError, isPending, handleInputChange, handleSubmit } = useAuthForm(mode, onSuccess);
+  const [isOAuthPending, startOAuthTransition] = useTransition();
   const { handleLogin, isPending: isTelegramPending } = useTelegramLoginController();
   const { isOpen, onOpen, onClose, onOpenChange } = useModal();
 
@@ -52,7 +52,7 @@ export default function AuthForm({
   };
 
   const handleOAuthLogin = (provider: OAuthProvider) => {
-    startTransition(() => {
+    startOAuthTransition(() => {
       oauthLogin(provider);
     });
   };
@@ -125,6 +125,15 @@ export default function AuthForm({
         )}
       </AnimatePresence>
 
+      {serverError && (
+        <div
+          role="alert"
+          className="text-danger bg-danger/5 w-full text-sm font-medium p-3 border border-danger/20 rounded-lg"
+        >
+          {serverError}
+        </div>
+      )}
+
       <div className="flex flex-col gap-2 w-full mt-2">
         <div className="flex w-full gap-2 mb-2">
           {/* Social Provider Buttons */}
@@ -134,7 +143,7 @@ export default function AuthForm({
               radius="full"
               variant="bordered"
               onPress={() => handleOAuthLogin(OAUTH_PROVIDERS.GITHUB)}
-              isDisabled={isLoading || isPending}
+              isDisabled={isPending || isOAuthPending}
               aria-label={t(authFormButtons.loginWithGithub)}
             >
               <GithubIcon className="w-5 h-5" />
@@ -144,7 +153,7 @@ export default function AuthForm({
               radius="full"
               variant="bordered"
               onPress={() => handleOAuthLogin(OAUTH_PROVIDERS.GOOGLE)}
-              isDisabled={isLoading || isPending}
+              isDisabled={isPending || isOAuthPending}
               aria-label={t(authFormButtons.loginWithGoogle)}
             >
               <GoogleIcon className="w-5 h-5" />
@@ -154,7 +163,7 @@ export default function AuthForm({
               radius="full"
               variant="bordered"
               onPress={onOpen}
-              isDisabled={isLoading || isPending}
+              isDisabled={isPending || isOAuthPending}
               aria-label={t(authFormButtons.loginWithTelegram)}
             >
               <TelegramIcon className="w-5 h-5" />
@@ -164,8 +173,8 @@ export default function AuthForm({
           <Button
             type="submit"
             color="primary"
-            isLoading={isLoading || isPending}
-            isDisabled={isLoading || isPending}
+            isLoading={isPending}
+            isDisabled={isPending || isOAuthPending}
             className="flex-1"
           >
             {mode === authFormModes.login ? t(authFormButtons.login) : t(authFormButtons.signup)}

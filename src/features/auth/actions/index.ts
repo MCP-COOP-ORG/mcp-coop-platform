@@ -4,8 +4,16 @@ import { redirect } from "next/navigation";
 import { signupSchema, authCredentialsSchema } from "../validation";
 import type { SignupData, AuthCredentials, AuthResult, SignupResult } from "../types";
 import { formErrors } from "@/shared/constants/form";
-import { AuthService } from "../api/auth.api";
+import { AUTH_COOKIE } from "@/shared/constants/auth";
 import type { OAuthProvider } from "../constants";
+import { cookies } from "next/headers";
+import {
+  authControllerLogin,
+  authControllerRegister,
+  authControllerLogout,
+  authControllerLoginTelegram,
+  authControllerLinkTelegramAccount
+} from "@/shared/open-api/auth/auth";
 
 /**
  * Shared error handler for Server Actions.
@@ -34,7 +42,7 @@ export async function login(credentials: AuthCredentials): Promise<AuthResult> {
       return { success: false, error: parsed.error.issues[0]?.message || formErrors.validationFailed };
     }
 
-    await AuthService.login({
+    await authControllerLogin({
       email: parsed.data.email,
       password: parsed.data.password,
     });
@@ -55,7 +63,11 @@ export async function signup(data: SignupData): Promise<SignupResult> {
       return { success: false, error: parsed.error.issues[0]?.message || formErrors.validationFailed };
     }
 
-    await AuthService.signup(parsed.data);
+    await authControllerRegister({
+      email: parsed.data.email,
+      password: parsed.data.password,
+      ...(parsed.data.name ? { username: parsed.data.name } : {}),
+    });
 
     // Auto-login after successful registration
     const { email, password } = parsed.data;
@@ -70,7 +82,13 @@ export async function signup(data: SignupData): Promise<SignupResult> {
  */
 export async function logout(): Promise<AuthResult> {
   try {
-    await AuthService.logout();
+    await authControllerLogout().catch(() => {
+      // Ignore backend logout errors — local cleanup must proceed
+    });
+
+    const cookieStore = await cookies();
+    cookieStore.delete(AUTH_COOKIE.accessToken);
+    cookieStore.delete(AUTH_COOKIE.refreshToken);
     return { success: true };
   } catch (error) {
     return handleAuthActionError(error);
@@ -81,8 +99,7 @@ export async function logout(): Promise<AuthResult> {
  * Server Action for OAuth login redirects.
  */
 export async function oauthLogin(provider: OAuthProvider): Promise<void> {
-  const url = AuthService.getOAuthLoginUrl(provider);
-  redirect(url);
+  redirect(`/api/auth/oauth/${provider}`);
 }
 
 /**
@@ -90,7 +107,7 @@ export async function oauthLogin(provider: OAuthProvider): Promise<void> {
  */
 export async function loginWithTelegramAction(initData: string): Promise<AuthResult> {
   try {
-    await AuthService.loginTelegram(initData);
+    await authControllerLoginTelegram({ initData });
     return { success: true };
   } catch (error) {
     return handleAuthActionError(error);
@@ -102,7 +119,7 @@ export async function loginWithTelegramAction(initData: string): Promise<AuthRes
  */
 export async function linkTelegramAction(initData: string): Promise<AuthResult> {
   try {
-    await AuthService.linkTelegram(initData);
+    await authControllerLinkTelegramAccount({ initData });
     return { success: true };
   } catch (error) {
     return handleAuthActionError(error);

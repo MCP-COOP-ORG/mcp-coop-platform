@@ -1,20 +1,30 @@
-import { TelegramUser } from "@/features/auth/types";
+import type { TelegramUser } from "@/features/auth/types";
 
 /**
- * Parses the raw Telegram User DTO and maps it to a URLSearchParams flat string
- * matching the Hexagonal Backend API HMAC-SHA256 signature verification payload.
+ * Maps a TelegramUser object to a URLSearchParams string
+ * matching the NestJS backend HMAC-SHA256 signature verification format.
+ * Uses explicit field mapping to maintain strict TypeScript types.
  */
 export const serializeTelegramPayload = (user: TelegramUser | null): string => {
   if (!user) return "";
-  
+
+  const fields: Array<[string, string | number | undefined]> = [
+    ["id", user.id],
+    ["first_name", user.first_name],
+    ["last_name", user.last_name],
+    ["username", user.username],
+    ["photo_url", user.photo_url],
+    ["auth_date", user.auth_date],
+    ["hash", user.hash],
+  ];
+
   const searchParams = new URLSearchParams();
-  
-  Object.keys(user).forEach((key) => {
-    const val = user[key];
+
+  for (const [key, val] of fields) {
     if (val !== undefined && val !== null) {
       searchParams.append(key, String(val));
     }
-  });
+  }
 
   return searchParams.toString();
 };

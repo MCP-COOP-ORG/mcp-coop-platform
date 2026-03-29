@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start -p 80",
     "lint": "eslint",
-    "clean": "rm -rf .next && npm cache clean --force"
+    "clean": "rm -rf .next && npm cache clean --force",
+    "generate:api": "orval --tsconfig ./tsconfig.json"
   },
   "_dev_note": "TODO: remove --webpack from dev after upgrading Next/HeroUI in a few months.",
   "dependencies": {
@@ -42,6 +43,7 @@
     "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
+    "orval": "^7.13.2",
     "prisma": "^7.4.2",
     "sass": "^1.97.2",
     "tailwindcss": "^4.2.1",

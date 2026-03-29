@@ -25,7 +25,6 @@ export interface TelegramUser {
   photo_url?: string;
   auth_date: number;
   hash: string;
-  [key: string]: string | number | undefined;
 }
 
 export interface UseTelegramWidgetOptions {

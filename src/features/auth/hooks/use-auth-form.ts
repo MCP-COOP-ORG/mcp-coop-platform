@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { login, signup } from "@/features/auth/actions/auth.actions";
+import { login, signup } from "@/features/auth/actions";
 import { authFormModes, formErrors, type AuthFormMode, type AuthFormData } from "@/shared/constants/form";
 import { authCredentialsSchema, signupSchema } from "@/features/auth/validation";
 import type { SignupData } from "@/features/auth/types";
@@ -14,56 +14,67 @@ const getInitialFormData = (mode: AuthFormMode): AuthFormData => {
 
 export const useAuthForm = (mode: AuthFormMode, onSuccess?: () => void) => {
   const t = useTranslations("Form");
-  
+
   const [formData, setFormData] = React.useState<AuthFormData>(getInitialFormData(mode));
-  const [errors, setErrors] = React.useState<Partial<Record<keyof AuthFormData, string>>>({});
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [fieldErrors, setFieldErrors] = React.useState<Partial<Record<keyof AuthFormData, string>>>({});
+  const [serverError, setServerError] = React.useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   React.useEffect(() => {
     setFormData(getInitialFormData(mode));
-    setErrors({});
+    setFieldErrors({});
+    setServerError(null);
   }, [mode]);
 
   const handleInputChange = (field: keyof AuthFormData) => (value: string) => {
     setFormData((prev: AuthFormData) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev: Partial<Record<keyof AuthFormData, string>>) => ({ ...prev, [field]: undefined }));
+    if (fieldErrors[field]) {
+      setFieldErrors((prev: Partial<Record<keyof AuthFormData, string>>) => ({ ...prev, [field]: undefined }));
     }
+    if (serverError) setServerError(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const schema = mode === authFormModes.login ? authCredentialsSchema : signupSchema;
     const { success, data, errors: validationErrors } = validateWithZod(schema, formData);
 
     if (!success) {
-      setErrors(validationErrors as Partial<Record<keyof AuthFormData, string>>);
+      setFieldErrors(validationErrors as Partial<Record<keyof AuthFormData, string>>);
       return;
     }
 
-    setErrors({});
-    setIsLoading(true);
+    setFieldErrors({});
+    setServerError(null);
 
-    try {
-      const result = mode === authFormModes.login 
-        ? await login({ email: data.email, password: data.password })
-        : await signup(data as SignupData);
+    startTransition(async () => {
+      try {
+        const result =
+          mode === authFormModes.login
+            ? await login({ email: data.email, password: data.password })
+            : await signup(data as SignupData);
 
-      if (!result.success) {
-        setErrors({ email: result.error });
-        return;
+        if (!result.success) {
+          setServerError(result.error ?? formErrors.internalServerError);
+          return;
+        }
+
+        onSuccess?.();
+      } catch (error) {
+        setServerError(
+          error instanceof Error ? error.message : t(formErrors.internalServerError),
+        );
       }
-      
-      if (onSuccess) onSuccess();
-    } catch (error) {
-      setErrors({
-        email: error instanceof Error ? error.message : t(formErrors.internalServerError),
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
-  return { formData, errors, isLoading, handleInputChange, handleSubmit };
+  return {
+    formData,
+    errors: fieldErrors,
+    serverError,
+    isPending,
+    handleInputChange,
+    handleSubmit,
+  };
 };

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { HeroUIProvider } from "@heroui/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { AppSession } from "@/shared/types/auth";
-import { logout } from "@/features/auth/actions/auth.actions";
+import { logout } from "@/features/auth/actions";
 import { APP_EVENTS } from "@/shared/constants/events";
 import { SessionProvider } from "@/shared/hooks/use-session";
 import { THEME } from "@/shared/constants/theme";
@@ -20,7 +20,6 @@ export function Providers({ children, session }: ProvidersProps) {
 
   React.useEffect(() => {
     const handleAuthFail = async () => {
-      console.warn("MFE reported auth failure. Forcing logout on Platform.");
       const result = await logout();
       if (result.success) {
         router.refresh();
