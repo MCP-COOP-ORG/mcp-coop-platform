@@ -5,7 +5,7 @@
  * Micro App API
  */
 
-export interface TelegramLoginDto {
+export interface TelegramAuthDto {
   /** Telegram initData string from WebApp.initData */
   initData: string;
 }

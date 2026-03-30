@@ -9,7 +9,7 @@ import { ArrowRight } from "lucide-react";
 import { OTP_FLOW_STEPS } from "@/features/auth/types";
 import { useEmailOtpForm } from "@/features/auth/hooks/use-email-otp-form";
 import { useTelegramActionController } from "@/features/auth/hooks/use-telegram";
-import { loginWithTelegramAction } from "@/features/auth/actions";
+import { telegramAuthAction } from "@/features/auth/actions";
 import { authFormFields } from "@/shared/constants/form";
 
 import { EmailInputRow } from "./email-input-row";
@@ -43,7 +43,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
   const t = useTranslations("Form");
   const { isOpen, onOpen, onClose, onOpenChange } = useModal();
   const { execute: handleLogin, isPending: isTelegramPending } = useTelegramActionController({
-    action: loginWithTelegramAction,
+    action: telegramAuthAction,
   });
 
   const {

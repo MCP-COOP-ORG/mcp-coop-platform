@@ -3,7 +3,7 @@ import { authGuard } from "@/core/middleware/authGuard";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/core/configs/i18n/routing";
 import { AUTH_COOKIE, INTERNAL_API_URL } from "@/shared/constants/auth";
-import { getAuthControllerRefreshUrl } from "@/shared/open-api/auth/auth";
+import { getSessionControllerRefreshUrl } from "@/shared/open-api/auth/auth";
 
 const handleI18nRouting = createMiddleware(routing);
 
@@ -12,7 +12,7 @@ async function silentRefresh(refreshToken: string): Promise<string[] | null> {
   try {
     const envUrl = INTERNAL_API_URL.replace(/\/+$/, "");
     const baseUrl = envUrl.endsWith("/api") ? envUrl.slice(0, -4) : envUrl;
-    const response = await fetch(`${baseUrl}${getAuthControllerRefreshUrl()}`, {
+    const response = await fetch(`${baseUrl}${getSessionControllerRefreshUrl()}`, {
       method: "POST",
       headers: { Cookie: `${AUTH_COOKIE.refreshToken}=${refreshToken}` },
     });

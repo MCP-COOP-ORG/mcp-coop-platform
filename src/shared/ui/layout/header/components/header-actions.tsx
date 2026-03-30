@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import LanguageSelector from "@/shared/ui/components/language-selector";
 import { useModal } from "@/shared/ui/components/modal";
 import { useTelegramActionController } from "@/features/auth/hooks/use-telegram";
-import { linkTelegramAction } from "@/features/auth/actions";
+import { telegramAuthAction } from "@/features/auth/actions";
 import dynamic from "next/dynamic";
 
 const LazyTelegramAuthModal = dynamic(
@@ -31,7 +31,7 @@ export function HeaderActions({ session, onOpenLogin, onLogout, isMobile = false
   const [mounted, setMounted] = React.useState(false);
   const t = useTranslations("Header");
   const { isOpen, onOpen, onClose, onOpenChange } = useModal();
-  const { execute: handleLink, isPending } = useTelegramActionController({ action: linkTelegramAction, onClose });
+  const { execute: handleLink, isPending } = useTelegramActionController({ action: telegramAuthAction, onClose });
 
   React.useEffect(() => {
     setMounted(true);
