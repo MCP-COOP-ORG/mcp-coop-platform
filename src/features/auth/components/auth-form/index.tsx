@@ -25,13 +25,13 @@ interface AuthFormProps {
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 
-const slideVariants = {
-  enter: (direction: number) => ({ x: direction > 0 ? "100%" : "-100%", opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (direction: number) => ({ x: direction < 0 ? "100%" : "-100%", opacity: 0 }),
+const fadeVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
-const slideTransition: Transition = { duration: 0.28, ease: "easeInOut" };
+const fadeTransition: Transition = { duration: 0.1, ease: "easeInOut" };
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -68,7 +68,6 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
   } = useEmailOtpForm(onSuccess);
 
   const isOtpStep = step === OTP_FLOW_STEPS.CODE_SENT;
-  const slideDirection = isOtpStep ? 1 : -1;
 
   const handleTelegramAuth = async (initData: string) => {
     const res = await handleLogin(initData);
@@ -88,67 +87,68 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
       validationBehavior="aria"
       onSubmit={handleFormSubmit}
     >
-      {/* ── Input row: email ↔ OTP + Send/Verify button ─────────────────── */}
-      <div className="flex w-full items-start gap-2">
+      <div className="relative grid grid-cols-1 grid-rows-1 w-full items-start overflow-hidden rounded-xl">
 
-        {/* Left: animated email ↔ OTP */}
-        <div className="flex-1 grid grid-cols-1 grid-rows-1 items-start overflow-hidden">
-          <AnimatePresence initial={false} custom={slideDirection}>
-            {!isOtpStep ? (
-              <motion.div
-                key="email"
-                className="col-start-1 row-start-1 w-full"
-                custom={-slideDirection}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={slideTransition}
-              >
-                <EmailInputRow
-                  value={email}
-                  error={errors.email}
-                  isDisabled={isPending}
-                  onValueChange={handleEmailChange}
-                  onBlur={handleEmailBlur}
-                />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="otp"
-                className="col-start-1 row-start-1 w-full"
-                custom={slideDirection}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={slideTransition}
-              >
-                <OtpInputRow
-                  code={code}
-                  expiresAt={expiresAt!}
-                  error={errors.code}
-                  onCodeChange={handleCodeChange}
-                  onBack={handleBack}
-                  onExpired={handleTimerExpired}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
+        {/* Base layer: Email + Send Button */}
+        <div className="col-start-1 row-start-1 flex w-full items-center gap-2">
+          <div className="flex-1">
+            <EmailInputRow
+              value={email}
+              error={errors.email}
+              isDisabled={isPending}
+              onValueChange={handleEmailChange}
+              onBlur={handleEmailBlur}
+            />
+          </div>
+          <Button
+            type="submit"
+            color="primary"
+            isIconOnly
+            isLoading={isPending && !isOtpStep}
+            isDisabled={!canRequestCode || isPending}
+            className="shrink-0 h-[44px] w-[44px] rounded-xl data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-0"
+            aria-label={t("sendCode")}
+          >
+            <ArrowRight className="w-5 h-5 text-white" />
+          </Button>
         </div>
 
-        {/* Right: fixed action button */}
-        <Button
-          type="submit"
-          color="primary"
-          isIconOnly
-          isLoading={isPending}
-          isDisabled={isOtpStep ? !canSubmit || isPending : !canRequestCode || isPending}
-          className="shrink-0 h-[44px] w-[44px] rounded-xl data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-0"
-          aria-label={isOtpStep ? t("verify") : t("sendCode")}
-        >
-          <ArrowRight className="w-5 h-5 text-white" />
-        </Button>
+        {/* Overlay layer: OTP + Verify Button slides OVER the base layer */}
+        <AnimatePresence>
+          {isOtpStep && (
+            <motion.div
+              key="otp-overlay"
+              className="col-start-1 row-start-1 flex w-full items-center justify-between bg-background z-10"
+              variants={fadeVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={fadeTransition}
+            >
+              <OtpInputRow
+                code={code}
+                expiresAt={expiresAt!}
+                error={errors.code}
+                isDisabled={isPending}
+                onCodeChange={handleCodeChange}
+                onBack={handleBack}
+                onExpired={handleTimerExpired}
+              >
+                <Button
+                  type="submit"
+                  color="primary"
+                  isIconOnly
+                  isLoading={isPending && isOtpStep}
+                  isDisabled={!canSubmit || isPending}
+                  className="shrink-0 h-[44px] w-[44px] rounded-xl data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-0"
+                  aria-label={t("verify")}
+                >
+                  <ArrowRight className="w-5 h-5 text-white" />
+                </Button>
+              </OtpInputRow>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* ── New user: fullName (fade-in) ─────────────────────────────────── */}
@@ -159,22 +159,26 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: "easeInOut" }}
-            className="overflow-hidden"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden w-full"
           >
-            <div className="pt-3 pb-1 px-1">
+            <div className="pt-3 pb-1 w-full">
               <Input
                 id="auth-full-name"
+                size="sm"
                 type="text"
                 autoComplete="name"
                 label={t(authFormFields.name.label)}
                 placeholder={t(authFormFields.name.placeholder)}
-                description="Это ваш первый вход с данным email. Представьтесь, пожалуйста, чтобы завершить регистрацию."
                 value={fullName}
                 onValueChange={handleFullNameChange}
+                isDisabled={isPending}
                 isInvalid={!!errors.fullName}
                 errorMessage={errors.fullName ? t(errors.fullName as Parameters<typeof t>[0]) : undefined}
-                isRequired
+                classNames={{
+                  base: "w-full",
+                  inputWrapper: "w-full transition-all duration-200 h-[44px] min-h-[44px]",
+                }}
               />
             </div>
           </motion.div>

@@ -1,5 +1,6 @@
 {
   "Header": {
+    "welcome": "Welcome",
     "login": "Login",
     "logout": "Logout",
     "themeToggleLabel": "Toggle theme",
@@ -31,7 +32,7 @@
   },
   "Form": {
     "email": "Email",
-    "emailPlaceholder": "Enter your email",
+    "emailPlaceholder": "you@example.com",
     "emailRequired": "Email is required",
     "emailInvalid": "Please enter a valid email address",
     "firstName": "First Name",
@@ -50,7 +51,7 @@
     "confirmPassword": "Confirm Password",
     "confirmPasswordPlaceholder": "Confirm your password",
     "name": "Name",
-    "namePlaceholder": "Enter your name",
+    "namePlaceholder": "username",
     "login": "Login",
     "signup": "Sign Up",
     "switchToSignup": "Don't have an account? Sign Up",

@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/shared/ui/components/hero-ui";
+import { Clock } from "lucide-react";
 
 interface CountdownTimerProps {
   expiresAt: number;
+  isDisabled?: boolean;
   onExpired: () => void;
   onBack: () => void;
 }
@@ -16,7 +18,7 @@ function formatRemaining(ms: number): string {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
-export function CountdownTimer({ expiresAt, onExpired, onBack }: CountdownTimerProps) {
+export function CountdownTimer({ expiresAt, isDisabled = false, onExpired, onBack }: CountdownTimerProps) {
   const [remaining, setRemaining] = useState<number>(() => Math.max(0, expiresAt - Date.now()));
   const hasExpiredRef = useRef(false);
   const onExpiredRef = useRef(onExpired);
@@ -51,19 +53,19 @@ export function CountdownTimer({ expiresAt, onExpired, onBack }: CountdownTimerP
   return (
     <Button
       type="button"
+      color="danger"
       variant="flat"
-      size="sm"
       onPress={onBack}
-      isDisabled={isExpired}
+      isDisabled={isExpired || isDisabled}
       aria-label="Back to email input"
-      className={[
-        "min-w-[72px] font-mono font-semibold text-sm transition-all duration-200 shrink-0",
-        isExpired
-          ? "text-danger bg-danger/10 cursor-not-allowed"
-          : "text-primary bg-primary/10 hover:bg-primary/20",
-      ].join(" ")}
+      className="!p-0 !min-w-[44px] !w-[44px] !h-[44px] !min-h-[44px] rounded-xl shrink-0"
     >
-      ⏱ {isExpired ? "00:00" : formatRemaining(remaining)}
+      <div className="flex flex-col items-center justify-center gap-[1px]">
+        <Clock className="w-3.5 h-3.5" />
+        <span className="text-[9px] font-mono leading-none tracking-tight">
+          {isExpired ? "00:00" : formatRemaining(remaining)}
+        </span>
+      </div>
     </Button>
   );
 }

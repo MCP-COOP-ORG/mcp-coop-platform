@@ -1,5 +1,6 @@
 {
   "Header": {
+    "welcome": "Добро пожаловать",
     "login": "Войти",
     "logout": "Выйти",
     "themeToggleLabel": "Переключить тему",
@@ -31,7 +32,7 @@
   },
   "Form": {
     "email": "Email",
-    "emailPlaceholder": "Введите ваш email",
+    "emailPlaceholder": "you@example.com",
     "emailRequired": "Требуется указать email",
     "emailInvalid": "Пожалуйста, введите корректный email",
     "firstName": "Имя",
@@ -49,8 +50,8 @@
     "passwordPlaceholder": "Введите ваш пароль",
     "confirmPassword": "Подтверждение пароля",
     "confirmPasswordPlaceholder": "Подтвердите пароль",
-    "name": "Имя пользователя",
-    "namePlaceholder": "Введите имя пользователя",
+    "name": "Имя",
+    "namePlaceholder": "Ваше имя",
     "login": "Войти",
     "signup": "Зарегистрироваться",
     "switchToSignup": "Нет аккаунта? Зарегистрироваться",

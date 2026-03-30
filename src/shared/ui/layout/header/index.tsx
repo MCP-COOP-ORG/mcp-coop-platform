@@ -116,7 +116,7 @@ export default function Header() {
       <AppModal
         isOpen={isOpen}
         onOpenChange={(open) => { if (!open) onClose(); }}
-        title={headerT("login")}
+        title={headerT("welcome")}
         size="md"
       >
         <AuthForm onSuccess={handleAuthSuccess} />

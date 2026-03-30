@@ -116,11 +116,19 @@ export async function verifyEmailOtpAction(dto: {
       };
     }
 
-    const response = await authControllerVerifyEmailOtp({
-      email: parsed.data.email,
-      code: parsed.data.code,
-      ...(parsed.data.fullName ? { fullName: parsed.data.fullName } : {}),
-    });
+    let response;
+    try {
+      response = await authControllerVerifyEmailOtp({
+        email: parsed.data.email,
+        code: parsed.data.code,
+        ...(parsed.data.fullName ? { fullName: parsed.data.fullName } : {}),
+      });
+    } catch (error) {
+      if (error instanceof Error && error.message.toLowerCase().includes("invalid")) {
+        throw new Error(formErrors.invalidOtpCode);
+      }
+      throw error;
+    }
 
     if (response.status !== 200) {
       return { success: false, error: formErrors.internalServerError };

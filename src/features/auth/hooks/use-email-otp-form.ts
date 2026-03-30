@@ -78,10 +78,8 @@ export function useEmailOtpForm(onSuccess?: () => void): UseEmailOtpFormReturn {
   const canSubmit = useMemo(() => {
     if (step !== OTP_FLOW_STEPS.CODE_SENT) return false;
     if (code.length !== OTP_CODE_LENGTH) return false;
-    if (isNewUser && fullName.trim().length === 0) return false;
-    // expiry handled by CountdownTimer.onExpired → handleTimerExpired
     return true;
-  }, [step, code, fullName, isNewUser]);
+  }, [step, code]);
 
   // ── Field handlers ────────────────────────────────────────────────────────
 
@@ -140,7 +138,7 @@ export function useEmailOtpForm(onSuccess?: () => void): UseEmailOtpFormReturn {
       const result = await requestEmailOtpAction(email);
 
       if (!result.success || result.expiresIn === undefined || result.isNewUser === undefined) {
-        setErrors({ server: result.error ?? "Request failed" });
+        setErrors({ server: result.error ?? formErrors.internalServerError });
         return;
       }
 
@@ -162,7 +160,7 @@ export function useEmailOtpForm(onSuccess?: () => void): UseEmailOtpFormReturn {
       });
 
       if (!result.success) {
-        setErrors({ server: result.error ?? "Verification failed" });
+        setErrors({ server: result.error ?? formErrors.validationFailed });
         return;
       }
 

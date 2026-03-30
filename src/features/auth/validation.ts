@@ -13,5 +13,5 @@ export const requestEmailOtpSchema = z.object({ email: emailSchema });
 export const verifyEmailOtpSchema = z.object({
   email: emailSchema,
   code: z.string().length(OTP_CODE_LENGTH, formErrors.invalidOtpCode),
-  fullName: z.string().trim().min(1, formErrors.nameRequired).optional(),
+  fullName: z.string().trim().optional(),
 });
