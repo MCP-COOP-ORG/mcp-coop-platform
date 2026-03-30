@@ -5,18 +5,47 @@ export const openApiMutator = async <T>(
   url: string,
   options: RequestInit
 ): Promise<T> => {
-  const isServer = typeof window === 'undefined';
+  const isServer = typeof window === "undefined";
 
   const response = await executeRequest(url, options, isServer);
 
-  // Client-side silent refresh: intercept 401 in the browser, refresh tokens, retry once.
-  // Server-side refresh is handled by the proxy before the page renders.
-  if (!isServer && response.status === 401) {
+  // Exclude /auth/ endpoints (like login, verify, refresh) from global 401 handling
+  // because 401 is an expected business logic failure (wrong password, wrong code, etc.)
+  const isAuthEndpoint = url.includes("/auth/");
+
+  if (!isServer && response.status === 401 && !isAuthEndpoint) {
     const refreshed = await attemptClientRefresh();
     if (refreshed) {
       const retryResponse = await executeRequest(url, options, isServer);
       return handleResponse<T>(retryResponse);
+    } else {
+      // Fallback: clear session and bounce to public fallback
+      window.location.href = `/api/auth/clear-session?callbackUrl=${encodeURIComponent(
+        window.location.pathname
+      )}`;
+      await new Promise(() => {}); // Pause execution while navigating
     }
+  }
+
+  if (isServer && response.status === 401 && !isAuthEndpoint) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { redirect } = require("next/navigation");
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { headers } = require("next/headers");
+    
+    // Attempt to get the current URL path from server headers if available
+    const headerStore = await headers();
+    const referer = headerStore.get("referer");
+    let callbackUrl = "/";
+    if (referer) {
+      try {
+        callbackUrl = new URL(referer).pathname;
+      } catch {
+        callbackUrl = "/";
+      }
+    }
+    
+    redirect(`/api/auth/clear-session?callbackUrl=${encodeURIComponent(callbackUrl)}`);
   }
 
   return handleResponse<T>(response);
@@ -106,12 +135,19 @@ function buildAbsoluteUrl(url: string): string {
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const errorData = await response.json().catch(() => null);
-    throw new Error(errorData?.message || errorData?.error || `API Error ${response.status}: ${response.statusText}`);
+    const errorData = (await response.json().catch(() => null)) as Record<string, unknown> | null;
+    const msg = errorData?.message || errorData?.error;
+    const finalMsg =
+      typeof msg === "string"
+        ? msg
+        : `API Error ${response.status}: ${response.statusText}`;
+        
+    throw new Error(finalMsg);
   }
 
   const text = await response.text();
-  let data: any;
+  let data: unknown;
+  
   try {
     data = text ? JSON.parse(text) : undefined;
   } catch {

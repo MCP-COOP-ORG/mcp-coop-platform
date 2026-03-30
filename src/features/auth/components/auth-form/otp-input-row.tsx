@@ -47,7 +47,7 @@ export function OtpInputRow({
           value={code}
           onValueChange={onCodeChange}
           isInvalid={!!error}
-          errorMessage={error ? t(error as any) : undefined}
+          errorMessage={error ? t(error as Parameters<typeof t>[0]) : undefined}
           autoFocus
           classNames={{
             base: "w-full",

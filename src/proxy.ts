@@ -38,6 +38,13 @@ export default async function middleware(req: NextRequest) {
         response.headers.append("Set-Cookie", cookie);
       }
       return response;
+    } else {
+      // Refresh failed (e.g. 401). We must clear cookies so browser forgets them.
+      const guardResponse = authGuard(req, false);
+      const response = guardResponse || handleI18nRouting(req);
+      response.cookies.delete(AUTH_COOKIE.accessToken);
+      response.cookies.delete(AUTH_COOKIE.refreshToken);
+      return response;
     }
   }
 

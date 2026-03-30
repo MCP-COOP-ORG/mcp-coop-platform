@@ -30,7 +30,7 @@ export function EmailInputRow({
   const t = useTranslations("Form");
 
   // error can be an i18n key or already translated string
-  const translatedError = error ? t(error as any) : undefined;
+  const translatedError = error ? t(error as Parameters<typeof t>[0]) : undefined;
 
   return (
     <Input

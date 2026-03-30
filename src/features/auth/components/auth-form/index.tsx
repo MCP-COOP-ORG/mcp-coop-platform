@@ -173,7 +173,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
                 value={fullName}
                 onValueChange={handleFullNameChange}
                 isInvalid={!!errors.fullName}
-                errorMessage={errors.fullName ? t(errors.fullName as any) : undefined}
+                errorMessage={errors.fullName ? t(errors.fullName as Parameters<typeof t>[0]) : undefined}
                 isRequired
               />
             </div>
@@ -193,7 +193,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
             role="alert"
             className="text-danger bg-danger/5 text-sm font-medium p-3 border border-danger/20 rounded-lg"
           >
-            {t(errors.server as any) || errors.server}
+            {t(errors.server as Parameters<typeof t>[0]) || errors.server}
           </motion.div>
         )}
       </AnimatePresence>

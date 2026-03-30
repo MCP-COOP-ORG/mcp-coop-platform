@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import { TELEGRAM_BOT_NAME, TELEGRAM_WIDGET_CONFIG, TELEGRAM_WIDGET_SCRIPT_URL } from "@/shared/constants/telegram";
-import { TelegramUser, UseTelegramWidgetOptions, UseTelegramLinkControllerOptions, AuthResult } from "@/features/auth/types";
+import { TelegramUser, UseTelegramWidgetOptions, AuthResult } from "@/features/auth/types";
 import { serializeTelegramPayload } from "@/features/auth/utils/telegram.mapper";
 import { useRouter } from "@/core/configs/i18n/routing";
-import { linkTelegramAction, loginWithTelegramAction } from "@/features/auth/actions";
 
 
 interface ExtendedWindow extends Window {
