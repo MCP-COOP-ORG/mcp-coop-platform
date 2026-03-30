@@ -1,0 +1,73 @@
+name: Deploy Nginx Only
+
+on:
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: 'project-ad4d3791-fa38-4a8b-9cc'
+  REGION: 'europe-central2'
+  REPO_NAME: 'mcp-coop-artifacts'
+  IMAGE_NAME: 'mcp-coop-platform'
+  GAR_LOCATION: 'europe-central2-docker.pkg.dev'
+
+jobs:
+  deploy-nginx:
+    name: Deploy Nginx Config to VM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 1. Copy Nginx template to the VM root
+      - name: Copy Nginx Config via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "nginx.conf.template"
+          target: "~/"
+
+      # 2. Execute SSH commands to update and recreate nginx container
+      - name: Restart Nginx via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          CLOUDFLARE_SSL_CERT: ${{ secrets.CLOUDFLARE_SSL_CERT }}
+          CLOUDFLARE_SSL_KEY: ${{ secrets.CLOUDFLARE_SSL_KEY }}
+
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY
+          script: |
+            set -e
+
+            # Compute full image URI just so docker-compose doesn't complain about other services
+            export IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
+            
+            # Ensure the platform directory exists
+            mkdir -p ~/mcp-coop-platform
+            cd ~/mcp-coop-platform
+
+            # --- ENV SETUP ---
+            touch ~/.env
+            sed -i '/^PORT=/d' ~/.env || true
+            echo "PORT=80" >> ~/.env
+
+            # --- SSL CERTIFICATES SETUP ---
+            mkdir -p certs
+            echo "$CLOUDFLARE_SSL_CERT" > certs/cert.pem
+            echo "$CLOUDFLARE_SSL_KEY" > certs/key.pem
+            chmod 600 certs/key.pem
+
+            # Rename config for standard convenience
+            mv ~/nginx.conf.template ./nginx.conf.template || true
+
+            # Recreate just the nginx container to apply new template and potentially new env vars
+            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} up -d --force-recreate nginx
+            
+            # Reload nginx process inside just to be absolutely sure
+            docker exec mcp-coop-nginx nginx -s reload || true

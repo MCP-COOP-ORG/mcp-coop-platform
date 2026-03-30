@@ -1,5 +1,3 @@
-"use server";
-
 import type { AuthResult } from "../types";
 import { formErrors } from "@/shared/constants/form";
 
