@@ -31,7 +31,7 @@ export default async function RootLayout(props: {
   const session: AppSession = { myProfile };
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning className="scroll-smooth">
       <body className="antialiased font-sans">
         <NextIntlClientProvider messages={messages}>
           <Providers session={session}>

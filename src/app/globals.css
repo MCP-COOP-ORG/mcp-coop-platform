@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin '@tailwindcss/typography';
 @plugin '../core/configs/theme/theme.config.ts';
 
 /* Explicitly tell Tailwind v4 to scan components outside the src/app/ directory */
