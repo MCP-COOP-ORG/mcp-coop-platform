@@ -16,13 +16,16 @@
   "Navigation": {
     "home": "Главная",
     "docs": "Документация",
-    "status": "Блокчейн",
+    "blockchain": "Блокчейн",
+    "community": "Наше Сообщество",
     "networkStatus": "Статус сети",
-    "coops": "Команды",
+    "networkStatusDescription": "Здесь вы всегда можете проверить текущее состояние работы, производительность и общее здоровье MCP Coop Chain.",
+    "coops": "Кооперативы",
+    "members": "Специалисты",
+    "membersDescription": "Список всех зарегистрированных специалистов.",
     "contacts": "Контакты",
     "workspace": "Воркспейс",
-    "cooperatives": "Кооперативы",
-    "cooperativesDescription": "Выберите кооператив для просмотра деталей."
+    "coopsDescription": "Список всех зарегистрированных кооперативов."
   },
   "Workspace": {
     "kanban": "Доска задач",

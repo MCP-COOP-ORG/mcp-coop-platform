@@ -5,13 +5,17 @@ export async function seedBlockchainStatus(prisma: PrismaClient) {
 
   const blockStatusContentEn = await prisma.pageContent.upsert({
     where: { page_language: { page: "blockchain-status", language: "en" } },
-    update: {},
+    update: {
+      title: "Network Status",
+      subtitle: "Live metrics and blockchain health",
+      description: "Monitor the real-time operational status, network performance, and overall health of the MCP Coop Chain. Here you can always verify the active state of our infrastructure. Below, you will find a live dashboard displaying various global blockchain metrics, transaction throughput, and node availability."
+    },
     create: {
       page: "blockchain-status",
       language: "en",
-      title: "Blockchain Status",
-      subtitle: "Live metrics and network health",
-      description: "Monitor the performance of the MCP COOP protocol on the blockchain. Check TPS, smart contract deployments, gas fees, and ongoing community governance proposals in real-time.",
+      title: "Network Status",
+      subtitle: "Live metrics and blockchain health",
+      description: "Monitor the real-time operational status, network performance, and overall health of the MCP Coop Chain. Here you can always verify the active state of our infrastructure. Below, you will find a live dashboard displaying various global blockchain metrics, transaction throughput, and node availability.",
       image: "/IMG_1163.JPG",
       jsonContent: {
         blocks: [
@@ -25,13 +29,17 @@ export async function seedBlockchainStatus(prisma: PrismaClient) {
 
   const blockStatusContentRu = await prisma.pageContent.upsert({
     where: { page_language: { page: "blockchain-status", language: "ru" } },
-    update: {},
+    update: {
+      title: "Статус сети",
+      subtitle: "Текущие метрики и состояние блокчейна",
+      description: "Здесь вы всегда можете проверить текущее состояние работы, производительность и общее здоровье MCP Coop Chain. Наша инфраструктура работает прозрачно — ниже будет представлен дашборд с ключевыми показателями блокчейна в реальном времени, включая пропускную способность транзакций (TPS) и аптайм узлов."
+    },
     create: {
       page: "blockchain-status",
       language: "ru",
-      title: "Блокчейн статус",
-      subtitle: "Текущие метрики и состояние сети",
-      description: "Отслеживайте производительность протокола MCP COOP в блокчейне. Проверяйте TPS, развертывание смарт-контрактов, комиссии за газ и текущие предложения управления сообществом в реальном времени.",
+      title: "Статус сети",
+      subtitle: "Текущие метрики и состояние блокчейна",
+      description: "Здесь вы всегда можете проверить текущее состояние работы, производительность и общее здоровье MCP Coop Chain. Наша инфраструктура работает прозрачно — ниже будет представлен дашборд с ключевыми показателями блокчейна в реальном времени, включая пропускную способность транзакций (TPS) и аптайм узлов.",
       image: "/IMG_1163.JPG",
       jsonContent: {
         blocks: [

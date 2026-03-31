@@ -7,6 +7,7 @@ import { seedHome } from "./seeds/home";
 import { seedDocs } from "./seeds/docs";
 import { seedBlockchainStatus } from "./seeds/blockchain-status";
 import { seedCoops } from "./seeds/coops";
+import { seedMembers } from "./seeds/members";
 
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString });
@@ -28,6 +29,7 @@ async function main() {
 
   // Other components
   await seedCoops(prisma);
+  await seedMembers(prisma);
 
   console.log("Seeding finished.");
 }

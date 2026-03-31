@@ -26,11 +26,11 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
                 <DropdownTrigger>
                   <Button
                     disableRipple
-                    className={`p-0 bg-transparent data-[hover=true]:bg-transparent transition-colors tracking-tight text-medium ${isDropdownActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
+                    className={`group p-0 bg-transparent data-[hover=true]:bg-transparent transition-colors uppercase tracking-wider text-medium ${isDropdownActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
                       }`}
                     radius="sm"
                     variant="light"
-                    endContent={<ChevronDownIcon className="w-4 h-4" />}
+                    endContent={<ChevronDownIcon className="w-[14px] h-[14px] scale-x-[0.85] text-foreground transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-data-[open=true]:rotate-180" />}
                   >
                     {navT(link.translationKey as never)}
                   </Button>
@@ -50,7 +50,7 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
                       key={child.translationKey}
                       textValue={navT(child.translationKey as never)}
                     >
-                      <Link href={child.href!} className={`w-full h-full flex items-center transition-colors ${isChildActive ? "text-primary font-bold" : "text-foreground"
+                      <Link href={child.href!} className={`w-full h-full flex items-center transition-colors text-[13px] uppercase tracking-wider ${isChildActive ? "text-primary font-normal" : "text-foreground font-light"
                         }`}>
                         {navT(child.translationKey as never)}
                       </Link>
@@ -67,7 +67,7 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
           <NavbarItem key={link.translationKey} isActive={isActive}>
             <Link
               href={link.href!}
-              className={`text-medium whitespace-nowrap transition-colors tracking-tight ${isActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
+              className={`text-medium whitespace-nowrap transition-colors uppercase tracking-wider ${isActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
                 }`}
             >
               {navT(link.translationKey as never)}

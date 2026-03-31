@@ -6,6 +6,7 @@ export const PAGE_KEYS = {
   home: "home",
   docs: "docs",
   coops: "coops",
+  members: "members",
   contactUs: "contact-us",
   blockchainStatus: "blockchain-status",
 } as const;

@@ -6,13 +6,17 @@ export async function seedCoops(prisma: PrismaClient) {
   // Seed PageContent for 'coops' layout
   const coopsContentEn = await prisma.pageContent.upsert({
     where: { page_language: { page: "coops", language: "en" } },
-    update: {},
+    update: {
+      title: "All COOPs",
+      subtitle: "Discover cooperatives matching your skills",
+      description: "Explore the comprehensive catalog of cutting-edge e-Coop organizations powered by the MCP Coop Chain. Every cooperative in our registry functions as a transparent technology startup or a standalone digital product, managed exclusively on-chain with absolute financial openness. Discover ideal decentralized projects, B2B services, and ecosystem cooperatives to build robust partnerships in the new digital economy."
+    },
     create: {
       page: "coops",
       language: "en",
       title: "All COOPs",
       subtitle: "Discover cooperatives matching your skills",
-      description: "Explore ongoing projects and decentralized communities building tools for the future in the MCP COOP platform.",
+      description: "Explore the comprehensive catalog of cutting-edge e-Coop organizations powered by the MCP Coop Chain. Every team in our registry operates as a fully transparent business, managed exclusively on-chain with verifiable finances, autonomous governance, and an immutable reputation. Discover your ideal technology partners, AI engineers, and domain experts to build products of any complexity in the new decentralized cooperative economy.",
       image: "/IMG_1163.JPG",
       jsonContent: {
         blocks: [
@@ -25,13 +29,17 @@ export async function seedCoops(prisma: PrismaClient) {
 
   const coopsContentRu = await prisma.pageContent.upsert({
     where: { page_language: { page: "coops", language: "ru" } },
-    update: {},
+    update: {
+      title: "Команды",
+      subtitle: "Найдите кооператив по вашим навыкам",
+      description: "Исследуйте глобальный каталог передовых e-Coop организаций на базе MCP Coop Chain. Каждый кооператив в нашем реестре — это прозрачный технологический стартап или масштабный цифровой продукт, управляемый смарт-контрактами с абсолютной финансовой открытостью. Находите идеальные децентрализованные проекты, B2B-сервисы и независимые кооперативы для надежного партнерства."
+    },
     create: {
       page: "coops",
       language: "ru",
-      title: "Все кооперативы",
+      title: "Команды",
       subtitle: "Найдите кооператив по вашим навыкам",
-      description: "Исследуйте текущие проекты и децентрализованные сообщества, создающие инструменты для будущего на платформе MCP COOP.",
+      description: "Исследуйте глобальный каталог передовых e-Coop организаций на базе MCP Coop Chain. Каждый кооператив в нашем реестре — это прозрачный технологический стартап или масштабный цифровой продукт, управляемый смарт-контрактами с абсолютной финансовой открытостью. Находите идеальные децентрализованные проекты, B2B-сервисы и независимые кооперативы для надежного партнерства.",
       image: "/IMG_1163.JPG",
       jsonContent: {
         blocks: [

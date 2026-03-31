@@ -16,13 +16,16 @@
   "Navigation": {
     "home": "Home",
     "docs": "Documentation",
-    "status": "Blockchain",
+    "blockchain": "Blockchain",
+    "community": "Our Community",
     "networkStatus": "Network Status",
-    "coops": "All COOPs",
+    "networkStatusDescription": "Monitor the real-time operational status, network performance, and overall health of the MCP Coop Chain.",
+    "coops": "Coops",
+    "members": "Specialists",
+    "membersDescription": "List of all registered specialists.",
     "contacts": "Contact Us",
     "workspace": "Workspace",
-    "cooperatives": "Cooperatives",
-    "cooperativesDescription": "Select a cooperative to view its on-chain details."
+    "coopsDescription": "List of all registered cooperatives."
   },
   "Workspace": {
     "kanban": "Task Board",

@@ -51,10 +51,14 @@ export function HeaderMobileMenu({
       <div className="flex flex-col gap-2">
         {links.map((link) => {
           if (link.children) {
+            const isDropdownActive = link.children.some(child =>
+              isNavLinkActive(child.href, pathname)
+            );
+
             return (
               <React.Fragment key={link.translationKey}>
-                <NavbarMenuItem className="pt-2">
-                  <span className="w-full py-2 text-xl font-bold text-foreground/50 tracking-tight block">
+                <NavbarMenuItem className="pt-1">
+                  <span className={`w-full py-[5px] text-xl font-normal uppercase tracking-wider block ${isDropdownActive ? "text-primary" : "text-foreground"}`}>
                     {navT(link.translationKey as never)}
                   </span>
                 </NavbarMenuItem>
@@ -66,10 +70,10 @@ export function HeaderMobileMenu({
                         as={Link}
                         color={isChildActive ? "primary" : "foreground"}
                         href={child.href!}
-                        className={`w-full py-2 text-xl transition-colors tracking-tight ${
-                          isChildActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
+                        className={`w-full py-[3px] pl-[10px] text-[14.5px] transition-colors uppercase tracking-wider ${
+                          isChildActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
                         }`}
-                        size="lg"
+                        size="md"
                       >
                         {navT(child.translationKey as never)}
                       </HeroLink>
@@ -87,8 +91,8 @@ export function HeaderMobileMenu({
                 as={Link}
                 color={isActive ? "primary" : "foreground"}
                 href={link.href!}
-                className={`w-full py-2 text-xl transition-colors tracking-tight ${
-                  isActive ? "font-bold text-primary" : "font-medium text-foreground/80 hover:text-foreground"
+                className={`w-full py-[5px] text-xl transition-colors uppercase tracking-wider ${
+                  isActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
                 }`}
                 size="lg"
               >

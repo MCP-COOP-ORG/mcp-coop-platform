@@ -15,7 +15,7 @@ export async function seedHome(prisma: PrismaClient) {
         "MCP COOP is a blockchain platform for transparent and efficient business development. " +
         "We create tools that help form teams of specialists amidst the transformation of traditional markets. " +
         "We believe the future belongs to AI business engineers: professionals who combine personal experience and logic with the capabilities of artificial intelligence to create products of any complexity.",
-      image: "/IMG_1163.JPG",
+      image: "/IMG_1163.png",
       jsonContent: {
         blocks: [
           { type: "heading", level: 2, text: "New opportunities for building your business" },
@@ -38,7 +38,7 @@ export async function seedHome(prisma: PrismaClient) {
         "MCP COOP - это блокчейн-платформа для прозрачного и эффективного управления бизнесом. " +
         "Мы создаем инструменты, которые помогают формировать команды специалистов в условиях трансформации традиционных рынков. " +
         "Мы верим, что будущее за AI бизнес-инженерами: профессионалами, которые сочетают личный опыт и логику с возможностями искусственного интеллекта для создания продуктов любой сложности.",
-      image: "/IMG_1163.JPG",
+      image: "/IMG_1163.png",
       jsonContent: {
         blocks: [
           { type: "heading", level: 2, text: "Новые возможности для создания бизнеса" },

@@ -180,7 +180,7 @@ export default async function DocsPage(props: { params: Promise<{ locale: string
 
   if (!content) {
     return (
-      <main className="max-w-7xl mx-auto py-12 px-6">
+      <main className="max-w-7xl mx-auto pt-6 pb-12 px-6">
         <h1 className="text-xl font-semibold">Documentation not found</h1>
       </main>
     );
@@ -191,7 +191,7 @@ export default async function DocsPage(props: { params: Promise<{ locale: string
   const hasContent = Object.keys(documentTree).length > 0;
 
   return (
-    <main className="max-w-7xl mx-auto py-12 px-6">
+    <main className="max-w-7xl mx-auto pt-6 pb-12 px-6">
 
       {/* Two Column Layout: Main Content (Left) & Sticky Sidebar (Right) */}
       <div className="flex flex-col lg:flex-row gap-12 relative items-start">

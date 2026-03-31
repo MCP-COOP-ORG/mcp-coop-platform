@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
   const navT = useTranslations("Navigation");
 
   return (
-    <footer className="border-t border-neutral-800 bg-gradient-to-b from-white/10 via-transparent to-transparent">
+    <footer className="border-t border-divider bg-background">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
         <p className="text-xs">
           {APP_INFO.copyright}
