@@ -12,6 +12,7 @@ export * from './authSuccessResponse';
 export * from './blockchainAccount';
 export * from './columnStatusSettingsDto';
 export * from './coop';
+export * from './coopsControllerFindAllParams';
 export * from './createAccountReviewDto';
 export * from './createSkillDto';
 export * from './createTaskCommentDto';

@@ -1,12 +1,17 @@
 import { PAGE_KEYS } from "@/shared/constants/page-keys";
-import { getCoops } from "@/features/coop/actions/coops.actions";
-import CoopList from "@/features/coop/components/coop-list";
 import { getPageContent } from "@/features/page-content/actions/page-content.actions";
 import { getTranslations } from "next-intl/server";
+import { CoopsCatalog } from "@/features/coops/ui/coops-catalog";
+import { Suspense } from "react";
+import { Spinner } from "@/shared/ui/components/hero-ui";
 
-export default async function CoopsPage(props: { params: Promise<{ locale: string }> }) {
+export default async function CoopsPage(props: { 
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const { locale } = await props.params;
-  const coops = await getCoops();
+  const searchParams = await props.searchParams;
+  const page = Number(searchParams?.page) || 1;
   const navT = await getTranslations("Navigation");
 
   // Fetch dynamic content overriding translation labels if exists
@@ -32,8 +37,9 @@ export default async function CoopsPage(props: { params: Promise<{ locale: strin
             </p>
           </div>
 
-          {/* Current Page Main Content */}
-          <CoopList coops={coops} />
+          <Suspense fallback={<div className="w-full flex justify-center py-10"><Spinner size="lg" color="primary" /></div>}>
+            <CoopsCatalog page={page} />
+          </Suspense>
 
         </section>
       </div>

@@ -1,28 +1,22 @@
-import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
 
-import { getCoopByAddress } from "@/features/coop/actions/coops.actions";
-import CoopItem from "@/features/coop/components/coop-item";
-
-interface CoopDetailsPageProps {
-  params: Promise<{
-    id: string;
-    locale: string;
-  }>;
-}
-
-export default async function CoopDetailsPage({ params }: CoopDetailsPageProps) {
-  const { id } = await params;
-  const coop = await getCoopByAddress(id);
-
-  if (!coop) {
-    notFound();
-  }
+export default async function CoopDetailsPage(props: { params: Promise<{ locale: string, id: string }> }) {
+  const { locale, id } = await props.params;
+  setRequestLocale(locale);
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-4 space-y-4">
-      <CoopItem coop={coop} />
-    </div>
+    <main className="max-w-7xl mx-auto pt-6 pb-12 px-6">
+      <div className="flex flex-col gap-4 items-center justify-center min-h-[40vh] py-16 border border-dashed border-default-300 rounded-2xl bg-default-50/50 shadow-sm mt-4">
+        <h1 className="text-2xl sm:text-[26px] font-bold tracking-tight text-foreground antialiased text-center">
+          Cooperative Organization
+        </h1>
+        <p className="text-[15px] sm:text-base font-medium text-foreground/60 leading-snug break-all px-4 text-center">
+          Coop Profile Address: {id}
+        </p>
+        <p className="text-xl font-light text-foreground/50 tracking-wider uppercase mt-6">
+          Coming Soon
+        </p>
+      </div>
+    </main>
   );
 }
-
-

@@ -14,7 +14,7 @@ FROM base AS deps
 # Copy only package.json and package-lock.json to leverage Docker layer caching.
 # This step will ONLY run again if package.json or package-lock.json changes.
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install
 
 # ==========================================
 # 2. Rebuild the source code only when needed

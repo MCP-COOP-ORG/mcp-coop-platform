@@ -8,6 +8,9 @@
 // --- Card ---
 export { Card, CardBody, CardHeader, CardFooter } from "@heroui/react";
 
+// --- Separator (Divider in v2) ---
+export { Divider } from "@heroui/react";
+
 // --- Button ---
 export { Button } from "@heroui/react";
 
@@ -27,7 +30,7 @@ export { Snippet } from "@heroui/react";
 export { Spinner } from "@heroui/react";
 
 // --- Select ---
-export { Select, SelectItem, Avatar } from "@heroui/react";
+export { Select, SelectItem, Avatar, AvatarGroup } from "@heroui/react";
 
 // --- Tabs ---
 export { Tabs, Tab } from "@heroui/react";
@@ -72,3 +75,6 @@ export { User } from "@heroui/react";
 
 // --- Input OTP ---
 export { InputOtp } from "@heroui/input-otp";
+
+// --- Pagination ---
+export { Pagination } from "@heroui/react";
