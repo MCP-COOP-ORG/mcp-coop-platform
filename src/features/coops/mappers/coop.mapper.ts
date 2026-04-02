@@ -1,5 +1,5 @@
 import { CoopResponseDto } from "@/shared/open-api/models";
-import { CardData } from "@/shared/ui/components/card";
+import { CoopCardData } from "@/shared/types/card.types";
 import { CryptoWalletsProps } from "@/shared/ui/components/crypto-wallets";
 import { ProfileContacts } from "@/shared/ui/components/contacts";
 import { CoopMemberItem } from "@/shared/ui/components/coop-members";
@@ -10,7 +10,7 @@ import { CoopMemberItem } from "@/shared/ui/components/coop-members";
  * Extracts unique roles from the members array and injects them as categories
  * so the Card UI renders them automatically in the blue badges area.
  */
-export function mapCoopDtoToCardData(dto: CoopResponseDto): CardData {
+export function mapCoopDtoToCardData(dto: CoopResponseDto): CoopCardData {
   // Parse members safely without inventing fake fallback data
   const members: CoopMemberItem[] = (dto.members || []).map((m) => ({
     id: m.id,
@@ -54,7 +54,5 @@ export function mapCoopDtoToCardData(dto: CoopResponseDto): CardData {
     contacts: mappedContacts,
     wallets: Object.keys(mappedWallets).length > 0 ? mappedWallets : undefined,
     members: members,
-    // Coops don't use skills in the card footer directly (they use members)
-    skills: [],
   };
 }

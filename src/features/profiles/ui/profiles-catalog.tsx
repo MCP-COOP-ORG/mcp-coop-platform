@@ -1,7 +1,8 @@
 import React from "react";
 import { CardCatalog } from "@/shared/ui/components/card-catalog";
-import { CatalogType, CATALOG_CONSTANTS } from "@/shared/config/constants/catalog";
+import { CATALOG_CONSTANTS } from "@/shared/constants/catalog";
 import { getProfilesAction } from "../api/get-profiles.action";
+import { ProfileCard } from "./profile-card";
 
 export interface ProfilesCatalogProps {
   page: number;
@@ -20,11 +21,10 @@ export const ProfilesCatalog = async ({ page }: ProfilesCatalogProps) => {
   // Fallback rendering handled smoothly by the CardCatalog component
   // We seamlessly map the URL routing to the raw fetched item ID
   return (
-    <CardCatalog
-      type={CatalogType.PROFILE}
-      items={data}
-      totalItems={total || 0}
-      itemHrefPrefix="/members" // Resolves strictly to detailed page
-    />
+    <CardCatalog totalItems={total || 0}>
+      {data.map((item, index) => (
+        <ProfileCard key={item.id || index} item={item} href={`/members/${item.id}`} />
+      ))}
+    </CardCatalog>
   );
 };

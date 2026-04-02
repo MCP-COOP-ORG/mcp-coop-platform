@@ -1,5 +1,5 @@
 import { ProfileResponseDto } from "@/shared/open-api/models";
-import { CardData } from "@/shared/ui/components/card";
+import { ProfileCardData } from "@/shared/types/card.types";
 import { CryptoWalletsProps } from "@/shared/ui/components/crypto-wallets";
 import { ProfileContacts } from "@/shared/ui/components/contacts";
 import { SkillItem } from "@/shared/ui/components/skills";
@@ -11,13 +11,13 @@ import { SkillItem } from "@/shared/ui/components/skills";
  * values (e.g. "Frontend", "Backend") into the root `categories` array so the Card
  * renders the blue badges above the content autonomously.
  */
-export function mapProfileDtoToCardData(dto: ProfileResponseDto): CardData {
-  // Parse skills safely, extracting icon_url from the new DTO
-  const rawSkills: SkillItem[] = (dto.skills || []).map((skill: any) => ({
+export function mapProfileDtoToCardData(dto: ProfileResponseDto): ProfileCardData {
+  // Parse skills safely, extracting iconUrl from the new DTO
+  const rawSkills: SkillItem[] = (dto.skills || []).map((skill) => ({
     id: skill.id,
     name: skill.name,
     category: skill.category,
-    iconUrl: skill.icon_url || skill.iconUrl || null,
+    iconUrl: skill.iconUrl || null,
   }));
 
   // Extract unique categories from skills to populate top-level categories
@@ -63,6 +63,5 @@ export function mapProfileDtoToCardData(dto: ProfileResponseDto): CardData {
     contacts: mappedContacts,
     wallets: Object.keys(mappedWallets).length > 0 ? mappedWallets : undefined,
     skills: rawSkills, // Renders the scrolling skills list in the footer
-    members: [], // Profiles don't use members in Card
   };
 }

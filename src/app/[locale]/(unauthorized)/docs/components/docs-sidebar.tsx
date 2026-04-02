@@ -23,7 +23,7 @@ function generateId(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9а-яё]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 }
 
-const sortOutline = (a: [string, any], b: [string, any]) => {
+const sortOutline = (a: [string, unknown], b: [string, unknown]) => {
   const getParts = (s: string) => (s.match(/^(\d+(?:\.\d+)*)/)?.[0] || "1000").split('.').map(Number);
   const aParts = getParts(a[0]);
   const bParts = getParts(b[0]);

@@ -1,7 +1,8 @@
 import React from "react";
 import { CardCatalog } from "@/shared/ui/components/card-catalog";
-import { CatalogType, CATALOG_CONSTANTS } from "@/shared/config/constants/catalog";
+import { CATALOG_CONSTANTS } from "@/shared/constants/catalog";
 import { getCoopsAction } from "../api/get-coops.action";
+import { CoopCard } from "./coop-card";
 
 export interface CoopsCatalogProps {
   page: number;
@@ -20,11 +21,10 @@ export const CoopsCatalog = async ({ page }: CoopsCatalogProps) => {
   // Fallback rendering handled smoothly by the CardCatalog component
   // We seamlessly map the URL routing to the raw fetched item ID
   return (
-    <CardCatalog
-      type={CatalogType.COOP}
-      items={data}
-      totalItems={total || 0}
-      itemHrefPrefix="/coops" // Resolves strictly to detailed page
-    />
+    <CardCatalog totalItems={total || 0}>
+      {data.map((item, index) => (
+        <CoopCard key={item.id || index} item={item} href={`/coops/${item.id}`} />
+      ))}
+    </CardCatalog>
   );
 };

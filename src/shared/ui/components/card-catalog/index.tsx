@@ -1,23 +1,21 @@
 "use client";
 
+import React from "react";
 import { Pagination } from "@/shared/ui/components/hero-ui";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { CATALOG_CONSTANTS, CatalogType } from "@/shared/config/constants/catalog";
-import { Link } from "@/core/configs/i18n/routing";
-import { Card, CardData } from "@/shared/ui/components/card";
-import React from "react";
-
-export type CatalogItemData = CardData;
+import { CATALOG_CONSTANTS } from "@/shared/constants/catalog";
 
 export interface CardCatalogProps {
-  items: CatalogItemData[];
-  type: CatalogType | "coop" | "profile";
+  children?: React.ReactNode;
   totalItems: number;
   className?: string;
-  itemHrefPrefix?: string;
 }
 
-export const CardCatalog: React.FC<CardCatalogProps> = ({ items, type, totalItems, className = "", itemHrefPrefix }) => {
+export const CardCatalog = ({ 
+  children,
+  totalItems, 
+  className = "" 
+}: CardCatalogProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -34,19 +32,9 @@ export const CardCatalog: React.FC<CardCatalogProps> = ({ items, type, totalItem
 
   return (
     <div className={`w-full flex flex-col gap-6 ${className}`}>
-      {/* Grid rendering identical to previous logic */}
+      {/* Grid rendering */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {items.map((item) => {
-          const card = <Card item={item} type={type} />;
-          if (itemHrefPrefix) {
-            return (
-              <Link key={item.id} href={`${itemHrefPrefix}/${item.id}` as any} className="block w-full">
-                {card}
-              </Link>
-            );
-          }
-          return <React.Fragment key={item.id}>{card}</React.Fragment>;
-        })}
+        {children}
       </div>
 
       {/* Pagination rendering */}

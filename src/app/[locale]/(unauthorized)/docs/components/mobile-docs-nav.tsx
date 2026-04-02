@@ -7,7 +7,7 @@ function generateId(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9а-яё]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 }
 
-const sortOutline = (a: [string, any], b: [string, any]) => {
+const sortOutline = (a: [string, unknown], b: [string, unknown]) => {
   const getParts = (s: string) => (s.match(/^(\d+(?:\.\d+)*)/)?.[0] || "1000").split('.').map(Number);
   const aParts = getParts(a[0]);
   const bParts = getParts(b[0]);
@@ -19,7 +19,11 @@ const sortOutline = (a: [string, any], b: [string, any]) => {
   return 0;
 };
 
-export function MobileDocsNav({ tree }: { tree: Record<string, any> }) {
+interface DocumentNode {
+  subSections?: Record<string, DocumentNode>;
+}
+
+export function MobileDocsNav({ tree }: { tree: Record<string, DocumentNode> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("Оглавление"); // Default fallback
   const menuRef = useRef<HTMLDivElement>(null);
@@ -41,6 +45,7 @@ export function MobileDocsNav({ tree }: { tree: Record<string, any> }) {
     if (!headings.length) return;
 
     if (activeSection === "Оглавление" && headings[0].textContent) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveSection(headings[0].textContent);
     }
 
@@ -72,10 +77,10 @@ export function MobileDocsNav({ tree }: { tree: Record<string, any> }) {
     }
   };
 
-  const renderNodes = (nodes: any, level = 0) => {
+  const renderNodes = (nodes: Record<string, DocumentNode>, level = 0) => {
     return (
       <ul className={`flex flex-col ${level === 0 ? "gap-2" : "gap-1 pl-4 mt-1 mb-2 border-l border-primary"}`}>
-        {Object.entries(nodes).sort(sortOutline).map(([heading, node]: any) => {
+        {Object.entries(nodes).sort(sortOutline).map(([heading, node]) => {
           const id = generateId(heading);
           const hasSub = node.subSections && Object.keys(node.subSections).length > 0;
           
@@ -92,7 +97,7 @@ export function MobileDocsNav({ tree }: { tree: Record<string, any> }) {
                >
                  {heading}
                </button>
-               {hasSub && renderNodes(node.subSections, level + 1)}
+               {hasSub && node.subSections && renderNodes(node.subSections, level + 1)}
             </li>
           );
         })}

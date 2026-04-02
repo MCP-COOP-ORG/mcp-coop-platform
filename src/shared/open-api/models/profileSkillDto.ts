@@ -9,4 +9,6 @@ export interface ProfileSkillDto {
   id: string;
   name: string;
   category: string;
+  /** @nullable */
+  iconUrl?: string | null;
 }

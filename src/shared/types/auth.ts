@@ -1,6 +1,6 @@
 import { MeResponseDto } from "@/shared/open-api/models";
 
-export interface MyProfile extends MeResponseDto {}
+export type MyProfile = MeResponseDto;
 
 export interface AppSession {
   myProfile: MyProfile | null;
