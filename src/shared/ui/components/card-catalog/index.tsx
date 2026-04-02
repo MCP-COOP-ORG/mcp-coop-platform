@@ -14,10 +14,10 @@ export interface CardCatalogProps {
   type: CatalogType | "coop" | "profile";
   totalItems: number;
   className?: string;
-  getItemHref?: (item: CatalogItemData) => string;
+  itemHrefPrefix?: string;
 }
 
-export const CardCatalog: React.FC<CardCatalogProps> = ({ items, type, totalItems, className = "", getItemHref }) => {
+export const CardCatalog: React.FC<CardCatalogProps> = ({ items, type, totalItems, className = "", itemHrefPrefix }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -35,12 +35,12 @@ export const CardCatalog: React.FC<CardCatalogProps> = ({ items, type, totalItem
   return (
     <div className={`w-full flex flex-col gap-6 ${className}`}>
       {/* Grid rendering identical to previous logic */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {items.map((item) => {
           const card = <Card item={item} type={type} />;
-          if (getItemHref) {
+          if (itemHrefPrefix) {
             return (
-              <Link key={item.id} href={getItemHref(item) as any} className="block w-full">
+              <Link key={item.id} href={`${itemHrefPrefix}/${item.id}` as any} className="block w-full">
                 {card}
               </Link>
             );

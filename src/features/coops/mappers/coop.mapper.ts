@@ -1,4 +1,4 @@
-import { CoopDto } from "@/entities/coops/types";
+import { CoopResponseDto } from "@/shared/open-api/models";
 import { CardData } from "@/shared/ui/components/card";
 import { CryptoWalletsProps } from "@/shared/ui/components/crypto-wallets";
 import { ProfileContacts } from "@/shared/ui/components/contacts";
@@ -10,62 +10,51 @@ import { CoopMemberItem } from "@/shared/ui/components/coop-members";
  * Extracts unique roles from the members array and injects them as categories
  * so the Card UI renders them automatically in the blue badges area.
  */
-export function mapCoopDtoToCardData(dto: Partial<CoopDto> | any): CardData {
-  // Parse members safely
-  const members: CoopMemberItem[] = Array.isArray(dto?.members) 
-    ? dto.members.map((m: any) => ({
-        id: m.id || String(Math.random()),
-        name: m.name || "Unknown",
-        avatarUrl: m.avatarUrl || null,
-        role: m.role || "Member",
-      }))
-    : [];
+export function mapCoopDtoToCardData(dto: CoopResponseDto): CardData {
+  // Parse members safely without inventing fake fallback data
+  const members: CoopMemberItem[] = (dto.members || []).map((m) => ({
+    id: m.id,
+    name: m.name,
+    avatarUrl: m.avatarUrl || null,
+    role: m.role || "",
+    isProposer: m.isProposer || false,
+  }));
 
-  // Extract unique roles from members to populate categories
-  const aggregatedRolesSet = new Set<string>();
-  members.forEach((m) => {
-    if (m.role) {
-      aggregatedRolesSet.add(m.role);
-    }
-  });
-  
-  // Optionally merge provided categories with the extracted roles
-  const providedCategories = Array.isArray(dto?.categories) ? dto.categories : [];
-  const mergedCategories = Array.from(new Set([...providedCategories, ...Array.from(aggregatedRolesSet)]));
+  // Strictly use DB categories as requested
+  const mergedCategories = dto.categories || [];
 
   // Parse wallets safely
-  const rawWallets = dto?.wallets || {};
+  const rawWallets = dto.wallets || {};
   const mappedWallets: CryptoWalletsProps["wallets"] = {};
   
-  if (rawWallets.solana) mappedWallets.solana = typeof rawWallets.solana === 'object' ? rawWallets.solana : { address: rawWallets.solana };
-  if (rawWallets.bitcoin) mappedWallets.bitcoin = typeof rawWallets.bitcoin === 'object' ? rawWallets.bitcoin : { address: rawWallets.bitcoin };
-  if (rawWallets.ethereum) mappedWallets.ethereum = typeof rawWallets.ethereum === 'object' ? rawWallets.ethereum : { address: rawWallets.ethereum };
-  if (rawWallets.ton) mappedWallets.ton = typeof rawWallets.ton === 'object' ? rawWallets.ton : { address: rawWallets.ton };
+  if (rawWallets.solana) mappedWallets.solana = typeof rawWallets.solana === 'object' ? rawWallets.solana as { address: string; isPrimary?: boolean } : { address: String(rawWallets.solana) };
+  if (rawWallets.bitcoin) mappedWallets.bitcoin = typeof rawWallets.bitcoin === 'object' ? rawWallets.bitcoin as { address: string; isPrimary?: boolean } : { address: String(rawWallets.bitcoin) };
+  if (rawWallets.ethereum) mappedWallets.ethereum = typeof rawWallets.ethereum === 'object' ? rawWallets.ethereum as { address: string; isPrimary?: boolean } : { address: String(rawWallets.ethereum) };
+  if (rawWallets.ton) mappedWallets.ton = typeof rawWallets.ton === 'object' ? rawWallets.ton as { address: string; isPrimary?: boolean } : { address: String(rawWallets.ton) };
 
   // Parse contacts safely
-  const rawContacts = dto?.contacts || {};
+  const rawContacts = dto.contacts || {};
   const mappedContacts: ProfileContacts = {
-    telegram: rawContacts.telegram || null,
-    whatsapp: rawContacts.whatsapp || null,
-    viber: rawContacts.viber || null,
-    phone: rawContacts.phone || null,
-    email: rawContacts.email || null,
-    instagram: rawContacts.instagram || null,
-    facebook: rawContacts.facebook || null,
-    linkedin: rawContacts.linkedin || null,
+    telegram: (rawContacts.telegram as string) || null,
+    whatsapp: (rawContacts.whatsapp as string) || null,
+    viber: (rawContacts.viber as string) || null,
+    phone: (rawContacts.phone as string) || null,
+    email: (rawContacts.email as string) || null,
+    instagram: (rawContacts.instagram as string) || null,
+    facebook: (rawContacts.facebook as string) || null,
+    linkedin: (rawContacts.linkedin as string) || null,
   };
 
   return {
-    id: dto?.id || "unknown-id",
-    name: dto?.name || "Unnamed Cooperative",
-    description: dto?.description || "",
-    avatarUrl: dto?.avatarUrl || null,
+    id: dto.id,
+    name: dto.name,
+    description: dto.description || "",
+    avatarUrl: dto.logoUrl || null,
     categories: mergedCategories,
     contacts: mappedContacts,
     wallets: Object.keys(mappedWallets).length > 0 ? mappedWallets : undefined,
     members: members,
-    // Coops don't use skills in the card footer directly (they use members), 
-    // but we can map them if provided just in case.
-    skills: Array.isArray(dto?.skills) ? dto.skills : [],
+    // Coops don't use skills in the card footer directly (they use members)
+    skills: [],
   };
 }

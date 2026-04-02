@@ -19,14 +19,16 @@ export async function getProfilesAction(page: number, limit: number): Promise<Ge
   try {
     const response = await profilesControllerFindAll({ page, limit });
 
-    // Extract raw items defensively in case backend schema is in transition
-    const rawItems: any[] = Array.isArray((response as any)?.data) 
-      ? (response as any).data 
-      : (Array.isArray((response as any)?.items) ? (response as any).items : []);
+    const payload = (response as any)?.data;
+
+    // Extract raw items defensively taking into account { data: [], meta: {} }
+    const rawItems: any[] = Array.isArray(payload) 
+      ? payload 
+      : (Array.isArray(payload?.data) ? payload.data : []);
 
     // Try extracting pagination metadata, falling back to array length
-    const rawTotal = (response as any)?.total 
-      || (response as any)?.meta?.totalItems
+    const rawTotal = payload?.meta?.totalItems 
+      || payload?.total 
       || parseInt((response as any)?.headers?.get("x-total-count") || "0", 10) 
       || rawItems.length;
 

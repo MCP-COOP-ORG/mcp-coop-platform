@@ -24,7 +24,7 @@ export const CoopsCatalog = async ({ page }: CoopsCatalogProps) => {
       type={CatalogType.COOP}
       items={data}
       totalItems={total || 0}
-      getItemHref={(item) => `/coops/${item.id}`} // Resolves strictly to detailed page
+      itemHrefPrefix="/coops" // Resolves strictly to detailed page
     />
   );
 };

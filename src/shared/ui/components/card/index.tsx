@@ -6,6 +6,7 @@ import { CryptoWallets, CryptoWalletsProps } from "@/shared/ui/components/crypto
 import { Skills, SkillItem } from "@/shared/ui/components/skills";
 import { CoopMembers, CoopMemberItem } from "@/shared/ui/components/coop-members";
 import { CatalogType } from "@/shared/config/constants/catalog";
+import { APP_INFO } from "@/shared/constants/app-info";
 
 export interface CardData {
   id: string;
@@ -21,7 +22,7 @@ export interface CardData {
 
 export interface CardProps {
   item: CardData;
-  type: CatalogType | "coop" | "profile";
+  type: CatalogType;
 }
 
 export const Card: React.FC<CardProps> = ({ item, type }) => {
@@ -36,12 +37,14 @@ export const Card: React.FC<CardProps> = ({ item, type }) => {
     members = [],
   } = item;
 
+  const bgImage = type === CatalogType.PROFILE ? APP_INFO.logo : avatarUrl;
+
   return (
-    <HeroCard className="my-[30px] p-[20px] shadow-sm border border-default-200 flex flex-col justify-between h-full relative overflow-hidden">
-      {avatarUrl && (
+    <HeroCard className="p-[20px] shadow-sm border border-default-200 flex flex-col justify-start h-full relative overflow-hidden">
+      {bgImage && (
         <div 
-          className="absolute -top-[15%] -left-[15%] w-[65%] pb-[65%] bg-no-repeat bg-contain opacity-5 pointer-events-none z-0"
-          style={{ backgroundImage: `url(${avatarUrl})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}
+          className="absolute -top-[40%] -left-[40%] w-[80%] pb-[80%] bg-no-repeat bg-contain opacity-5 pointer-events-none z-0 grayscale"
+          style={{ backgroundImage: `url(${bgImage})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}
         />
       )}
 

@@ -4,7 +4,6 @@
  * Do not edit manually.
  * Micro App API
  */
-import type { TaskProfileDtoSettings } from './taskProfileDtoSettings';
 
 export interface TaskProfileDto {
   id: string;
@@ -13,5 +12,5 @@ export interface TaskProfileDto {
   /** @nullable */
   fullName?: string | null;
   /** @nullable */
-  settings?: TaskProfileDtoSettings;
+  avatarUrl?: string | null;
 }

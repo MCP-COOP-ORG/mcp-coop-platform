@@ -5,4 +5,4 @@
  * Micro App API
  */
 
-export type ProfilesControllerFindOne200 = { [key: string]: unknown };
+export type UpdateProfileDtoContacts = { [key: string]: unknown };

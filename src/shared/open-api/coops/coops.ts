@@ -5,7 +5,8 @@
  * Micro App API
  */
 import type {
-  Coop,
+  CoopResponseDto,
+  CoopsControllerFindAll200AllOf,
   CoopsControllerFindAllParams
 } from '.././models';
 
@@ -15,7 +16,7 @@ import { openApiMutator } from '../../interceptors/open-api.mutator';
  * @summary List cooperatives (paginated, optional name search)
  */
 export type coopsControllerFindAllResponse200 = {
-  data: void
+  data: CoopsControllerFindAll200AllOf
   status: 200
 }
     
@@ -54,10 +55,10 @@ export const coopsControllerFindAll = async (params?: CoopsControllerFindAllPara
 
 
 /**
- * @summary Get cooperative by id (with skills and management data)
+ * @summary Get cooperative by id (with members and management data)
  */
 export type coopsControllerFindOneResponse200 = {
-  data: Coop
+  data: CoopResponseDto
   status: 200
 }
     

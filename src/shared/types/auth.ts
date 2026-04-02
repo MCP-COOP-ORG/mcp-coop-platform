@@ -1,18 +1,6 @@
-export interface ProfileSettings {
-  lastActiveWorkspaceId?: string;
-  avatarUrl?: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-}
+import { MeResponseDto } from "@/shared/open-api/models";
 
-export interface MyProfile {
-  id: string;
-  email: string | null;
-  fullName: string | null;
-  username: string | null;
-  tgId: string | null;
-  settings: ProfileSettings | null;
-}
+export interface MyProfile extends MeResponseDto {}
 
 export interface AppSession {
   myProfile: MyProfile | null;

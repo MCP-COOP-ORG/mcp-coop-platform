@@ -5,12 +5,9 @@
  * Micro App API
  */
 import type {
-  ProfilesControllerFindAllParams,
-  ProfilesControllerFindMe200,
-  ProfilesControllerFindOne200,
-  ProfilesControllerRemoveMe200,
-  ProfilesControllerUpdateMe200,
-  UpdateProfileDto
+  ProfileResponseDto,
+  ProfilesControllerFindAll200AllOf,
+  ProfilesControllerFindAllParams
 } from '.././models';
 
 import { openApiMutator } from '../../interceptors/open-api.mutator';
@@ -19,7 +16,7 @@ import { openApiMutator } from '../../interceptors/open-api.mutator';
  * @summary Get profiles from your workspaces
  */
 export type profilesControllerFindAllResponse200 = {
-  data: void
+  data: ProfilesControllerFindAll200AllOf
   status: 200
 }
     
@@ -58,116 +55,10 @@ export const profilesControllerFindAll = async (params?: ProfilesControllerFindA
 
 
 /**
- * @summary Get your own profile
- */
-export type profilesControllerFindMeResponse200 = {
-  data: ProfilesControllerFindMe200
-  status: 200
-}
-    
-export type profilesControllerFindMeResponseSuccess = (profilesControllerFindMeResponse200) & {
-  headers: Headers;
-};
-;
-
-export type profilesControllerFindMeResponse = (profilesControllerFindMeResponseSuccess)
-
-export const getProfilesControllerFindMeUrl = () => {
-
-
-  
-
-  return `/api/profiles/me`
-}
-
-export const profilesControllerFindMe = async ( options?: RequestInit): Promise<profilesControllerFindMeResponse> => {
-  
-  return openApiMutator<profilesControllerFindMeResponse>(getProfilesControllerFindMeUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
-
-/**
- * @summary Update your own profile
- */
-export type profilesControllerUpdateMeResponse200 = {
-  data: ProfilesControllerUpdateMe200
-  status: 200
-}
-    
-export type profilesControllerUpdateMeResponseSuccess = (profilesControllerUpdateMeResponse200) & {
-  headers: Headers;
-};
-;
-
-export type profilesControllerUpdateMeResponse = (profilesControllerUpdateMeResponseSuccess)
-
-export const getProfilesControllerUpdateMeUrl = () => {
-
-
-  
-
-  return `/api/profiles/me`
-}
-
-export const profilesControllerUpdateMe = async (updateProfileDto: UpdateProfileDto, options?: RequestInit): Promise<profilesControllerUpdateMeResponse> => {
-  
-  return openApiMutator<profilesControllerUpdateMeResponse>(getProfilesControllerUpdateMeUrl(),
-  {      
-    ...options,
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      updateProfileDto,)
-  }
-);}
-
-
-/**
- * @summary Delete your own profile
- */
-export type profilesControllerRemoveMeResponse200 = {
-  data: ProfilesControllerRemoveMe200
-  status: 200
-}
-    
-export type profilesControllerRemoveMeResponseSuccess = (profilesControllerRemoveMeResponse200) & {
-  headers: Headers;
-};
-;
-
-export type profilesControllerRemoveMeResponse = (profilesControllerRemoveMeResponseSuccess)
-
-export const getProfilesControllerRemoveMeUrl = () => {
-
-
-  
-
-  return `/api/profiles/me`
-}
-
-export const profilesControllerRemoveMe = async ( options?: RequestInit): Promise<profilesControllerRemoveMeResponse> => {
-  
-  return openApiMutator<profilesControllerRemoveMeResponse>(getProfilesControllerRemoveMeUrl(),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-    
-  }
-);}
-
-
-/**
  * @summary Get profile by ID (own or shared workspace)
  */
 export type profilesControllerFindOneResponse200 = {
-  data: ProfilesControllerFindOne200
+  data: ProfileResponseDto
   status: 200
 }
     

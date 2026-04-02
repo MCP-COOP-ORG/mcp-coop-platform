@@ -4,7 +4,7 @@
  * Do not edit manually.
  * Micro App API
  */
-import type { ProfileSettingsDto } from './profileSettingsDto';
+import type { UpdateProfileDtoContacts } from './updateProfileDtoContacts';
 
 export interface UpdateProfileDto {
   email?: string;
@@ -13,7 +13,16 @@ export interface UpdateProfileDto {
    * @nullable
    */
   username?: string | null;
-  /** Full name */
-  fullName?: string;
-  settings?: ProfileSettingsDto;
+  /**
+   * Full name
+   * @nullable
+   */
+  fullName?: string | null;
+  /** @nullable */
+  role?: string | null;
+  /** @nullable */
+  description?: string | null;
+  /** @nullable */
+  avatarUrl?: string | null;
+  contacts?: UpdateProfileDtoContacts;
 }

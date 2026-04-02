@@ -5,4 +5,4 @@
  * Micro App API
  */
 
-export interface BlockchainAccount { [key: string]: unknown }
+export type ProfileResponseDtoWallets = {[key: string]: { [key: string]: unknown }};

@@ -10,6 +10,4 @@ export interface UpdateSkillDto {
   name?: string;
   /** Grouping category */
   category?: string;
-  /** Short description of the skill */
-  description?: string;
 }

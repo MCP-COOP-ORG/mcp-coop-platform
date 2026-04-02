@@ -21,17 +21,18 @@ export async function getCoopsAction(page: number, limit: number): Promise<GetCo
     // Any backend breaking schema changes are captured here or inside the mutator
     const response = await coopsControllerFindAll({ page, limit });
     
-    // Safety check: The backend DTO could currently just be { [key: string]: unknown }
-    // We try to extract data from `.data`, `.items`, or the array itself safely.
-    const rawItems: any[] = Array.isArray((response as any)?.data) 
-      ? (response as any).data 
-      : (Array.isArray((response as any)?.items) ? (response as any).items : []);
+    const payload = (response as any)?.data;
+    
+    // The backend payload might be { data: [], meta: {} } or directly an array []
+    const rawItems: any[] = Array.isArray(payload) 
+      ? payload 
+      : (Array.isArray(payload?.data) ? payload.data : []);
 
-    // Safety check: Try to extract a total count for pagination from body or headers
-    const rawTotal = (response as any)?.total 
-      || (response as any)?.meta?.totalItems
+    // Try extracting pagination metadata, falling back to array length
+    const rawTotal = payload?.meta?.totalItems 
+      || payload?.total
       || parseInt((response as any)?.headers?.get("x-total-count") || "0", 10) 
-      || rawItems.length; // Fallback to array length if everything else fails
+      || rawItems.length;
 
     // Execute the Mapper (Anti-Corruption Layer)
     const mappedData = rawItems.map((dto) => mapCoopDtoToCardData(dto));

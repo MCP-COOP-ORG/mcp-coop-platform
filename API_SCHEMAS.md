@@ -97,3 +97,15 @@
 
 > [!TIP]
 > Объекты `contacts` и `wallets` абсолютно идентичны для обоих типов. Если у профиля или кооператива нет какого-то кошелька или контакта — просто не передавай ключ этого кошелька/контакта (или отдай его как `null`), и фронтенд автоматически уберет иконку.
+
+
+docker run --rm \
+  --network mcp-network \
+  -v "$(pwd)/prisma:/app/prisma" \
+  -v "$(pwd)/prisma.config.ts:/app/prisma.config.ts" \
+  -v "$(pwd)/tsconfig.json:/app/tsconfig.json" \
+  -v "$(pwd)/node_modules:/app/node_modules" \
+  -w /app \
+  -e DATABASE_URL="postgresql://postgres:CHANGE_ME@postgres-backend:5432/mcp_task_micro_app?schema=public" \
+  node:22-alpine \
+  sh -c "node_modules/.bin/ts-node -r tsconfig-paths/register prisma/seed.ts"

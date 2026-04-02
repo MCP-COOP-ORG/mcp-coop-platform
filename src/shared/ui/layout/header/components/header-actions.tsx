@@ -39,7 +39,7 @@ export function HeaderActions({ session, onOpenLogin, onLogout, isMobile = false
 
   const isDark = theme === THEME.dark;
   const isAuthenticated = !!session?.myProfile;
-  const avatarUrl = session?.myProfile?.settings?.avatarUrl;
+  const avatarUrl = session?.myProfile?.avatarUrl || undefined;
 
   const handleToggleTheme = () => {
     setTheme(isDark ? THEME.light : THEME.dark);

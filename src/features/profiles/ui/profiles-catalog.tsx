@@ -24,7 +24,7 @@ export const ProfilesCatalog = async ({ page }: ProfilesCatalogProps) => {
       type={CatalogType.PROFILE}
       items={data}
       totalItems={total || 0}
-      getItemHref={(item) => `/members/${item.id}`} // Resolves strictly to detailed page
+      itemHrefPrefix="/members" // Resolves strictly to detailed page
     />
   );
 };

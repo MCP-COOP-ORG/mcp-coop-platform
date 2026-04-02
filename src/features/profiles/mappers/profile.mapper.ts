@@ -1,4 +1,4 @@
-import { ProfileDto } from "@/entities/profiles/types";
+import { ProfileResponseDto } from "@/shared/open-api/models";
 import { CardData } from "@/shared/ui/components/card";
 import { CryptoWalletsProps } from "@/shared/ui/components/crypto-wallets";
 import { ProfileContacts } from "@/shared/ui/components/contacts";
@@ -11,9 +11,14 @@ import { SkillItem } from "@/shared/ui/components/skills";
  * values (e.g. "Frontend", "Backend") into the root `categories` array so the Card
  * renders the blue badges above the content autonomously.
  */
-export function mapProfileDtoToCardData(dto: Partial<ProfileDto> | any): CardData {
-  // Parse skills safely
-  const rawSkills: SkillItem[] = Array.isArray(dto?.skills) ? dto.skills : [];
+export function mapProfileDtoToCardData(dto: ProfileResponseDto): CardData {
+  // Parse skills safely, extracting icon_url from the new DTO
+  const rawSkills: SkillItem[] = (dto.skills || []).map((skill: any) => ({
+    id: skill.id,
+    name: skill.name,
+    category: skill.category,
+    iconUrl: skill.icon_url || skill.iconUrl || null,
+  }));
 
   // Extract unique categories from skills to populate top-level categories
   const extractedCategoriesSet = new Set<string>();
@@ -24,36 +29,36 @@ export function mapProfileDtoToCardData(dto: Partial<ProfileDto> | any): CardDat
   });
 
   // Optionally merge any explicitly provided categories with the extracted ones
-  const providedCategories = Array.isArray(dto?.categories) ? dto.categories : [];
+  const providedCategories = dto.categories || [];
   const mergedCategories = Array.from(new Set([...providedCategories, ...Array.from(extractedCategoriesSet)]));
 
   // Parse wallets safely (CryptoWallets component handles parsing correctly if we provide the right object shape)
-  const rawWallets = dto?.wallets || {};
+  const rawWallets = dto.wallets || {};
   const mappedWallets: CryptoWalletsProps["wallets"] = {};
   
-  if (rawWallets.solana) mappedWallets.solana = typeof rawWallets.solana === 'object' ? rawWallets.solana : { address: rawWallets.solana };
-  if (rawWallets.bitcoin) mappedWallets.bitcoin = typeof rawWallets.bitcoin === 'object' ? rawWallets.bitcoin : { address: rawWallets.bitcoin };
-  if (rawWallets.ethereum) mappedWallets.ethereum = typeof rawWallets.ethereum === 'object' ? rawWallets.ethereum : { address: rawWallets.ethereum };
-  if (rawWallets.ton) mappedWallets.ton = typeof rawWallets.ton === 'object' ? rawWallets.ton : { address: rawWallets.ton };
+  if (rawWallets.solana) mappedWallets.solana = typeof rawWallets.solana === 'object' ? rawWallets.solana as { address: string; isPrimary?: boolean } : { address: String(rawWallets.solana) };
+  if (rawWallets.bitcoin) mappedWallets.bitcoin = typeof rawWallets.bitcoin === 'object' ? rawWallets.bitcoin as { address: string; isPrimary?: boolean } : { address: String(rawWallets.bitcoin) };
+  if (rawWallets.ethereum) mappedWallets.ethereum = typeof rawWallets.ethereum === 'object' ? rawWallets.ethereum as { address: string; isPrimary?: boolean } : { address: String(rawWallets.ethereum) };
+  if (rawWallets.ton) mappedWallets.ton = typeof rawWallets.ton === 'object' ? rawWallets.ton as { address: string; isPrimary?: boolean } : { address: String(rawWallets.ton) };
 
   // Parse contacts safely
-  const rawContacts = dto?.contacts || {};
+  const rawContacts = dto.contacts || {};
   const mappedContacts: ProfileContacts = {
-    telegram: rawContacts.telegram || null,
-    whatsapp: rawContacts.whatsapp || null,
-    viber: rawContacts.viber || null,
-    phone: rawContacts.phone || null,
-    email: rawContacts.email || null,
-    instagram: rawContacts.instagram || null,
-    facebook: rawContacts.facebook || null,
-    linkedin: rawContacts.linkedin || null,
+    telegram: (rawContacts.telegram as string) || null,
+    whatsapp: (rawContacts.whatsapp as string) || null,
+    viber: (rawContacts.viber as string) || null,
+    phone: (rawContacts.phone as string) || null,
+    email: (rawContacts.email as string) || null,
+    instagram: (rawContacts.instagram as string) || null,
+    facebook: (rawContacts.facebook as string) || null,
+    linkedin: (rawContacts.linkedin as string) || null,
   };
 
   return {
-    id: dto?.id || `unknown-${Math.random()}`,
-    name: dto?.name || "Unnamed Specialist",
-    description: dto?.description || "",
-    avatarUrl: dto?.avatarUrl || null,
+    id: dto.id,
+    name: dto.fullName || dto.username || "",
+    description: dto.description || "",
+    avatarUrl: dto.avatarUrl || null,
     categories: mergedCategories, // The blue badges are rendered from here!
     contacts: mappedContacts,
     wallets: Object.keys(mappedWallets).length > 0 ? mappedWallets : undefined,

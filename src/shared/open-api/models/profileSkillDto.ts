@@ -5,9 +5,8 @@
  * Micro App API
  */
 
-export interface CreateSkillDto {
-  /** Unique skill name */
+export interface ProfileSkillDto {
+  id: string;
   name: string;
-  /** Grouping category */
   category: string;
 }
