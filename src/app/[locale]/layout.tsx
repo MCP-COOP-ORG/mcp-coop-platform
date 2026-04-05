@@ -1,3 +1,4 @@
+import { ibmPlexSans, ibmPlexMono } from "@/core/configs/theme/fonts.config";
 import { metadataConfig, viewportConfig } from "@/core/configs/seo/seo.config";
 import "../globals.css";
 import { Providers } from "@/core/providers/providers";
@@ -31,7 +32,7 @@ export default async function RootLayout(props: {
   const session: AppSession = { myProfile };
 
   return (
-    <html lang={locale} suppressHydrationWarning className="scroll-smooth">
+    <html lang={locale} suppressHydrationWarning className={`scroll-smooth ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <body className="antialiased font-sans">
         <NextIntlClientProvider messages={messages}>
           <Providers session={session}>

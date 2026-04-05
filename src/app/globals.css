@@ -8,8 +8,14 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-ibm-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-ibm-mono, ui-monospace, monospace);
+}
+
+/* Force HeroUI theme engine to respect our Next.js font variables globally */
+:root, [data-theme], [data-theme="light"], [data-theme="dark"] {
+  --font-sans: var(--font-ibm-sans) !important;
+  --font-mono: var(--font-ibm-mono) !important;
 }
 
 body {
