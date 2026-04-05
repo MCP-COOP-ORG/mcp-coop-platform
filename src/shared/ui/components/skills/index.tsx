@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Tooltip } from "@/shared/ui/components/hero-ui";
-import { ProfileCategories } from "@/shared/ui/components/profile-categories";
 
 export interface SkillItem {
   id: string;
@@ -17,6 +16,8 @@ export interface SkillsProps {
 }
 
 export const Skills: React.FC<SkillsProps> = ({ skills = [], className = "" }) => {
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+
   if (!skills.length) return null;
 
   // Aggregate unique categories from skills
@@ -24,18 +25,33 @@ export const Skills: React.FC<SkillsProps> = ({ skills = [], className = "" }) =
 
   return (
     <div className={`w-full flex flex-col gap-4 ${className}`}>
-      {/* Aggregated Categories using ProfileCategories (Blue styling) */}
+      {/* Aggregated categories */}
       {uniqueCategories.length > 0 && (
-        <ProfileCategories
-          categories={uniqueCategories}
-          className="text-primary text-center w-full font-medium"
-        />
+        <div className="truncate text-[14px] font-medium tracking-wide min-w-0 text-primary text-center w-full">
+          {uniqueCategories.map((cat, index) => (
+            <React.Fragment key={`${index}-${cat}`}>
+              <span
+                className="cursor-pointer transition-opacity duration-150 hover:opacity-100"
+                style={{ opacity: hoveredCategory !== null && hoveredCategory !== cat ? 0.4 : 1 }}
+                onMouseEnter={() => setHoveredCategory(cat)}
+                onMouseLeave={() => setHoveredCategory(null)}
+              >
+                {cat}
+              </span>
+              {index < uniqueCategories.length - 1 && (
+                <span className="opacity-50 mx-2 select-none">|</span>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
       )}
 
       {/* Skills list */}
       <div className="flex flex-nowrap gap-3 items-center justify-center overflow-x-auto py-2 px-[5px] w-full max-w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {skills.map((skill) => {
-          // Formulate tooltip text
+          const isHighlighted = hoveredCategory !== null && skill.category === hoveredCategory;
+          const isDimmed = hoveredCategory !== null && skill.category !== hoveredCategory;
+
           const tooltipContent = (
             <div className="flex flex-col items-center justify-center text-center px-1 py-0.5">
               <span className="font-medium text-sm leading-tight">{skill.name}</span>
@@ -55,15 +71,17 @@ export const Skills: React.FC<SkillsProps> = ({ skills = [], className = "" }) =
                   e.preventDefault();
                   e.stopPropagation();
                 }}
-                className="rounded-full border-[0.5px] border-default-300 p-0.5 shadow-[0_8px_24px_rgba(0,0,0,0.04)] bg-default-50 flex items-center justify-center transition-transform hover:scale-110 cursor-default shrink-0"
-                style={{ width: "2.5rem", height: "2.5rem" }} // 40px base circular boundary
+                className={`rounded-full border-[0.5px] border-default-300 p-0.5 bg-default-50 flex items-center justify-center transition-all duration-200 hover:scale-110 cursor-default shrink-0 ${
+                  isHighlighted ? "shadow-[0_4px_12px_rgba(34,197,94,0.4)] scale-110" : ""
+                } ${isDimmed ? "opacity-40" : ""}`}
+                style={{ width: "2.5rem", height: "2.5rem" }}
               >
                 <Avatar
                   src={skill.iconUrl || undefined}
                   name={skill.name.substring(0, 2).toUpperCase()}
                   classNames={{
                     base: "w-full h-full bg-transparent text-xs",
-                    img: "object-contain scale-75", // scale-75 because logos usually touch edges
+                    img: "object-contain scale-75",
                   }}
                 />
               </div>

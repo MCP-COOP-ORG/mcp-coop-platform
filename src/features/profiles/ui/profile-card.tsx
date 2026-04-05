@@ -4,7 +4,7 @@ import { Contacts } from "@/shared/ui/components/contacts";
 import { CryptoWallets } from "@/shared/ui/components/crypto-wallets";
 import { Skills } from "@/shared/ui/components/skills";
 import { ProfileCategories } from "@/shared/ui/components/profile-categories";
-import { ProfileCardData } from "@/shared/types/card.types";
+import { ProfileCardData } from "@/entities/profiles/types";
 import { APP_INFO } from "@/shared/constants/app-info";
 
 export interface ProfileCardProps {
@@ -27,7 +27,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ item, href }) => {
         actions={
           <>
             <Contacts contacts={item.contacts || {}} />
-            <CryptoWallets wallets={item.wallets || {}} />
+            <CryptoWallets wallets={item.wallets || {}} onChainId={item.blockchainAccount} />
           </>
         }
       />

@@ -10,15 +10,19 @@ export interface VerifyEmailOtpDto {
   email: string;
   /**
    * 4-digit OTP code received via email
-   * @minLength 4
-   * @maxLength 4
+   * @minLength 6
+   * @maxLength 6
    */
   code: string;
   /**
    * Username
+   * @maxLength 255
    * @nullable
    */
   username?: string | null;
-  /** Full name */
+  /**
+   * Full name
+   * @maxLength 255
+   */
   fullName?: string;
 }

@@ -1,16 +1,7 @@
-import { MeResponseDto } from "@/shared/open-api/models";
+import type { MyProfileData } from "@/entities/profiles/types";
 
-export type MyProfile = MeResponseDto;
+export type MyProfile = MyProfileData;
 
 export interface AppSession {
   myProfile: MyProfile | null;
-}
-
-export function isMyProfile(value: unknown): value is MyProfile {
-  return (
-    value !== null &&
-    typeof value === "object" &&
-    "id" in value &&
-    typeof (value as Record<string, unknown>).id === "string"
-  );
 }

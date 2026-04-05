@@ -12,14 +12,23 @@ export interface CreateTaskDto {
   workspaceId: string;
   /** Assignee ID (defaults to creator if omitted) */
   assigneeId?: string;
-  /** Task title */
+  /**
+   * Task title
+   * @maxLength 255
+   */
   title: string;
-  /** Task description */
+  /**
+   * Task description
+   * @maxLength 5000
+   */
   description: string;
   /** Task priority */
   priority?: CreateTaskDtoPriority;
   /** Task status */
   status?: CreateTaskDtoStatus;
-  /** Additional info (plain text) */
+  /**
+   * Additional info (plain text)
+   * @maxLength 5000
+   */
   info?: string;
 }

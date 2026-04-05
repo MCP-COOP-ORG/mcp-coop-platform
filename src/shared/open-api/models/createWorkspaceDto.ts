@@ -9,9 +9,15 @@ import type { CreateWorkspaceDtoTier } from './createWorkspaceDtoTier';
 import type { WorkspaceSettingsDto } from './workspaceSettingsDto';
 
 export interface CreateWorkspaceDto {
-  /** External ID (e.g. Telegram chat ID) */
+  /**
+   * External ID (e.g. Telegram chat ID)
+   * @maxLength 255
+   */
   externalId?: string;
-  /** Workspace name */
+  /**
+   * Workspace name
+   * @maxLength 255
+   */
   name?: string;
   /** Workspace type */
   type?: CreateWorkspaceDtoType;

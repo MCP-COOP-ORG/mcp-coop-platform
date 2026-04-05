@@ -4,7 +4,7 @@ import { Contacts } from "@/shared/ui/components/contacts";
 import { CryptoWallets } from "@/shared/ui/components/crypto-wallets";
 import { CoopMembers } from "@/shared/ui/components/coop-members";
 import { ProfileCategories } from "@/shared/ui/components/profile-categories";
-import { CoopCardData } from "@/shared/types/card.types";
+import { CoopCardData } from "@/entities/coops/types";
 
 export interface CoopCardProps {
   item: CoopCardData;
@@ -26,7 +26,7 @@ export const CoopCard: React.FC<CoopCardProps> = ({ item, href }) => {
         actions={
           <>
             <Contacts contacts={item.contacts || {}} />
-            <CryptoWallets wallets={item.wallets || {}} />
+            <CryptoWallets wallets={item.wallets || {}} onChainId={item.onChainId} />
           </>
         }
       />

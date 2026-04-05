@@ -1,15 +1,6 @@
 import type { AuthResult } from "../types";
 import { formErrors } from "@/shared/constants/form";
-
-/**
- * Helper to safely identify Next.js boundary redirects.
- */
-export function isNextRedirect(error: unknown): boolean {
-  if (error && typeof error === "object" && "digest" in error) {
-    return String((error as { digest: string }).digest).includes("NEXT_REDIRECT");
-  }
-  return false;
-}
+import { isNextRedirect } from "@/shared/helpers/is-next-redirect";
 
 /**
  * Higher-Order Function to standardize Auth Server Actions.

@@ -10,7 +10,7 @@ import {
   emailOtpControllerRequestOtp,
   emailOtpControllerVerifyOtp,
 } from "@/shared/open-api/auth/auth";
-import type { RequestEmailOtpResponseDto } from "@/shared/open-api/models";
+import { mapEmailOtpResponse } from "@/shared/mappers";
 import { withAuthAction } from "./core";
 
 export type RequestEmailOtpActionResult = AuthResult & {
@@ -46,7 +46,7 @@ export async function requestEmailOtpAction(
       return { success: false, error: formErrors.internalServerError };
     }
 
-    const dto = response.data as RequestEmailOtpResponseDto;
+    const dto = mapEmailOtpResponse(response.data);
     return {
       success: true,
       expiresIn: dto.expiresIn,

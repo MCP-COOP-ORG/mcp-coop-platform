@@ -7,6 +7,5 @@
 
 /**
  * Dictionary of contacts (telegram, email, etc.)
- * @nullable
  */
-export type CoopResponseDtoContacts = { [key: string]: unknown } | null;
+export type CoopResponseDtoContacts = { [key: string]: unknown };

@@ -5,4 +5,4 @@
  * Micro App API
  */
 
-export type WorkspaceMemberRole = { [key: string]: unknown };
+export type ProfileFullResponseDtoContacts = { [key: string]: unknown };

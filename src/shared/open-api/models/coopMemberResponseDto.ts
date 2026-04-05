@@ -9,14 +9,9 @@ export interface CoopMemberResponseDto {
   /** Member ID (UUID) within the Coop */
   id: string;
   /** On-chain wallet address of the member */
-  walletAddress: string;
-  /** Display name resolved via Profile fallback (fullName -> username -> email -> walletAddress) */
+  onChainId: string;
+  /** Display name resolved via Profile fallback (fullName -> username -> email -> on-chain id) */
   name: string;
-  /**
-   * Role derived from Profile
-   * @nullable
-   */
-  role?: string | null;
   /**
    * Avatar URL derived from ProfileSettings
    * @nullable
@@ -24,4 +19,14 @@ export interface CoopMemberResponseDto {
   avatarUrl?: string | null;
   /** Indicates if the member is the proposer/creator on-chain */
   isProposer: boolean;
+  /**
+   * Platform profile UUID when this wallet is linked to a user; null otherwise
+   * @nullable
+   */
+  profileId?: string | null;
+  /**
+   * Primary competence category derived from profile skills
+   * @nullable
+   */
+  competence?: string | null;
 }

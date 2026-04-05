@@ -78,3 +78,6 @@ export { InputOtp } from "@heroui/input-otp";
 
 // --- Pagination ---
 export { Pagination } from "@heroui/react";
+
+// --- Chip ---
+export { Chip } from "@heroui/react";

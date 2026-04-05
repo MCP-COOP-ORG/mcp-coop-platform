@@ -19,7 +19,7 @@ export interface BaseCardHeaderProps {
 
 export const BaseCardHeader: React.FC<BaseCardHeaderProps> = ({ avatarUrl, name, title, tags, actions, href, children }) => {
   return (
-    <CardHeader className="p-0 flex items-start gap-4 mb-5 relative z-0 w-full overflow-visible">
+    <CardHeader className="p-0 flex items-start gap-4 mb-5 w-full overflow-visible">
       <div className="shrink-0 w-16 h-16 relative z-10 pointer-events-none">
         <Avatar
           src={avatarUrl || undefined}
@@ -32,7 +32,7 @@ export const BaseCardHeader: React.FC<BaseCardHeaderProps> = ({ avatarUrl, name,
 
       <div className="flex-1 flex flex-col items-start gap-1 min-w-0 pr-4">
         {title ? title : (
-          <h2 className="text-lg font-semibold tracking-tight truncate w-full text-left" title={name}>
+          <h2 className="text-lg font-semibold tracking-tight truncate w-full text-left">
             {href ? (
               <Link href={href} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md">
                 <span className="absolute inset-0 z-0" aria-hidden="true" />
@@ -45,14 +45,14 @@ export const BaseCardHeader: React.FC<BaseCardHeaderProps> = ({ avatarUrl, name,
         )}
         
         {tags && (
-          <div className="w-full mt-0.5 min-w-0 relative z-10">
+          <div className="w-full mt-0.5 min-w-0 relative z-10 pointer-events-none select-none">
             {tags}
           </div>
         )}
       </div>
 
       {(actions || children) && (
-        <div className="shrink-0 flex flex-col items-end justify-start gap-3">
+        <div className="shrink-0 flex flex-col items-end justify-start gap-3 relative z-20 pointer-events-auto">
           {actions}
           {children}
         </div>
@@ -73,7 +73,7 @@ export const BaseCardBody: React.FC<BaseCardBodyProps> = ({ description, childre
   return (
     <CardBody className="p-0 overflow-visible relative z-0 mb-6 pointer-events-none">
       {description ? (
-        <p className="text-[15px] leading-relaxed text-foreground/85 font-normal tracking-wide relative z-10 pointer-events-auto">
+        <p className="text-[15px] leading-relaxed text-foreground/85 font-normal tracking-wide">
           {description}
         </p>
       ) : null}

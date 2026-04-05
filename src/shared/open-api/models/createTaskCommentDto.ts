@@ -6,6 +6,9 @@
  */
 
 export interface CreateTaskCommentDto {
-  /** Comment text content */
+  /**
+   * Comment text content
+   * @maxLength 5000
+   */
   content: string;
 }

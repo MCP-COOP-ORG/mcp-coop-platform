@@ -25,10 +25,7 @@ export interface CoopResponseDto {
   description?: string | null;
   /** Industry categories associated with this cooperative */
   categories: string[];
-  /**
-   * Dictionary of contacts (telegram, email, etc.)
-   * @nullable
-   */
+  /** Dictionary of contacts (telegram, email, etc.) */
   contacts?: CoopResponseDtoContacts;
   /** Dictionary of blockchain wallets by network */
   wallets: CoopResponseDtoWallets;

@@ -6,7 +6,10 @@
  */
 
 export interface CreateTaskCriterionDto {
-  /** Criterion text */
+  /**
+   * Criterion text
+   * @maxLength 5000
+   */
   text: string;
   /**
    * Display order

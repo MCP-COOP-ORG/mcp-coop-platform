@@ -6,6 +6,9 @@
  */
 
 export interface TelegramAuthDto {
-  /** Telegram initData string from WebApp.initData */
+  /**
+   * Telegram initData string from WebApp.initData
+   * @maxLength 5000
+   */
   initData: string;
 }

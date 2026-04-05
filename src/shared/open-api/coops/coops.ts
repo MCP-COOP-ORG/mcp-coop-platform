@@ -5,7 +5,7 @@
  * Micro App API
  */
 import type {
-  CoopResponseDto,
+  CoopFullResponseDto,
   CoopsControllerFindAll200AllOf,
   CoopsControllerFindAllParams
 } from '.././models';
@@ -58,7 +58,7 @@ export const coopsControllerFindAll = async (params?: CoopsControllerFindAllPara
  * @summary Get cooperative by id (with members and management data)
  */
 export type coopsControllerFindOneResponse200 = {
-  data: CoopResponseDto
+  data: CoopFullResponseDto
   status: 200
 }
     

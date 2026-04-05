@@ -5,8 +5,10 @@ import Header from "@/shared/ui/layout/header";
 import Footer from "@/shared/ui/layout/footer";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { myProfileControllerFindMe } from "@/shared/open-api/my-profile/my-profile";
-import { type AppSession, isMyProfile, MyProfile } from "@/shared/types/auth";
+import { myProfileControllerFindMe } from "@/shared/open-api/profiles/profiles";
+import { mapMeResponseDto } from "@/shared/mappers";
+import type { MyProfileData } from "@/entities/profiles/types";
+import type { AppSession } from "@/shared/types/auth";
 
 export const metadata = metadataConfig;
 export const viewport = viewportConfig;
@@ -23,10 +25,8 @@ export default async function RootLayout(props: {
     getMessages(),
   ]);
 
-  const myProfile: MyProfile | null = 
-    profileResponse?.data && isMyProfile(profileResponse.data) 
-      ? profileResponse.data 
-      : null;
+  const myProfile: MyProfileData | null =
+    profileResponse?.data ? mapMeResponseDto(profileResponse.data) : null;
       
   const session: AppSession = { myProfile };
 

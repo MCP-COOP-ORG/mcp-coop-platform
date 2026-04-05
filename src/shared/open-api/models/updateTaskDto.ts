@@ -8,9 +8,15 @@ import type { UpdateTaskDtoStatus } from './updateTaskDtoStatus';
 import type { UpdateTaskDtoPriority } from './updateTaskDtoPriority';
 
 export interface UpdateTaskDto {
-  /** Task title */
+  /**
+   * Task title
+   * @maxLength 255
+   */
   title?: string;
-  /** Task description */
+  /**
+   * Task description
+   * @maxLength 5000
+   */
   description?: string;
   /** Task status */
   status?: UpdateTaskDtoStatus;
@@ -18,6 +24,9 @@ export interface UpdateTaskDto {
   priority?: UpdateTaskDtoPriority;
   /** Assignee ID (defaults to creator if omitted) */
   assigneeId?: string;
-  /** Additional info (plain text) */
+  /**
+   * Additional info (plain text)
+   * @maxLength 5000
+   */
   info?: string;
 }

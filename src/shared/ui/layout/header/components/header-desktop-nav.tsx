@@ -48,12 +48,12 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
                   return (
                     <DropdownItem
                       key={child.translationKey}
-                      textValue={navT(child.translationKey as never)}
+                      as={Link}
+                      href={child.href!}
+                      className={`transition-colors text-[13px] uppercase tracking-wider ${isChildActive ? "text-primary font-normal" : "text-foreground font-light"
+                        }`}
                     >
-                      <Link href={child.href!} className={`w-full h-full flex items-center transition-colors text-[13px] uppercase tracking-wider ${isChildActive ? "text-primary font-normal" : "text-foreground font-light"
-                        }`}>
-                        {navT(child.translationKey as never)}
-                      </Link>
+                      {navT(child.translationKey as never)}
                     </DropdownItem>
                   );
                 })}

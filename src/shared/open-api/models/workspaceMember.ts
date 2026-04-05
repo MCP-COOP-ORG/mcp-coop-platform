@@ -4,13 +4,5 @@
  * Do not edit manually.
  * Micro App API
  */
-import type { WorkspaceMemberRole } from './workspaceMemberRole';
 
-export interface WorkspaceMember {
-  id: string;
-  workspaceId: string;
-  userId: string;
-  role: WorkspaceMemberRole;
-  createdAt: string;
-  updatedAt: string;
-}
+export interface WorkspaceMember { [key: string]: unknown }

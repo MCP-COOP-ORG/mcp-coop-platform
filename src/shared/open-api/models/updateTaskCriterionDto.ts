@@ -6,7 +6,10 @@
  */
 
 export interface UpdateTaskCriterionDto {
-  /** Criterion text */
+  /**
+   * Criterion text
+   * @maxLength 5000
+   */
   text?: string;
   /** Completion status */
   isCompleted?: boolean;

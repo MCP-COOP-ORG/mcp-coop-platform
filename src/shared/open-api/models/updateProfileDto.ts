@@ -7,22 +7,31 @@
 import type { UpdateProfileDtoContacts } from './updateProfileDtoContacts';
 
 export interface UpdateProfileDto {
+  /** @maxLength 255 */
   email?: string;
   /**
    * Username
+   * @maxLength 255
    * @nullable
    */
   username?: string | null;
   /**
    * Full name
+   * @maxLength 255
    * @nullable
    */
   fullName?: string | null;
   /** @nullable */
-  role?: string | null;
-  /** @nullable */
+  lastActiveWorkspaceId?: string | null;
+  /**
+   * @maxLength 5000
+   * @nullable
+   */
   description?: string | null;
-  /** @nullable */
+  /**
+   * @maxLength 1000
+   * @nullable
+   */
   avatarUrl?: string | null;
   contacts?: UpdateProfileDtoContacts;
 }

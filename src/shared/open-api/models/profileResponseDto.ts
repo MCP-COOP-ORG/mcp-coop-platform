@@ -20,11 +20,8 @@ export interface ProfileResponseDto {
   description?: string | null;
   /** @nullable */
   avatarUrl?: string | null;
-  /** @nullable */
-  role?: string | null;
   rating: number;
   skills: ProfileSkillDto[];
-  categories: string[];
   contacts: ProfileResponseDtoContacts;
   wallets: ProfileResponseDtoWallets;
   /**
