@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 import { Button as HeroButton, ButtonProps as HeroButtonProps } from "@heroui/react";
-import { ChevronDownIcon } from "@/shared/ui/icons/chevron-down";
+import { ChevronDown } from "lucide-react";
 
 /**
  * Семантические варианты кнопок для всего приложения.
@@ -58,7 +58,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           variant: "light",
           radius: "sm",
           endContent: (
-            <ChevronDownIcon className="w-[14px] h-[14px] scale-x-[0.85] text-foreground transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-data-[open=true]:rotate-180" />
+            <ChevronDown className="w-[14px] h-[14px] scale-x-[0.85] text-foreground transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-data-[open=true]:rotate-180" />
           ),
         };
         customClassName = `group p-0 bg-transparent data-[hover=true]:bg-transparent uppercase tracking-wider text-medium hover:text-foreground transition-colors ${

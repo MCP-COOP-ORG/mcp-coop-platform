@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { Button } from "@/shared/ui/primitives";
-import { GithubIcon, GoogleIcon, TelegramIcon } from "@/shared/ui/icons/social";
+import { GitHub, Google, Telegram } from "@/shared/ui/icons";
 import { authFormButtons } from "@/shared/constants/form";
 import { OAUTH_PROVIDERS } from "@/features/auth/constants";
 import type { OAuthProvider } from "@/features/auth/constants";
@@ -43,7 +43,7 @@ export function OAuthButtonGroup({ isDisabled, onTelegramOpen }: OAuthButtonGrou
         isDisabled={allDisabled}
         aria-label={t(authFormButtons.loginWithGithub)}
       >
-        <GithubIcon className="w-5 h-5 flex-shrink-0" />
+        <GitHub className="w-5 h-5 flex-shrink-0" />
       </Button>
       <Button
         appVariant="icon-only"
@@ -51,7 +51,7 @@ export function OAuthButtonGroup({ isDisabled, onTelegramOpen }: OAuthButtonGrou
         isDisabled={allDisabled}
         aria-label={t(authFormButtons.loginWithGoogle)}
       >
-        <GoogleIcon className="w-5 h-5 flex-shrink-0" />
+        <Google className="w-5 h-5 flex-shrink-0" />
       </Button>
       <Button
         appVariant="icon-only"
@@ -59,7 +59,7 @@ export function OAuthButtonGroup({ isDisabled, onTelegramOpen }: OAuthButtonGrou
         isDisabled={allDisabled}
         aria-label={t(authFormButtons.loginWithTelegram)}
       >
-        <TelegramIcon className="w-5 h-5" />
+        <Telegram className="w-5 h-5" />
       </Button>
     </div>
   );

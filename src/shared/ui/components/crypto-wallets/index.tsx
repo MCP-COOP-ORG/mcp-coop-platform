@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import QRCode from "react-qr-code";
 import { Wallet, Copy, Check } from "lucide-react";
-import { Modal, Snippet, useModal, Avatar } from "@/shared/ui/primitives";
+import { Modal, Snippet, useModal } from "@/shared/ui/primitives";
 import { Button } from "@/shared/ui/primitives";
-import { NetworkKey, NETWORK_AVATARS } from "@/shared/constants/crypto";
+import { NetworkKey } from "@/shared/constants/crypto";
+import * as Icons from "@/shared/ui/icons";
 
 function formatHash(hash: string): string {
   if (!hash || hash.length < 10) return hash;
@@ -31,6 +32,13 @@ export interface CryptoWalletsProps {
   };
   className?: string;
 }
+
+const NETWORK_ICONS_MAP = {
+  solana: Icons.Solana,
+  bitcoin: Icons.Bitcoin,
+  ethereum: Icons.Ethereum,
+  ton: Icons.Ton,
+} as const;
 
 export const CryptoWallets: React.FC<CryptoWalletsProps> = ({
   wallets,
@@ -85,7 +93,6 @@ export const CryptoWallets: React.FC<CryptoWalletsProps> = ({
           title="Скопировать адрес"
           className="p-1 rounded-sm hover:bg-success/20 transition-colors cursor-pointer"
           onPointerDown={(e) => {
-            // Prevent React Aria's usePress from firing on the parent Button
             e.stopPropagation();
           }}
           onClick={(e) => {
@@ -110,25 +117,17 @@ export const CryptoWallets: React.FC<CryptoWalletsProps> = ({
               <div className="flex gap-4">
                 {availableNetworks.map((net) => {
                   const isActive = activeNetwork === net;
-                  const iconUrl = NETWORK_AVATARS[net];
-                  if (!iconUrl) return null;
-
+                  const IconComponent = NETWORK_ICONS_MAP[net];
+                  
                   return (
                     <button
                       key={net}
                       onClick={() => setActiveNetwork(net)}
-                      className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all hover:opacity-80
+                      className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all hover:opacity-80 p-1 overflow-hidden
                         ${isActive ? "border-success bg-success/10 shadow-sm" : "border-transparent bg-default-50"}
                       `}
                     >
-                      <Avatar
-                        src={iconUrl}
-                        name={net.substring(0, 2).toUpperCase()}
-                        classNames={{
-                          base: "w-full h-full bg-transparent",
-                          img: "object-contain scale-[0.65]",
-                        }}
-                      />
+                      <IconComponent className="w-full h-full object-contain scale-[0.80]" />
                     </button>
                   );
                 })}
