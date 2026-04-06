@@ -3,7 +3,7 @@ import { getPageContent } from "@/features/page-content/actions/page-content.act
 import { getTranslations } from "next-intl/server";
 import { CoopsCatalog } from "@/features/coops/ui/coops-catalog";
 import { Suspense } from "react";
-import { Spinner } from "@/shared/ui/components/hero-ui";
+import { Spinner } from "@/shared/ui/primitives";
 
 export default async function CoopsPage(props: { 
   params: Promise<{ locale: string }>;

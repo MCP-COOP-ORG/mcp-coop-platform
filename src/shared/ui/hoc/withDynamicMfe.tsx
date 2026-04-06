@@ -1,5 +1,5 @@
 "use client";
-import { Spinner } from "@/shared/ui/components/hero-ui";
+import { Spinner } from "@/shared/ui/primitives";
 import { useDynamicScript } from "@/shared/hooks/use-dynamic-script";
 import { useTranslations } from "next-intl";
 

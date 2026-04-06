@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Avatar, Tooltip } from "@/shared/ui/components/hero-ui";
+import { Avatar, Tooltip } from "@/shared/ui/primitives";
 
 export interface SkillItem {
   id: string;

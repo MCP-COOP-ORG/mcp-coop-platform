@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Avatar } from "@/shared/ui/components/hero-ui";
+import { Avatar } from "@/shared/ui/primitives";
 
 export interface ProfileContacts {
   telegram?: string | null;

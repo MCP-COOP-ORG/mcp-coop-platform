@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Card as HeroCard, CardHeader, CardBody, CardFooter, Avatar } from "@/shared/ui/components/hero-ui";
+import { Card as HeroCard, CardHeader, CardBody, CardFooter, Avatar } from "@/shared/ui/primitives";
 import { Link } from "@/core/configs/i18n/routing";
 
 export interface BaseCardProps {

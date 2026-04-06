@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { Tabs, Tab } from "@/shared/ui/components/hero-ui";
+import { Tabs, Tab } from "@/shared/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "@/core/configs/i18n/routing";
@@ -31,10 +31,7 @@ export default function WorkspaceTabs({ initialTab }: WorkspaceTabsProps) {
       aria-label="Workspace Tabs"
       selectedKey={initialTab}
       onSelectionChange={handleSelectionChange}
-      classNames={{
-        base: "w-full flex justify-center",
-        tabList: "mx-auto",
-      }}
+      appVariant="workspace"
       items={WORKSPACE_TABS.map((id) => ({ id, label: t(id as never) }))}
     >
       {(item) => (

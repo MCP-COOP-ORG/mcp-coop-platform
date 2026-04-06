@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { Spinner } from "@/shared/ui/components/hero-ui";
+import { Spinner } from "@/shared/ui/primitives";
 import { CoopDetail } from "@/features/coops/ui/coop-detail";
 
 export default async function CoopDetailsPage(props: { params: Promise<{ locale: string; id: string }> }) {

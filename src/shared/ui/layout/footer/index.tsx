@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import { Link } from "@/core/configs/i18n/routing";
 import { useTranslations } from "next-intl";
-import { HeroLink } from "@/shared/ui/components/hero-ui";
+import { HeroLink } from "@/shared/ui/primitives";
 import { navigationRoutes } from "@/shared/constants/header";
 import { APP_INFO } from "@/shared/constants/app-info";
 
@@ -18,9 +17,8 @@ const Footer: React.FC = () => {
         </p>
         <div className="flex items-center gap-4">
           <HeroLink
-            as={Link}
-            color="foreground"
             href={navigationRoutes.contacts.href}
+            color="foreground"
             className="text-sm transition-colors"
           >
             {navT(navigationRoutes.contacts.translationKey as never)}

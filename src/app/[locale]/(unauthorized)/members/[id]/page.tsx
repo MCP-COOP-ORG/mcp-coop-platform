@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { Spinner } from "@/shared/ui/components/hero-ui";
+import { Spinner } from "@/shared/ui/primitives";
 import { ProfileDetail } from "@/features/profiles/ui/profile-detail";
 
 export default async function MemberDetailsPage(props: { params: Promise<{ locale: string; id: string }> }) {

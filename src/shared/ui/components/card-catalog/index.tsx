@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Pagination } from "@/shared/ui/components/hero-ui";
+import { Pagination } from "@/shared/ui/primitives";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { CATALOG_CONSTANTS } from "@/shared/constants/catalog";
 

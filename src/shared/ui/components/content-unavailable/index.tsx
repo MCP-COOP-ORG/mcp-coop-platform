@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody } from "@/shared/ui/components/hero-ui";
+import { Card, CardHeader, CardBody } from "@/shared/ui/primitives";
 
 interface ContentUnavailableProps {
   title?: string;

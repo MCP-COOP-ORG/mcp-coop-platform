@@ -1,3 +1,6 @@
+import React from "react";
+import { Link2, LogOut } from "lucide-react";
+
 export type NavigationRouteKey = "home" | "docs" | "blockchain" | "networkStatus" | "community" | "coops" | "members" | "contacts" | "workspace";
 
 export interface NavigationLink {
@@ -44,3 +47,38 @@ export const headerI18nKeys = {
   openMenu: "openMenu",
   closeMenu: "closeMenu",
 } as const;
+
+export const PROFILE_ACTION_KEYS = {
+  LINK_TELEGRAM: "link-telegram",
+  LOGOUT: "logout",
+} as const;
+
+export const headerProfileDropdownActions = [
+  {
+    key: PROFILE_ACTION_KEYS.LINK_TELEGRAM,
+    translationKey: "linkTelegram",
+    icon: React.createElement(Link2, { size: 18 }),
+  },
+  {
+    key: PROFILE_ACTION_KEYS.LOGOUT,
+    translationKey: "logout",
+    color: "danger" as const,
+    icon: React.createElement(LogOut, { size: 18 }),
+  }
+];
+
+export const getHeaderActionConfig = (
+  userName: string,
+  t: (key: string) => string
+) => [
+  {
+    key: "profile",
+    label: t("signedInAs"),
+    description: userName,
+    isReadOnly: true,
+  },
+  ...headerProfileDropdownActions.map((action) => ({
+    ...action,
+    label: t(action.translationKey),
+  }))
+];

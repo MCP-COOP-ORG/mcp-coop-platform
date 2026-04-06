@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, Textarea } from "@/shared/ui/components/hero-ui";
+import { Input, Textarea } from "@/shared/ui/primitives";
 import type { FormField } from "@/shared/constants/form";
 
 /** i18n translation function type — matches next-intl useTranslations return */

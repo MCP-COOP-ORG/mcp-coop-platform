@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@/shared/ui/components/hero-ui";
+import { Card, CardBody } from "@/shared/ui/primitives";
 import * as LucideIcons from "lucide-react";
 import React from "react";
 

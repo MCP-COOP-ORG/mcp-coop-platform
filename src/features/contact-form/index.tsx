@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Form, Button, Checkbox, Card, CardBody } from "@/shared/ui/components/hero-ui";
+import { Form, Checkbox, Card, CardBody } from "@/shared/ui/primitives";
+import { Button } from "@/shared/ui/primitives";
 import {
   contactFormFields,
   contactFormCheckbox,
@@ -94,7 +95,7 @@ export default function ContactForm() {
               />
               <Button
                 type="submit"
-                color="primary"
+                appVariant="primary-action"
                 className="min-w-32 h-full"
                 isLoading={isSubmitting}
                 isDisabled={isSubmitting}

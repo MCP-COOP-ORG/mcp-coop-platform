@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Snippet } from "@/shared/ui/components/hero-ui";
+import { Card, CardBody, CardFooter, Snippet } from "@/shared/ui/primitives";
 import Image from "next/image";
 import { getPageContent } from "@/features/page-content/actions/page-content.actions";
 import type { PageContentDto } from "@/entities/page-content/types";

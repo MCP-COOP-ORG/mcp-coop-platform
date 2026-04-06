@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/shared/ui/components/hero-ui";
 import { Clock } from "lucide-react";
+import { Button } from "@/shared/ui/primitives";
 
 interface CountdownTimerProps {
   expiresAt: number;
@@ -53,8 +53,7 @@ export function CountdownTimer({ expiresAt, isDisabled = false, onExpired, onBac
   return (
     <Button
       type="button"
-      color="danger"
-      variant="flat"
+      appVariant="danger-action"
       onPress={onBack}
       isDisabled={isExpired || isDisabled}
       aria-label="Back to email input"

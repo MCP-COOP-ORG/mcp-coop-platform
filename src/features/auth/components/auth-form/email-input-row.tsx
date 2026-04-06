@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/shared/ui/components/hero-ui";
+import { Input } from "@/shared/ui/primitives";
 import { useTranslations } from "next-intl";
 import { authFormFields } from "@/shared/constants/form";
 
@@ -47,9 +47,7 @@ export function EmailInputRow({
       isInvalid={!!error}
       errorMessage={translatedError || error}
       isRequired
-      classNames={{
-        inputWrapper: "transition-all duration-200 h-[44px] min-h-[44px]",
-      }}
+      appVariant="auth"
     />
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Avatar, Tooltip } from "@/shared/ui/components/hero-ui";
+import { Avatar, Tooltip } from "@/shared/ui/primitives";
 import { Link } from "@/core/configs/i18n/routing";
 
 export interface CoopMemberItem {

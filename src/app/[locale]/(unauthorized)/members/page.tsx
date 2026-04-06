@@ -4,7 +4,7 @@ import { getPageContent } from "@/features/page-content/actions/page-content.act
 import { getTranslations } from "next-intl/server";
 import { ProfilesCatalog } from "@/features/profiles/ui/profiles-catalog";
 import { Suspense } from "react";
-import { Spinner } from "@/shared/ui/components/hero-ui";
+import { Spinner } from "@/shared/ui/primitives";
 
 export default async function MembersPage(props: { 
   params: Promise<{ locale: string }>;

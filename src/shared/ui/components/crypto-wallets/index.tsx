@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import QRCode from "react-qr-code";
 import { Wallet, Copy, Check } from "lucide-react";
-import { Button, Modal, ModalContent, ModalHeader, ModalBody, Snippet, useDisclosure, Avatar } from "@/shared/ui/components/hero-ui";
+import { Modal, Snippet, useModal, Avatar } from "@/shared/ui/primitives";
+import { Button } from "@/shared/ui/primitives";
 import { NetworkKey, NETWORK_AVATARS } from "@/shared/constants/crypto";
 
 function formatHash(hash: string): string {
@@ -37,7 +38,7 @@ export const CryptoWallets: React.FC<CryptoWalletsProps> = ({
   texts = { selectNetwork: "Select Network", noAddress: "No address" },
   className = ""
 }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useModal();
   const [copied, setCopied] = useState(false);
 
   const availableNetworks = wallets ? (Object.keys(wallets) as NetworkKey[]) : [];
@@ -67,8 +68,7 @@ export const CryptoWallets: React.FC<CryptoWalletsProps> = ({
   return (
     <>
       <Button
-        color="success"
-        variant="flat"
+        appVariant="success-action"
         size="sm"
         disableAnimation
         disableRipple
@@ -105,65 +105,59 @@ export const CryptoWallets: React.FC<CryptoWalletsProps> = ({
       {hasWallets && (
         <div className="relative z-[100]">
           <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} size="sm" placement="center">
-            <ModalContent>
-              {() => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1 items-center pb-2 pt-6">
-                    <span className="text-sm font-semibold mb-2">{texts.selectNetwork}</span>
-                    <div className="flex gap-4">
-                      {availableNetworks.map((net) => {
-                        const isActive = activeNetwork === net;
-                        const iconUrl = NETWORK_AVATARS[net];
-                        if (!iconUrl) return null;
+            <div className="flex flex-col gap-1 items-center pb-2 pt-6">
+              <span className="text-sm font-semibold mb-2">{texts.selectNetwork}</span>
+              <div className="flex gap-4">
+                {availableNetworks.map((net) => {
+                  const isActive = activeNetwork === net;
+                  const iconUrl = NETWORK_AVATARS[net];
+                  if (!iconUrl) return null;
 
-                        return (
-                          <button
-                            key={net}
-                            onClick={() => setActiveNetwork(net)}
-                            className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all hover:opacity-80
-                              ${isActive ? "border-success bg-success/10 shadow-sm" : "border-transparent bg-default-50"}
-                            `}
-                          >
-                            <Avatar
-                              src={iconUrl}
-                              name={net.substring(0, 2).toUpperCase()}
-                              classNames={{
-                                base: "w-full h-full bg-transparent",
-                                img: "object-contain scale-[0.65]",
-                              }}
-                            />
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </ModalHeader>
-
-                  <ModalBody className="flex flex-col items-center pb-8 pt-4">
-                    <div className="p-4 bg-white rounded-2xl shadow-sm border border-default-100 flex items-center justify-center" style={{ width: 200, height: 200 }}>
-                      {currentAddress ? (
-                        <QRCode value={currentAddress} size={168} />
-                      ) : (
-                        <span className="text-default-400 text-sm">{texts.noAddress}</span>
-                      )}
-                    </div>
-
-                    <div className="w-full mt-6">
-                      <Snippet
-                        hideSymbol
-                        color="default"
-                        variant="flat"
-                        className="w-full bg-default-100"
+                  return (
+                    <button
+                      key={net}
+                      onClick={() => setActiveNetwork(net)}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all hover:opacity-80
+                        ${isActive ? "border-success bg-success/10 shadow-sm" : "border-transparent bg-default-50"}
+                      `}
+                    >
+                      <Avatar
+                        src={iconUrl}
+                        name={net.substring(0, 2).toUpperCase()}
                         classNames={{
-                          pre: "font-mono text-xs whitespace-normal break-all w-full text-center"
+                          base: "w-full h-full bg-transparent",
+                          img: "object-contain scale-[0.65]",
                         }}
-                      >
-                        {currentAddress}
-                      </Snippet>
-                    </div>
-                  </ModalBody>
-                </>
-              )}
-            </ModalContent>
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center pb-8 pt-4">
+              <div className="p-4 bg-white rounded-2xl shadow-sm border border-default-100 flex items-center justify-center" style={{ width: 200, height: 200 }}>
+                {currentAddress ? (
+                  <QRCode value={currentAddress} size={168} />
+                ) : (
+                  <span className="text-default-400 text-sm">{texts.noAddress}</span>
+                )}
+              </div>
+
+              <div className="w-full mt-6">
+                <Snippet
+                  hideSymbol
+                  color="default"
+                  variant="flat"
+                  className="w-full bg-default-100"
+                  classNames={{
+                    pre: "font-mono text-xs whitespace-normal break-all w-full text-center"
+                  }}
+                >
+                  {currentAddress}
+                </Snippet>
+              </div>
+            </div>
           </Modal>
         </div>
       )}

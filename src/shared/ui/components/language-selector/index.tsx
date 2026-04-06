@@ -1,4 +1,4 @@
-import { Select, SelectItem, Avatar } from "@/shared/ui/components/hero-ui";
+import { Select, SelectItem, Avatar } from "@/shared/ui/primitives";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/core/configs/i18n/routing";
 import { localeConfigs } from "@/shared/constants/locale";
@@ -22,17 +22,11 @@ export default function LanguageSelector({ onAction }: LanguageSelectorProps) {
 
   return (
     <Select
-      variant="bordered"
+      appVariant="language-selector"
       aria-label="Select Language"
-      className="w-[72px]"
       selectedKeys={[locale]}
       onChange={handleSelectionChange}
       items={localeConfigs}
-      classNames={{
-        trigger: "h-10 min-h-10 px-2",
-        value: "flex justify-center",
-        popoverContent: "w-[72px] min-w-[72px]"
-      }}
       renderValue={(items) => {
         return items.map((item) => {
           const config = localeConfigs.find((c) => c.key === item.key);

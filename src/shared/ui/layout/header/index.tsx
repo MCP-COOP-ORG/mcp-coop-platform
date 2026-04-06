@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Link, useRouter, usePathname } from "@/core/configs/i18n/routing";
-import { Navbar as HeroNavbar, NavbarBrand, NavbarContent, NavbarMenuToggle } from "@/shared/ui/components/hero-ui";
+import { Navbar as HeroNavbar, NavbarBrand, NavbarContent, NavbarMenuToggle } from "@/shared/ui/primitives";
 import Image from "next/image";
 
 import {
@@ -13,7 +13,7 @@ import {
 } from "@/shared/constants/header";
 import { APP_INFO } from "@/shared/constants/app-info";
 import { useSession } from "@/shared/hooks/use-session";
-import AppModal, { useModal } from "@/shared/ui/components/modal";
+import { Modal, useModal } from "@/shared/ui/primitives";
 import AuthForm from "@/features/auth/components/auth-form";
 import { logout } from "@/features/auth/actions";
 import { useTranslations } from "next-intl";
@@ -113,14 +113,14 @@ export default function Header() {
       />
 
       {/* Auth Modal */}
-      <AppModal
+      <Modal
         isOpen={isOpen}
         onOpenChange={(open) => { if (!open) onClose(); }}
         title={headerT("welcome")}
         size="md"
       >
         <AuthForm onSuccess={handleAuthSuccess} />
-      </AppModal>
+      </Modal>
     </HeroNavbar>
   );
 }

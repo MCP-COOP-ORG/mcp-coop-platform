@@ -1,7 +1,7 @@
 import React from "react";
 import { getCoopByIdAction } from "../api/get-coop-by-id.action";
-import { Avatar } from "@/shared/ui/components/hero-ui";
-import { Chip } from "@/shared/ui/components/hero-ui";
+import { Avatar } from "@/shared/ui/primitives";
+import { Chip } from "@/shared/ui/primitives";
 import ContentUnavailable from "@/shared/ui/components/content-unavailable";
 
 interface CoopDetailProps {

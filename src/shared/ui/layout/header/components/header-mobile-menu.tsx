@@ -1,6 +1,5 @@
 import React from "react";
-import { NavbarMenu, NavbarMenuItem, HeroLink } from "@/shared/ui/components/hero-ui";
-import { Link } from "@/core/configs/i18n/routing";
+import { NavbarMenu, NavbarMenuItem, HeroLink } from "@/shared/ui/primitives";
 import { NavigationLink } from "@/shared/constants/header";
 import { HeaderActions } from "./header-actions";
 import { isNavLinkActive } from "../utils";
@@ -67,12 +66,10 @@ export function HeaderMobileMenu({
                   return (
                     <NavbarMenuItem key={child.translationKey} isActive={isChildActive}>
                       <HeroLink
-                        as={Link}
-                        color={isChildActive ? "primary" : "foreground"}
                         href={child.href!}
-                        className={`w-full py-[3px] pl-[10px] text-[14.5px] transition-colors uppercase tracking-wider ${
-                          isChildActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
-                        }`}
+                        color={isChildActive ? "primary" : "foreground"}
+                        className={`w-full py-[3px] pl-[10px] text-[14.5px] transition-colors uppercase tracking-wider ${isChildActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
+                          }`}
                         size="md"
                       >
                         {navT(child.translationKey as never)}
@@ -88,12 +85,9 @@ export function HeaderMobileMenu({
           return (
             <NavbarMenuItem key={link.translationKey} isActive={isActive}>
               <HeroLink
-                as={Link}
-                color={isActive ? "primary" : "foreground"}
                 href={link.href!}
-                className={`w-full py-[5px] text-xl transition-colors uppercase tracking-wider ${
-                  isActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
-                }`}
+                className={`w-full py-[5px] text-xl transition-colors uppercase tracking-wider ${isActive ? "font-normal text-primary" : "font-light text-foreground/80 hover:text-foreground"
+                  }`}
                 size="lg"
               >
                 {navT(link.translationKey as never)}

@@ -1,9 +1,8 @@
 "use client";
 
-import { Form, Button, Input } from "@/shared/ui/components/hero-ui";
+import { Button, Form, Input, useModal } from "@/shared/ui/primitives";
 import { motion, AnimatePresence, type Transition } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useModal } from "@/shared/ui/components/modal";
 import { ArrowRight } from "lucide-react";
 
 import { OTP_FLOW_STEPS } from "@/features/auth/types";
@@ -101,12 +100,12 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
             />
           </div>
           <Button
+            appVariant="primary-action"
             type="submit"
-            color="primary"
             isIconOnly
             isLoading={isPending && !isOtpStep}
             isDisabled={!canRequestCode || isPending}
-            className="shrink-0 h-[44px] w-[44px] rounded-xl data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-0"
+            className="shrink-0 rounded-xl !h-[44px] !w-[44px] !min-w-[44px]"
             aria-label={t("sendCode")}
           >
             <ArrowRight className="w-5 h-5 text-white" />
@@ -135,12 +134,12 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
                 onExpired={handleTimerExpired}
               >
                 <Button
+                  appVariant="primary-action"
                   type="submit"
-                  color="primary"
                   isIconOnly
                   isLoading={isPending && isOtpStep}
                   isDisabled={!canSubmit || isPending}
-                  className="shrink-0 h-[44px] w-[44px] rounded-xl data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-0"
+                  className="shrink-0 rounded-xl !h-[44px] !w-[44px] !min-w-[44px]"
                   aria-label={t("verify")}
                 >
                   <ArrowRight className="w-5 h-5 text-white" />
@@ -175,10 +174,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
                 isDisabled={isPending}
                 isInvalid={!!errors.fullName}
                 errorMessage={errors.fullName ? t(errors.fullName as Parameters<typeof t>[0]) : undefined}
-                classNames={{
-                  base: "w-full",
-                  inputWrapper: "w-full transition-all duration-200 h-[44px] min-h-[44px]",
-                }}
+                appVariant="auth"
               />
             </div>
           </motion.div>
