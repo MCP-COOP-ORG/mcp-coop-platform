@@ -43,10 +43,9 @@ export const Dropdown = ({
   placement = "bottom",
   ariaLabel = "Dropdown menu",
 }: AppDropdownProps) => {
-  // Жестко зашитые константы стиля для всего проекта
   const ITEM_CLASSES = {
     base: "gap-3 py-2 px-3 transition-colors data-[hover=true]:bg-default-100",
-    title: "text-[14px] font-medium text-foreground",
+    title: "text-[16px] font-normal text-foreground",
     description: "text-[12px] font-normal text-foreground/60",
   };
 
@@ -54,9 +53,9 @@ export const Dropdown = ({
     <HeroDropdown
       placement={placement}
       radius="md"
-      shadow="md"
+      shadow="sm"
       // Единый жестко зашитый контейнер
-      className="bg-background/95 backdrop-blur-md border border-default-200 min-w-[220px] p-1"
+      className="bg-background/95 backdrop-blur-md !border-1 !border-divider/50 min-w-[200px] p-1 shadow-sm"
     >
       <HeroDropdownTrigger>{children}</HeroDropdownTrigger>
 

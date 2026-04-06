@@ -1,7 +1,6 @@
 export { Button } from "./button";
 export { Dropdown } from "./dropdown";
 export { Tooltip } from "./tooltip";
-export { User } from "./user";
 export { HeroLink } from "./link";
 export { Select, SelectItem } from "./select";
 export { Avatar, AvatarGroup } from "./avatar";
@@ -13,6 +12,5 @@ export { Checkbox, CheckboxGroup } from "./checkbox";
 export { Card, CardHeader, CardBody, CardFooter } from "./card";
 export { Tabs, Tab } from "./tabs";
 export { Pagination } from "./pagination";
-export { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "./navbar";
 export { Chip } from "./chip";
 export { Snippet } from "./snippet";

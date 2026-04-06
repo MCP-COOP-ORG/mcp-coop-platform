@@ -22,11 +22,15 @@ function SelectInner<T extends object>(
   let mappedProps: Partial<HeroSelectProps<T>> = {};
 
   if (appVariant === "language-selector") {
-    mappedProps = { variant: "bordered" };
+    mappedProps = { variant: "bordered", radius: "full", popoverProps: { placement: "bottom-end" } };
     customClassNames = {
-      trigger: "h-10 min-h-10 px-2 w-[72px]",
-      value: "flex justify-center",
-      popoverContent: "w-[72px] min-w-[72px]",
+      base: "w-8",
+      trigger: "h-8 min-h-8 w-8 min-w-8 !p-0 !border-1 !border-foreground",
+      innerWrapper: "w-full h-full justify-center !pt-0 !pb-0 !pl-0 !pr-0 !gap-0",
+      selectorIcon: "hidden w-0 h-0",
+      value: "flex justify-center items-center w-full h-full !pr-0 !pl-0",
+      popoverContent: "w-[44px] min-w-[44px] !p-1",
+      listbox: "p-0 flex flex-col items-center gap-2 [&_svg]:hidden",
     };
   }
 

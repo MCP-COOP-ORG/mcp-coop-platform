@@ -1,4 +1,5 @@
-import { Select, SelectItem, Avatar } from "@/shared/ui/primitives";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/react";
+import { Avatar, Button } from "@/shared/ui/primitives";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/core/configs/i18n/routing";
 import { localeConfigs } from "@/shared/constants/locale";
@@ -12,43 +13,54 @@ export default function LanguageSelector({ onAction }: LanguageSelectorProps) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const nextLocale = e.target.value;
-    if (nextLocale && nextLocale !== locale) {
-      router.replace(pathname, { locale: nextLocale });
+  const handleSelection = (key: string) => {
+    if (key && key !== locale) {
+      router.replace(pathname, { locale: key });
       onAction?.();
     }
   };
 
+  const currentConfig = localeConfigs.find((c) => c.key === locale);
+
   return (
-    <Select
-      appVariant="language-selector"
-      aria-label="Select Language"
-      selectedKeys={[locale]}
-      onChange={handleSelectionChange}
-      items={localeConfigs}
-      renderValue={(items) => {
-        return items.map((item) => {
-          const config = localeConfigs.find((c) => c.key === item.key);
-          if (!config) return null;
-          return (
-            <div key={item.key} className="flex items-center justify-center w-full" title={config.label}>
-              <Avatar alt={config.label} className="w-5 h-5 shrink-0" src={config.flag} />
-            </div>
-          );
-        });
+    <Dropdown 
+      placement="bottom"
+      classNames={{
+        content: "min-w-[42px] w-[42px] !p-0 bg-background/95 backdrop-blur-md !border-1 !border-divider/50 shadow-sm",
       }}
     >
-      {(item) => (
-        <SelectItem
-          key={item.key}
-          textValue={item.label}
-        >
-          <div className="flex items-center justify-center w-full" title={item.label}>
-            <Avatar alt={item.label} className="w-5 h-5 shrink-0" src={item.flag} />
-          </div>
-        </SelectItem>
-      )}
-    </Select>
+      <DropdownTrigger>
+        {/* We use our exact icon-only button so it perfectly matches Moon/Sun/LogIn */}
+        <Button appVariant="icon-only" aria-label="Select Language">
+          {currentConfig ? (
+            <Avatar 
+              alt={currentConfig.label} 
+              className="w-[26px] h-[26px] min-w-[26px] min-h-[26px] border border-default-200" 
+              src={currentConfig.flag} 
+            />
+          ) : null}
+        </Button>
+      </DropdownTrigger>
+      
+      <DropdownMenu
+        aria-label="Language options"
+        onAction={(key) => handleSelection(key as string)}
+        className="flex flex-col items-center gap-1 w-full !p-1 m-0"
+        itemClasses={{
+          base: "flex justify-center items-center !w-8 !h-8 !min-w-[32px] !min-h-[32px] !max-w-[32px] !max-h-[32px] !p-0 m-0 rounded-full data-[hover=true]:bg-default-100",
+          title: "flex justify-center items-center shrink-0 w-full h-full"
+        }}
+      >
+        {localeConfigs.map((config) => (
+          <DropdownItem key={config.key} textValue={config.label} className="!p-0 flex justify-center items-center">
+             <Avatar 
+               alt={config.label} 
+               className="w-[26px] h-[26px] min-w-[26px] min-h-[26px] max-w-[26px] max-h-[26px] shrink-0 pointer-events-none border border-default-200" 
+               src={config.flag} 
+             />
+          </DropdownItem>
+        ))}
+      </DropdownMenu>
+    </Dropdown>
   );
 }

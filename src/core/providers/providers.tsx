@@ -9,6 +9,7 @@ import { logout } from "@/features/auth/actions";
 import { APP_EVENTS } from "@/shared/constants/events";
 import { SessionProvider } from "@/shared/hooks/use-session";
 import { THEME } from "@/shared/constants/theme";
+import { AuthModalsProvider } from "@/features/auth/components/auth-modals-provider";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -34,7 +35,9 @@ export function Providers({ children, session }: ProvidersProps) {
     <HeroUIProvider navigate={router.push}>
       <NextThemesProvider attribute="class" defaultTheme={THEME.light}>
         <SessionProvider session={session}>
-          {children}
+          <AuthModalsProvider>
+            {children}
+          </AuthModalsProvider>
         </SessionProvider>
       </NextThemesProvider>
     </HeroUIProvider>

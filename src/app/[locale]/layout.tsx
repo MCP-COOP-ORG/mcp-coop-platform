@@ -2,7 +2,7 @@ import { ibmPlexSans, ibmPlexMono } from "@/core/configs/theme/fonts.config";
 import { metadataConfig, viewportConfig } from "@/core/configs/seo/seo.config";
 import "../globals.css";
 import { Providers } from "@/core/providers/providers";
-import Header from "@/shared/ui/layout/header";
+import { Header } from "@/features/header";
 import Footer from "@/shared/ui/layout/footer";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -28,7 +28,7 @@ export default async function RootLayout(props: {
 
   const myProfile: MyProfileData | null =
     profileResponse?.data ? mapMeResponseDto(profileResponse.data) : null;
-      
+
   const session: AppSession = { myProfile };
 
   return (

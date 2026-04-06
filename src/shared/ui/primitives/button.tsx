@@ -49,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
       case "icon-only":
         mappedProps = { isIconOnly: true, variant: "bordered", radius: "full" };
-        customClassName = "!h-[44px] !w-[44px] !min-w-[44px]";
+        customClassName = "!h-8 !w-8 !min-w-8 !p-0 !border-1 !border-foreground";
         break;
 
       case "nav-dropdown":
