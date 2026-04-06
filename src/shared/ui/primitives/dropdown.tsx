@@ -69,7 +69,6 @@ export const Dropdown = ({
         {items.map((item) => (
           <HeroDropdownItem
             key={item.key}
-            textValue={typeof item.label === "string" ? item.label : item.key}
             description={item.description}
             href={item.href}
             as={item.href ? Link : undefined}

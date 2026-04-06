@@ -18,23 +18,25 @@ export function HeaderDesktopNav({ links, pathname, navT }: HeaderDesktopNavProp
           );
 
           return (
-            <Dropdown
-              key={link.translationKey}
-              items={link.children.map((child) => ({
-                key: child.translationKey,
-                label: navT(child.translationKey as never),
-                href: child.href!,
-              }))}
-            >
-              <NavbarItem isActive={isDropdownActive}>
+            // NavbarItem (li) — снаружи, Dropdown trigger — Button напрямую.
+            // HeroUI PopoverTrigger требует, чтобы прямым child DropdownTrigger
+            // был интерактивный элемент (button), а не обёртка (li).
+            <NavbarItem key={link.translationKey} isActive={isDropdownActive}>
+              <Dropdown
+                items={link.children.map((child) => ({
+                  key: child.translationKey,
+                  label: navT(child.translationKey as never),
+                  href: child.href!,
+                }))}
+              >
                 <Button
                   appVariant="nav-dropdown"
                   className={isDropdownActive ? "font-normal text-primary" : ""}
                 >
                   {navT(link.translationKey as never)}
                 </Button>
-              </NavbarItem>
-            </Dropdown>
+              </Dropdown>
+            </NavbarItem>
           );
         }
 
