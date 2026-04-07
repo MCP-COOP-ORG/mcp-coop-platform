@@ -1,54 +1,43 @@
 import { PrismaClient } from "../../generated/prisma/client";
 
+const BLOCKCHAIN_STATUS_CONTENT_RU = {
+  highlightWords: ["MCP Coop Chain", "в реальном времени"],
+  hero: {
+    title: "Статус сети",
+    subtitle: "Мониторинг состояния и производительности MCP Coop Chain.\nСледите за глобальными метриками блокчейна в реальном времени, включая TPS и доступность узлов."
+  }
+};
+
+const BLOCKCHAIN_STATUS_CONTENT_EN = {
+  highlightWords: ["MCP Coop Chain", "real-time"],
+  hero: {
+    title: "Network Status",
+    subtitle: "Live performance and health monitoring of the MCP Coop Chain.\nTrack global blockchain metrics in real-time, including transaction throughput and node availability."
+  }
+};
+
 export async function seedBlockchainStatus(prisma: PrismaClient) {
-  console.log("Seeding Blockchain Status page content...");
+  console.log("Seeding Blockchain Status configs...");
 
-  const blockStatusContentEn = await prisma.pageContent.upsert({
-    where: { page_language: { page: "blockchain-status", language: "en" } },
-    update: {
-      title: "Network Status",
-      subtitle: "Live metrics and blockchain health",
-      description: "Monitor the real-time operational status, network performance, and overall health of the MCP Coop Chain. Here you can always verify the active state of our infrastructure. Below, you will find a live dashboard displaying various global blockchain metrics, transaction throughput, and node availability."
-    },
+  await prisma.page.upsert({
+    where: { pageName_language: { pageName: "blockchain-status", language: "en" } },
+    update: { jsonContent: BLOCKCHAIN_STATUS_CONTENT_EN },
     create: {
-      page: "blockchain-status",
+      pageName: "blockchain-status",
       language: "en",
-      title: "Network Status",
-      subtitle: "Live metrics and blockchain health",
-      description: "Monitor the real-time operational status, network performance, and overall health of the MCP Coop Chain. Here you can always verify the active state of our infrastructure. Below, you will find a live dashboard displaying various global blockchain metrics, transaction throughput, and node availability.",
-      image: "/IMG_1163.JPG",
-      jsonContent: {
-        blocks: [
-          { type: "heading", level: 2, text: "Network Overview" },
-          { type: "articles" }
-        ]
-      },
+      jsonContent: BLOCKCHAIN_STATUS_CONTENT_EN,
     },
   });
-  console.log(`Created page content for: ${blockStatusContentEn.page} (en)`);
+  console.log(`Created page configuration for: blockchain-status (en)`);
 
-  const blockStatusContentRu = await prisma.pageContent.upsert({
-    where: { page_language: { page: "blockchain-status", language: "ru" } },
-    update: {
-      title: "Статус сети",
-      subtitle: "Текущие метрики и состояние блокчейна",
-      description: "Здесь вы всегда можете проверить текущее состояние работы, производительность и общее здоровье MCP Coop Chain. Наша инфраструктура работает прозрачно — ниже будет представлен дашборд с ключевыми показателями блокчейна в реальном времени, включая пропускную способность транзакций (TPS) и аптайм узлов."
-    },
+  await prisma.page.upsert({
+    where: { pageName_language: { pageName: "blockchain-status", language: "ru" } },
+    update: { jsonContent: BLOCKCHAIN_STATUS_CONTENT_RU },
     create: {
-      page: "blockchain-status",
+      pageName: "blockchain-status",
       language: "ru",
-      title: "Статус сети",
-      subtitle: "Текущие метрики и состояние блокчейна",
-      description: "Здесь вы всегда можете проверить текущее состояние работы, производительность и общее здоровье MCP Coop Chain. Наша инфраструктура работает прозрачно — ниже будет представлен дашборд с ключевыми показателями блокчейна в реальном времени, включая пропускную способность транзакций (TPS) и аптайм узлов.",
-      image: "/IMG_1163.JPG",
-      jsonContent: {
-        blocks: [
-          { type: "heading", level: 2, text: "Обзор сети" },
-          { type: "articles" }
-        ]
-      },
+      jsonContent: BLOCKCHAIN_STATUS_CONTENT_RU,
     },
   });
-  console.log(`Created page content for: ${blockStatusContentRu.page} (ru)`);
-
+  console.log(`Created page configuration for: blockchain-status (ru)`);
 }

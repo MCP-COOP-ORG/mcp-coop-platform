@@ -24,7 +24,7 @@ export const Skills: React.FC<SkillsProps> = ({ skills = [], className = "" }) =
   const uniqueCategories = Array.from(new Set(skills.map(s => s.category).filter(Boolean) as string[]));
 
   return (
-    <div className={`w-full flex flex-col gap-4 ${className}`}>
+    <div className={`w-full flex flex-col gap-2 ${className}`}>
       {/* Aggregated categories */}
       {uniqueCategories.length > 0 && (
         <div className="truncate text-[14px] font-medium tracking-wide min-w-0 text-primary text-center w-full">
@@ -47,7 +47,7 @@ export const Skills: React.FC<SkillsProps> = ({ skills = [], className = "" }) =
       )}
 
       {/* Skills list */}
-      <div className="flex flex-nowrap gap-3 items-center justify-center overflow-x-auto py-2 px-[5px] w-full max-w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="flex flex-nowrap gap-3 items-center justify-center overflow-x-auto py-1 px-[5px] w-full max-w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {skills.map((skill) => {
           const isHighlighted = hoveredCategory !== null && skill.category === hoveredCategory;
           const isDimmed = hoveredCategory !== null && skill.category !== hoveredCategory;
@@ -71,17 +71,17 @@ export const Skills: React.FC<SkillsProps> = ({ skills = [], className = "" }) =
                   e.preventDefault();
                   e.stopPropagation();
                 }}
-                className={`rounded-full border-[0.5px] border-default-300 p-0.5 bg-default-50 flex items-center justify-center transition-all duration-200 hover:scale-110 cursor-default shrink-0 ${
-                  isHighlighted ? "shadow-[0_4px_12px_rgba(34,197,94,0.4)] scale-110" : ""
+                className={`flex items-center justify-center transition-all duration-200 hover:scale-110 cursor-default shrink-0 ${
+                  isHighlighted ? "scale-110" : ""
                 } ${isDimmed ? "opacity-40" : ""}`}
-                style={{ width: "2.5rem", height: "2.5rem" }}
               >
                 <Avatar
                   src={skill.iconUrl || undefined}
                   name={skill.name.substring(0, 2).toUpperCase()}
+                  radius="none"
                   classNames={{
-                    base: "w-full h-full bg-transparent text-xs",
-                    img: "object-contain scale-75",
+                    base: "w-[30px] h-[30px] bg-transparent text-xs",
+                    img: "object-contain",
                   }}
                 />
               </div>

@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
-import { PAGE_KEYS } from "@/shared/constants/page-keys";
-import { getPageContent } from "@/features/page-content/actions/page-content.actions";
+import { getPage, DefaultView } from "@/features/page-content";
+import type { ListingPageJsonContent } from "@/entities/page-content/types";
 import { getTranslations } from "next-intl/server";
 import { ProfilesCatalog } from "@/features/profiles/ui/profiles-catalog";
 import { Suspense } from "react";
@@ -17,7 +17,7 @@ export default async function MembersPage(props: {
   setRequestLocale(locale);
 
   const navT = await getTranslations("Navigation");
-  const content = await getPageContent({ page: PAGE_KEYS.members, language: locale });
+  const content = await getPage<ListingPageJsonContent>({ pageName: "members", language: locale });
 
   return (
     <main className="max-w-7xl mx-auto pt-6 pb-12 px-6">
@@ -25,19 +25,11 @@ export default async function MembersPage(props: {
         <section className="flex-1 min-w-0 w-full flex flex-col gap-10">
 
           {/* Page Header */}
-          <div className="flex flex-col gap-3 w-full pb-2">
-            <h1 className="text-2xl sm:text-[26px] font-bold tracking-tight text-foreground antialiased">
-              {content?.title || navT("members")}
-            </h1>
-            {content?.subtitle && (
-              <p className="text-[15px] sm:text-base font-medium text-foreground leading-snug">
-                {content.subtitle}
-              </p>
-            )}
-            <p className="w-full text-sm sm:text-[15px] leading-relaxed text-foreground whitespace-pre-wrap mt-1">
-              {content?.description || navT("membersDescription")}
-            </p>
-          </div>
+          <DefaultView 
+            content={content} 
+            fallbackTitle={navT("members")} 
+            fallbackDescription={navT("membersDescription")} 
+          />
 
           <Suspense fallback={<div className="w-full flex justify-center py-10"><Spinner size="lg" color="primary" /></div>}>
             <ProfilesCatalog page={page} />

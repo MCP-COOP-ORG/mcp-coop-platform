@@ -50,12 +50,11 @@ export const Contacts: React.FC<ContactsProps> = ({ contacts, className = "" }) 
     <div className={`flex flex-row flex-wrap justify-end gap-1.5 ${className}`}>
       {activeContacts.map((item) => {
         const IconComponent = CONTACT_ICONS_MAP[item.id];
-        
+
         return (
           <div
             key={item.id}
-            className="rounded-full border-[0.5px] border-default-300 p-0.5 shadow-[0_4px_12px_rgba(0,0,0,0.04)] bg-default-50 flex items-center justify-center transition-transform hover:scale-110 cursor-pointer overflow-hidden"
-            style={{ width: "1.75rem", height: "1.75rem" }}
+            className="flex items-center justify-center transition-transform hover:scale-110 hover:opacity-100 opacity-90 cursor-pointer"
             title={item.url || ""}
             onClick={(e) => {
               e.preventDefault();
@@ -63,8 +62,8 @@ export const Contacts: React.FC<ContactsProps> = ({ contacts, className = "" }) 
               window.open(item.url || "", "_blank", "noopener,noreferrer");
             }}
           >
-            <IconComponent 
-              className="w-full h-full object-contain scale-[0.80]"
+            <IconComponent
+              className="w-[20px] h-[20px] object-contain"
             />
           </div>
         );

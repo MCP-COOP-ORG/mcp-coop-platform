@@ -19,7 +19,7 @@ export interface BaseCardHeaderProps {
 
 export const BaseCardHeader: React.FC<BaseCardHeaderProps> = ({ avatarUrl, name, title, tags, actions, href, children }) => {
   return (
-    <CardHeader className="p-0 flex items-start gap-4 mb-5 w-full overflow-visible">
+    <CardHeader className="p-0 flex items-center gap-4 mb-5 w-full overflow-visible">
       <div className="shrink-0 w-16 h-16 relative z-10 pointer-events-none">
         <Avatar
           src={avatarUrl || undefined}
@@ -108,7 +108,7 @@ type BaseCardType = React.FC<BaseCardProps> & {
 
 export const BaseCard = (({ bgImage, children }) => {
   return (
-    <HeroCard className="p-5 shadow-sm border border-default-200 flex flex-col justify-start h-full relative overflow-hidden">
+    <HeroCard className="p-5 shadow-none rounded-none border border-default-200 flex flex-col justify-start h-full relative overflow-hidden">
       {bgImage && (
         <div 
           className="absolute top-[-40%] left-[-40%] w-[80%] pb-[80%] bg-no-repeat bg-contain opacity-5 pointer-events-none z-0 grayscale"

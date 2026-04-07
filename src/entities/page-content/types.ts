@@ -45,3 +45,12 @@ export interface HomePageJsonContent {
     articles: Array<{ id: string; title: string; subtitle: string; icon: string; content: string }>;
   };
 }
+
+export interface ListingPageJsonContent {
+  highlightWords?: string[];
+  hero: {
+    title: string;
+    subtitle?: string;
+    description: string;
+  };
+}

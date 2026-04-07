@@ -14,5 +14,4 @@ export { Tabs, Tab } from "./tabs";
 export { Pagination } from "./pagination";
 export { Chip } from "./chip";
 export { Snippet } from "./snippet";
-export { HighlightedText } from "./highlighted-text";
-export type { HighlightedTextProps } from "./highlighted-text";
+export { HighlightedText, type HighlightedTextProps } from "./highlighted-text";

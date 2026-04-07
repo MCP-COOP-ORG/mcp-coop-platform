@@ -1,52 +1,43 @@
 import { PrismaClient } from "../../generated/prisma/client";
 
+const MEMBERS_CONTENT_RU = {
+  highlightWords: ["инженеры", "разработчики", "комьюнити", "кооперативу"],
+  hero: {
+    title: "Специалисты сообщества",
+    subtitle: "Здесь представлены проверенные инженеры и разработчики \nнашего комьюнити, готовые присоединиться к вашему кооперативу \nдля создания выдающихся продуктов.",
+  }
+};
+
+const MEMBERS_CONTENT_EN = {
+  highlightWords: ["engineers", "developers", "community", "coop"],
+  hero: {
+    title: "Community Specialists",
+    subtitle: "Here you can find verified engineers and developers of our community, \nready to join your coop to build outstanding products.",
+  }
+};
+
 export async function seedMembers(prisma: PrismaClient) {
-  console.log("Seeding Members Items...");
+  console.log("Seeding Members configs...");
 
-  // Seed PageContent for 'members' layout
-  const membersContentEn = await prisma.pageContent.upsert({
-    where: { page_language: { page: "members", language: "en" } },
-    update: {
-      title: "Our Specialists",
-      subtitle: "Find the right experts for your cooperative",
-      description: "Explore the global registry of verified specialists, developers, and engineers ready to join new decentralized businesses. Invite talents with proven on-chain reputation to build the next generation of e-Coops together."
-    },
+  await prisma.page.upsert({
+    where: { pageName_language: { pageName: "members", language: "en" } },
+    update: { jsonContent: MEMBERS_CONTENT_EN },
     create: {
-      page: "members",
+      pageName: "members",
       language: "en",
-      title: "Our Specialists",
-      subtitle: "Find the right experts for your cooperative",
-      description: "Explore the global registry of verified specialists, developers, and engineers ready to join new decentralized businesses. Invite talents with proven on-chain reputation to build the next generation of e-Coops together.",
-      image: "/IMG_1163.JPG",
-      jsonContent: {
-        blocks: [
-          { type: "heading", level: 2, text: "Explore Talents" }
-        ]
-      },
+      jsonContent: MEMBERS_CONTENT_EN,
     },
   });
-  console.log(`Created page content for: ${membersContentEn.page} (en)`);
+  console.log(`Created page configuration for: members (en)`);
 
-  const membersContentRu = await prisma.pageContent.upsert({
-    where: { page_language: { page: "members", language: "ru" } },
-    update: {
-      title: "Наши Специалисты",
-      subtitle: "Найдите экспертов для вашего кооператива",
-      description: "Исследуйте глобальный реестр проверенных специалистов, разработчиков и инженеров, готовых присоединиться к новым децентрализованным бизнесам. Приглашайте таланты с подтвержденной on-chain репутацией для совместного создания продуктов будущего."
-    },
+  await prisma.page.upsert({
+    where: { pageName_language: { pageName: "members", language: "ru" } },
+    update: { jsonContent: MEMBERS_CONTENT_RU },
     create: {
-      page: "members",
+      pageName: "members",
       language: "ru",
-      title: "Наши Специалисты",
-      subtitle: "Найдите экспертов для вашего кооператива",
-      description: "Исследуйте глобальный реестр проверенных специалистов, разработчиков и инженеров, готовых присоединиться к новым децентрализованным бизнесам. Приглашайте таланты с подтвержденной on-chain репутацией для совместного создания продуктов будущего.",
-      image: "/IMG_1163.JPG",
-      jsonContent: {
-        blocks: [
-          { type: "heading", level: 2, text: "Обзор специалистов" }
-        ]
-      },
+      jsonContent: MEMBERS_CONTENT_RU,
     },
   });
-  console.log(`Created page content for: ${membersContentRu.page} (ru)`);
+  console.log(`Created page configuration for: members (ru)`);
 }
