@@ -51,35 +51,4 @@ export async function seedBlockchainStatus(prisma: PrismaClient) {
   });
   console.log(`Created page content for: ${blockStatusContentRu.page} (ru)`);
 
-  const articleCreators = [
-    // ENGLISH ARTICLES
-    () => prisma.article.create({
-      data: {
-        language: "en",
-        title: "Latest Network Upgrades",
-        subtitle: "Recent deployments to the mainnet",
-        image: "network",
-        jsonContent: { content: "Our core protocol has just been upgraded with layer-2 optimizations, reducing gas costs for cooperative formation by over 40%. The new smart contracts are fully audited and operational." },
-        pageContentId: blockStatusContentEn.id,
-      },
-    }),
-    // RUSSIAN ARTICLES
-    () => prisma.article.create({
-      data: {
-        language: "ru",
-        title: "Последние обновления сети",
-        subtitle: "Недавние развертывания в основной сети",
-        image: "network",
-        jsonContent: { content: "Наш основной протокол только что был обновлен с помощью оптимизаций второго уровня (L2), что снизило затраты на транзакции для создания кооперативов более чем на 40%. Новые смарт-контракты полностью проверены (аудиты) и работают." },
-        pageContentId: blockStatusContentRu.id,
-      },
-    }),
-  ];
-
-  const articles = [];
-  for (const creatorFn of articleCreators) {
-    articles.push(await creatorFn());
-    await new Promise(resolve => setTimeout(resolve, 50));
-  }
-  console.log(`Created ${articles.length} test articles for Blockchain Status.`);
 }

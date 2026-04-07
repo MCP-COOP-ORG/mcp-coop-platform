@@ -13,3 +13,5 @@ export * from "./facebook";
 export * from "./linkedin";
 export * from "./viber";
 export * from "./phone";
+export * from "./engineering-watermark";
+export * from "./ai-chip-watermark";

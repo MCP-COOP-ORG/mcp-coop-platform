@@ -6,7 +6,6 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { seedHome } from "./seeds/home";
 import { seedDocs } from "./seeds/docs";
 import { seedBlockchainStatus } from "./seeds/blockchain-status";
-import { seedCoops } from "./seeds/coops";
 import { seedMembers } from "./seeds/members";
 
 const connectionString = process.env.DATABASE_URL;
@@ -18,8 +17,7 @@ async function main() {
   console.log("Start seeding...");
 
   console.log("Clearing existing data...");
-  await prisma.article.deleteMany();
-  await prisma.coopItem.deleteMany();
+  await prisma.page.deleteMany();
   await prisma.pageContent.deleteMany();
 
   // Modular Page Seeding logic
@@ -28,7 +26,6 @@ async function main() {
   await seedBlockchainStatus(prisma);
 
   // Other components
-  await seedCoops(prisma);
   await seedMembers(prisma);
 
   console.log("Seeding finished.");

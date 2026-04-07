@@ -3,7 +3,6 @@ import Image from "next/image";
 import { getPageContent } from "@/features/page-content/actions/page-content.actions";
 import type { PageContentDto } from "@/entities/page-content/types";
 import ContentUnavailable from "@/shared/ui/components/content-unavailable";
-import ArticlesLayout from "@/shared/ui/layout/articles";
 import { getTranslations } from "next-intl/server";
 import { Locales } from "@/shared/constants/locale";
 
@@ -153,12 +152,6 @@ export default async function PageContentLayout({
               </Tag>
             );
           }
-          case "articles":
-            return (
-              <div key={index} className="w-full">
-                <ArticlesLayout language={language} pageKey={pageKey} />
-              </div>
-            );
           default:
             return null;
         }
