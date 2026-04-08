@@ -28,8 +28,9 @@ export function OAuthButtonGroup({ isDisabled, onTelegramOpen }: OAuthButtonGrou
   const [isOAuthPending, startOAuthTransition] = useTransition();
 
   const handleOAuthLogin = (provider: OAuthProvider) => {
+    const returnTo = window.location.href;
     startOAuthTransition(() => {
-      oauthLogin(provider);
+      oauthLogin(provider, returnTo);
     });
   };
 
