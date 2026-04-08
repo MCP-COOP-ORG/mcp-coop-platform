@@ -93,7 +93,7 @@ export const BaseCardFooter: React.FC<BaseCardFooterProps> = ({ children }) => {
   if (!children) return null;
   
   return (
-    <CardFooter className="p-0 flex flex-col items-center gap-2 w-full relative z-10 overflow-visible pointer-events-auto">
+    <CardFooter className="p-0 flex flex-col items-center gap-2 w-full relative z-10 overflow-visible pointer-events-none">
       {children}
     </CardFooter>
   );

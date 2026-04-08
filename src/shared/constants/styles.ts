@@ -2,6 +2,8 @@
  * Shared complex CSS styles for the application UI.
  */
 
+export const dashedSeparator = "border-t-[2px] border-dashed border-default-200";
+
 export const blueprintBackgroundStyle = {
   backgroundColor: '#6ba0c0',
   backgroundImage: `

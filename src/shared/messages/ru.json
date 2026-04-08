@@ -89,5 +89,19 @@
     "imageGoesHere": "Здесь будет изображение",
     "watchVideo": "Смотреть связанное видео",
     "failedSubmit": "Не удалось отправить форму. Попробуйте еще раз."
+  },
+  "ProfileDetail": {
+    "notFoundTitle": "Профиль не найден",
+    "notFoundDesc": "Не удалось загрузить запрашиваемый профиль.",
+    "unnamedProfile": "Анонимный профиль",
+    "location": "Локация",
+    "timezone": "Часовой пояс",
+    "availability": "Доступность",
+    "email": "Email",
+    "aboutMe": "ОБО МНЕ",
+    "experience": "ОПЫТ",
+    "projectRole": "Роль на проекте:",
+    "now": "Наст. время",
+    "languages": "Языки"
   }
 }

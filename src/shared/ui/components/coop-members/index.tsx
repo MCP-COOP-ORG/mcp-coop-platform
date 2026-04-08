@@ -52,10 +52,11 @@ export const CoopMembers: React.FC<CoopMembersProps> = ({ members, className = "
       <Tooltip key={member.id} content={renderTooltipContent(member)} placement="top" offset={15}>
         <Link
           href={`/members/${member.profileId}`}
-          className={`cursor-pointer transition-transform duration-200 hover:z-[100] hover:-translate-y-1 block shrink-0 rounded-full ${
+          className={`pointer-events-auto cursor-pointer transition-transform duration-200 hover:z-[100] hover:-translate-y-1 block shrink-0 rounded-full ${
             isHighlighted ? "z-[100] -translate-y-1" : ""
           }`}
           style={{ zIndex: isHighlighted ? 100 : 50 - index }}
+          onClick={(e) => e.stopPropagation()}
         >
           <Avatar
             isBordered
@@ -77,7 +78,7 @@ export const CoopMembers: React.FC<CoopMembersProps> = ({ members, className = "
           {uniqueCompetences.map((competence, index) => (
             <React.Fragment key={`${index}-${competence}`}>
               <span
-                className="cursor-pointer transition-opacity duration-150 hover:opacity-100"
+                className="pointer-events-auto cursor-pointer transition-opacity duration-150 hover:opacity-100"
                 style={{ opacity: hoveredCompetence !== null && hoveredCompetence !== competence ? 0.4 : 1 }}
                 onMouseEnter={() => setHoveredCompetence(competence)}
                 onMouseLeave={() => setHoveredCompetence(null)}

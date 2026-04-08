@@ -89,5 +89,19 @@
     "imageGoesHere": "Image goes here",
     "watchVideo": "Watch related video",
     "failedSubmit": "Failed to submit form. Please try again."
+  },
+  "ProfileDetail": {
+    "notFoundTitle": "Profile not found",
+    "notFoundDesc": "The requested profile could not be loaded.",
+    "unnamedProfile": "Unnamed Profile",
+    "location": "Location",
+    "timezone": "Timezone",
+    "availability": "Availability",
+    "email": "Email",
+    "aboutMe": "About Me",
+    "experience": "Experience",
+    "projectRole": "Project role:",
+    "now": "Now",
+    "languages": "Languages"
   }
 }

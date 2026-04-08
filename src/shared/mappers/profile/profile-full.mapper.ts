@@ -16,6 +16,8 @@ function mapExperience(dto: ProfileExperienceDto): ProfileExperienceData {
     startDate: dto.startDate,
     endDate: dto.endDate ?? null,
     description: dto.description ?? null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    skills: (dto as any).skills ?? [],
   };
 }
 

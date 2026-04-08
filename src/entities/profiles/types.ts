@@ -28,6 +28,7 @@ export interface ProfileExperienceData {
   startDate: string;
   endDate: string | null;
   description: string | null;
+  skills: SkillItem[];
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
