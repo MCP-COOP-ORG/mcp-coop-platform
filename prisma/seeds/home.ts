@@ -3,7 +3,7 @@ import { PrismaClient } from "../../generated/prisma/client";
 const HOME_PAGE_CONTENT_RU = {
   highlightWords: ["Твой"],
   hero: {
-    tagline: "Твой труд | Твой кооператив | Твой продукт",
+    tagline: "Твой кооператив | Твой труд | Твой продукт",
     subtitle: "Наша платформа помогает найти команду, чтобы создавать продукты вместе",
     buttonText: "НАЧАТЬ",
   },
@@ -90,7 +90,7 @@ const HOME_PAGE_CONTENT_RU = {
 const HOME_PAGE_CONTENT_EN = {
   highlightWords: ["Your"],
   hero: {
-    tagline: "Your work | Your coop | Your product",
+    tagline: "Your coop | Your work | Your product",
     subtitle: "Our platform helps you find a team to build apps together",
     buttonText: "GET STARTED",
   },
@@ -102,7 +102,7 @@ const HOME_PAGE_CONTENT_EN = {
     },
     {
       id: "coop",
-      title: "Cooperation",
+      title: "Coloboration",
       description: "Create your own coop to build apps and startups in a team where everyone's opinion is valued."
     },
     {

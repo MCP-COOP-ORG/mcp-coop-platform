@@ -1,27 +1,60 @@
 import React from "react";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getCoopByIdAction } from "../api/get-coop-by-id.action";
-import { Avatar } from "@/shared/ui/primitives";
-import { Chip } from "@/shared/ui/primitives";
+import { Avatar, Card, CardBody, Chip } from "@/shared/ui/primitives";
 import ContentUnavailable from "@/shared/ui/components/content-unavailable";
+import { Contacts } from "@/shared/ui/components/contacts";
+import { CryptoWallets } from "@/shared/ui/components/crypto-wallets";
+import { CoopMembers } from "@/shared/ui/components/coop-members";
+import { Activity, Star, Globe, Calendar, Fingerprint, ExternalLink } from "lucide-react";
+
+import { dashedSeparator } from "@/shared/constants/styles";
 
 interface CoopDetailProps {
   id: string;
 }
 
 /**
+ * Parses the rich description object to extract text from paragraph blocks.
+ */
+function parseDescription(description: Record<string, unknown> | null): string {
+  if (!description || !Array.isArray(description.blocks)) return "";
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const paragraphs = description.blocks.filter((b: any) => b.type === "paragraph");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return paragraphs.map((p: any) => p.data?.text).filter(Boolean).join("\n\n");
+}
+
+/**
+ * Formats an ISO date string to a human-readable format.
+ */
+function formatDate(dateString: string): string {
+  if (!dateString) return "";
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString;
+    return new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", day: "numeric" }).format(d);
+  } catch {
+    return dateString;
+  }
+}
+
+/**
  * RSC Smart Container — Cooperative Detail Page.
  *
- * Fetches cooperative data via server action and renders all API fields
- * as a structured data dump alongside a "Coming Soon" design placeholder.
+ * Fetches cooperative data via server action and renders the full structural layout.
  */
 export const CoopDetail = async ({ id }: CoopDetailProps) => {
+  const t = await getTranslations("CoopDetail");
   const { data: coop, error } = await getCoopByIdAction(id);
 
   if (error || !coop) {
     return (
       <ContentUnavailable
-        title="Cooperative not found"
-        description={error || "The requested cooperative could not be loaded."}
+        title={t("notFoundTitle")}
+        description={error || t("notFoundDesc")}
       />
     );
   }
@@ -30,196 +63,161 @@ export const CoopDetail = async ({ id }: CoopDetailProps) => {
   const contacts = coop.contacts || {};
   const members = coop.members || [];
   const categories = coop.categories || [];
+  const slides = coop.presentationSlides || [];
 
   return (
-    <div className="flex flex-col gap-8">
-      {/* Header Section */}
-      <div className="flex items-start gap-5">
-        <Avatar
-          src={coop.logoUrl || undefined}
-          name={coop.name ? coop.name.substring(0, 2).toUpperCase() : ""}
-          className="w-20 h-20 shadow-md text-xl"
-          isBordered
-          color="primary"
-        />
-        <div className="flex-1 min-w-0">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-            {coop.name}
-          </h1>
-          <div className="flex items-center gap-2 mt-1.5">
-            <Chip
-              size="sm"
-              color={coop.status === "ACTIVE" ? "success" : coop.status === "FROZEN" ? "warning" : "danger"}
-              variant="flat"
-            >
-              {coop.status}
-            </Chip>
-            <span className="text-sm text-foreground/50">
-              Rating: {coop.rating}/5
-            </span>
+    <div className="flex flex-col gap-8 w-full">
+      {/* SECTION 1: General Information */}
+      <section aria-labelledby="coop-info-heading" className="flex flex-col md:flex-row gap-8 items-start">
+        {/* Left Column: Logo & Mini-card data */}
+        <div className="flex flex-col gap-3 w-[240px] shrink-0 mx-auto md:mx-0">
+          <Avatar
+            src={coop.logoUrl || undefined}
+            name={(coop.name || "").substring(0, 2).toUpperCase()}
+            classNames={{
+              base: "w-full h-auto aspect-square bg-default-50",
+              img: "object-cover"
+            }}
+            className="text-5xl font-light"
+            radius="none"
+          />
+          <div className="flex flex-col gap-2.5 w-full items-center">
+            {Object.keys(contacts).length > 0 && (
+              <Contacts contacts={contacts} />
+            )}
+            {(Object.keys(wallets).length > 0 || coop.onChainId) && (
+              <CryptoWallets wallets={wallets} onChainId={coop.onChainId} />
+            )}
           </div>
         </div>
-      </div>
 
-      {/* Coming Soon Banner */}
-      <div className="flex flex-col items-center justify-center py-10 border border-dashed border-primary/30 rounded-2xl bg-primary/5">
-        <p className="text-xl font-light text-primary/60 tracking-wider uppercase">
-          🚧 Page Design — Coming Soon
-        </p>
-        <p className="text-sm text-foreground/40 mt-2">
-          Raw API data displayed below for development purposes
-        </p>
-      </div>
-
-      {/* Data Dump — all fields from API */}
-      <div className="grid gap-6">
-
-        {/* Basic Info */}
-        <section className="border border-default-200 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Basic Info</h2>
-          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
-            <div>
-              <dt className="font-medium text-foreground/50">ID</dt>
-              <dd className="text-foreground break-all mt-0.5">{coop.id}</dd>
+        {/* Right Column: Coop Data */}
+        <div className="flex-1 min-w-0 flex flex-col pt-2 w-full">
+          <h1 id="coop-info-heading" className="text-3xl md:text-4xl font-normal tracking-tight text-foreground uppercase mb-6">
+            {coop.name || t("unnamedCoop")}
+          </h1>
+          
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+            {/* Column 1: Status & Created At */}
+            <div className="flex flex-col gap-5">
+              {coop.status && (
+                <div className="flex items-center gap-3">
+                  <Activity className="w-5 h-5 text-primary shrink-0" />
+                  <div>
+                    <dt className="text-xs text-foreground/50 font-medium uppercase tracking-wider mb-1">{t("status")}</dt>
+                    <dd className="text-sm text-foreground flex items-center gap-2">
+                       <Chip size="sm" color={coop.status === "ACTIVE" ? "success" : coop.status === "FROZEN" ? "warning" : "default"} variant="flat">
+                         {coop.status}
+                       </Chip>
+                    </dd>
+                  </div>
+                </div>
+              )}
+              {coop.createdAt && (
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-5 h-5 text-primary shrink-0" />
+                  <div>
+                    <dt className="text-xs text-foreground/50 font-medium uppercase tracking-wider mb-1">{t("createdAt")}</dt>
+                    <dd className="text-sm text-foreground">{formatDate(coop.createdAt)}</dd>
+                  </div>
+                </div>
+              )}
             </div>
-            <div>
-              <dt className="font-medium text-foreground/50">On-Chain ID</dt>
-              <dd className="text-foreground break-all mt-0.5">{coop.onChainId}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-foreground/50">Status</dt>
-              <dd className="text-foreground mt-0.5">{coop.status}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-foreground/50">Rating</dt>
-              <dd className="text-foreground mt-0.5">{coop.rating}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-foreground/50">Website</dt>
-              <dd className="text-foreground mt-0.5">{coop.website || "N/A"}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-foreground/50">Logo URL</dt>
-              <dd className="text-foreground break-all mt-0.5">{coop.logoUrl || "N/A"}</dd>
-            </div>
-            <div className="sm:col-span-2">
-              <dt className="font-medium text-foreground/50">Description</dt>
-              <dd className="text-foreground mt-0.5 whitespace-pre-wrap">
-                {coop.description ? JSON.stringify(coop.description, null, 2) : coop.shortDescription || "N/A"}
-              </dd>
+            
+            {/* Column 2: Website */}
+            <div className="flex flex-col gap-5">
+              {coop.website && (
+                <div className="flex items-center gap-3">
+                  <Globe className="w-5 h-5 text-primary shrink-0" />
+                  <div>
+                    <dt className="text-xs text-foreground/50 font-medium uppercase tracking-wider mb-1">{t("website")}</dt>
+                    <dd className="text-sm text-foreground flex items-center gap-1.5 break-all">
+                      <a href={coop.website.startsWith("http") ? coop.website : `https://${coop.website}`} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                        {coop.website}
+                      </a>
+                      <ExternalLink className="w-3 h-3 text-foreground/50" />
+                    </dd>
+                  </div>
+                </div>
+              )}
             </div>
           </dl>
-        </section>
 
-        {/* Categories */}
-        <section className="border border-default-200 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-foreground mb-4">
-            Categories ({categories.length})
-          </h2>
-          {categories.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
+          {coop.shortDescription && (
+            <div className={`mt-8 pt-6 ${dashedSeparator}`}>
+              <p className="text-base text-foreground/80 leading-relaxed">
+                {coop.shortDescription}
+              </p>
+            </div>
+          )}
+
+          {members && members.length > 0 && (
+            <div className="mt-8 flex items-end gap-6">
+              <h2 className="text-2xl md:text-3xl font-light text-foreground uppercase tracking-widest shrink-0 leading-none select-none pb-1">
+                {t("members")}:
+              </h2>
+              <div className="shrink-0 w-max">
+                <CoopMembers members={members} className="!w-max !gap-2" />
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* SECTION 2: Description & Categories */}
+      {(coop.description || categories.length > 0) && (
+        <section aria-labelledby="about-heading" className="flex flex-col gap-2 w-full">
+          <h4 id="about-heading" className="text-2xl font-normal uppercase text-center text-foreground tracking-wider">
+            {t("about")}
+          </h4>
+          
+          {coop.description && (
+            <div className="text-base text-foreground/80 leading-relaxed w-full mt-2">
+              <p className="whitespace-pre-wrap">{parseDescription(coop.description)}</p>
+            </div>
+          )}
+
+          {categories.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
               {categories.map((cat) => (
                 <Chip key={cat} size="sm" variant="flat" color="primary">{cat}</Chip>
               ))}
             </div>
-          ) : (
-            <p className="text-sm text-foreground/40">No categories</p>
           )}
         </section>
+      )}
 
-        {/* Contacts */}
-        <section className="border border-default-200 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Contacts</h2>
-          {Object.keys(contacts).length > 0 ? (
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
-              {Object.entries(contacts).map(([key, value]) => (
-                <div key={key}>
-                  <dt className="font-medium text-foreground/50 capitalize">{key}</dt>
-                  <dd className="text-foreground break-all mt-0.5">{String(value ?? "N/A")}</dd>
+
+
+      {/* SECTION 4: Presentation Slides */}
+      {slides && slides.length > 0 && (
+        <section aria-labelledby="slides-heading" className="flex flex-col gap-2 mt-4">
+          <h4 id="slides-heading" className="text-2xl font-normal uppercase text-center text-foreground tracking-wider mb-2">
+            {t("slides")}
+          </h4>
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {slides.sort((a, b) => a.order - b.order).map((slide) => (
+              <Card 
+                key={slide.id} 
+                shadow="none" 
+                radius="none"
+                className="bg-background shadow-[0_0_10px_rgba(0,0,0,0.08)] border border-default-200 overflow-hidden"
+              >
+                <div className="aspect-video w-full bg-default-100 flex items-center justify-center relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={slide.mediaUrl} alt={slide.title || "Slide"} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
-              ))}
-            </dl>
-          ) : (
-            <p className="text-sm text-foreground/40">No contacts</p>
-          )}
+                {(slide.title || slide.description) && (
+                  <CardBody className="p-3">
+                    {slide.title && <h5 className="font-bold text-sm tracking-tight uppercase mb-1">{slide.title}</h5>}
+                    {slide.description && <p className="text-xs text-foreground/80 leading-relaxed">{slide.description}</p>}
+                  </CardBody>
+                )}
+              </Card>
+            ))}
+          </div>
         </section>
-
-        {/* Wallets */}
-        <section className="border border-default-200 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Wallets</h2>
-          {Object.keys(wallets).length > 0 ? (
-            <dl className="grid grid-cols-1 gap-y-3 text-sm">
-              {Object.entries(wallets).map(([network, wallet]) => (
-                <div key={network} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
-                  <dt className="font-medium text-foreground/50 capitalize shrink-0 w-24">{network}</dt>
-                  <dd className="text-foreground break-all font-mono text-xs">
-                    {typeof wallet === "object" && wallet !== null
-                      ? JSON.stringify(wallet)
-                      : String(wallet ?? "N/A")}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          ) : (
-            <p className="text-sm text-foreground/40">No wallets</p>
-          )}
-        </section>
-
-        {/* Members */}
-        <section className="border border-default-200 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-foreground mb-4">
-            Members ({members.length})
-          </h2>
-          {members.length > 0 ? (
-            <div className="grid gap-3">
-              {members.map((member) => (
-                <div key={member.id} className="flex items-center gap-3 p-3 rounded-lg bg-default-50 border border-default-100">
-                  <Avatar
-                    src={member.avatarUrl || undefined}
-                    name={member.name ? member.name.substring(0, 2).toUpperCase() : ""}
-                    className="w-10 h-10 text-sm"
-                    size="sm"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{member.name}</p>
-                    <p className="text-xs text-foreground/50">{member.isProposer ? "Proposer" : "Member"}</p>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    {member.isProposer && (
-                      <Chip size="sm" variant="flat" color="warning">Proposer</Chip>
-                    )}
-                    <span className="text-xs text-foreground/40 font-mono break-all max-w-[120px] truncate" title={member.onChainId}>
-                      {member.onChainId}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-foreground/40">No members</p>
-          )}
-        </section>
-
-        {/* Timestamps */}
-        <section className="border border-default-200 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-foreground mb-4">Timestamps</h2>
-          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-3 text-sm">
-            <div>
-              <dt className="font-medium text-foreground/50">Created At</dt>
-              <dd className="text-foreground mt-0.5">{coop.createdAt}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-foreground/50">Updated At</dt>
-              <dd className="text-foreground mt-0.5">{coop.updatedAt}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-foreground/50">On-Chain Created At</dt>
-              <dd className="text-foreground mt-0.5">{coop.onChainCreatedAt || "N/A"}</dd>
-            </div>
-          </dl>
-        </section>
-
-      </div>
+      )}
     </div>
   );
 };

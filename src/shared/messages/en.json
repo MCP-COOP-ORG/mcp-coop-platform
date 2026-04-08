@@ -103,5 +103,21 @@
     "projectRole": "Project role:",
     "now": "Now",
     "languages": "Languages"
+  },
+  "CoopDetail": {
+    "notFoundTitle": "Cooperative not found",
+    "notFoundDesc": "The requested cooperative could not be loaded.",
+    "unnamedCoop": "Unnamed Cooperative",
+    "status": "Status",
+    "rating": "Rating",
+    "website": "Website",
+    "onChainId": "On-Chain ID",
+    "categories": "Categories",
+    "about": "ABOUT COOPERATIVE",
+    "members": "MEMBERS",
+    "createdAt": "Created At",
+    "proposer": "Proposer",
+    "member": "Member",
+    "slides": "PRESENTATION"
   }
 }

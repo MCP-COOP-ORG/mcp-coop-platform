@@ -103,5 +103,21 @@
     "projectRole": "Роль на проекте:",
     "now": "Наст. время",
     "languages": "Языки"
+  },
+  "CoopDetail": {
+    "notFoundTitle": "Кооператив не найден",
+    "notFoundDesc": "Не удалось загрузить запрашиваемый кооператив.",
+    "unnamedCoop": "Кооператив без названия",
+    "status": "Статус",
+    "rating": "Рейтинг",
+    "website": "Сайт",
+    "onChainId": "On-Chain ID",
+    "categories": "Категории",
+    "about": "О КООПЕРАТИВЕ",
+    "members": "УЧАСТНИКИ",
+    "createdAt": "Создан",
+    "proposer": "Инициатор",
+    "member": "Участник",
+    "slides": "ПРЕЗЕНТАЦИЯ"
   }
 }
