@@ -26,7 +26,7 @@ export function HeaderActions({ className = "" }: HeaderComponentBaseProps) {
       items={getHeaderActionConfig(userName, tHeader)}
     >
       <button className="flex items-center gap-3 outline-none transition-transform active:scale-95 group">
-        <span className="max-w-[100px] truncate text-sm font-medium hidden sm:block group-hover:text-primary">
+        <span className="max-w-[100px] truncate text-sm font-medium max-sm:hidden group-hover:text-primary">
           {userName}
         </span>
         <Avatar

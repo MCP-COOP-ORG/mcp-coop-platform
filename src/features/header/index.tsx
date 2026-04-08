@@ -17,14 +17,14 @@ export function Header() {
     <header className="w-full p-[20px] bg-transparent relative z-[9999]">
       <div className="max-w-7xl mx-auto flex items-center justify-between h-[60px]">
         <HeaderLogo />
-        <HeaderNav className="hidden lg:flex" />
+        <HeaderNav className="max-lg:hidden" />
 
         <div className="flex items-center gap-2">
-          <HeaderActions className="hidden lg:flex" />
+          <HeaderActions className="max-lg:hidden" />
 
           <button
             type="button"
-            className="flex lg:hidden group items-center justify-center w-8 h-8 rounded-small outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2 tap-highlight-transparent"
+            className="lg:hidden flex group items-center justify-center w-8 h-8 rounded-small outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2 tap-highlight-transparent"
             aria-label={isMenuOpen ? headerT(headerI18nKeys.closeMenu) : headerT(headerI18nKeys.openMenu)}
             aria-expanded={isMenuOpen}
             data-open={isMenuOpen}
