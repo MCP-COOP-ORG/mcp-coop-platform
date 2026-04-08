@@ -61,6 +61,8 @@ async function executeRequest(
 
   if (isServer) {
     await attachServerCookies(headers);
+    // Mimic browser behavior for backend CORS strictness
+    headers.set('Origin', process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
   } else {
     options.credentials = 'include';
   }
