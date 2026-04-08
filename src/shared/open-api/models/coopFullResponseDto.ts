@@ -53,5 +53,9 @@ export interface CoopFullResponseDto {
   shortDescription?: string | null;
   /** @nullable */
   description?: CoopFullResponseDtoDescription;
+  /** @nullable */
+  mission?: string | null;
+  /** @nullable */
+  vision?: string | null;
   presentationSlides: CoopPresentationSlideDto[];
 }

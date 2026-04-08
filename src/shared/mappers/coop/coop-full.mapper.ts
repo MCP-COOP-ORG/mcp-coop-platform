@@ -47,6 +47,8 @@ export function mapCoopFullDto(dto: CoopFullResponseDto): CoopFullData {
     createdAt: dto.createdAt,
     updatedAt: dto.updatedAt,
     members: (dto.members ?? []).map(mapCoopMember),
+    mission: dto.mission ?? null,
+    vision: dto.vision ?? null,
     shortDescription: dto.shortDescription ?? null,
     description: dto.description as Record<string, unknown> | null ?? null,
     presentationSlides: (dto.presentationSlides ?? []).map(mapSlide),

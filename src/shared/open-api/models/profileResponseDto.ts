@@ -17,6 +17,8 @@ export interface ProfileResponseDto {
   /** @nullable */
   email?: string | null;
   /** @nullable */
+  headline?: string | null;
+  /** @nullable */
   description?: string | null;
   /** @nullable */
   avatarUrl?: string | null;

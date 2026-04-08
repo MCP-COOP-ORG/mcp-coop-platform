@@ -64,6 +64,8 @@ export interface CoopFullData {
   createdAt: string;
   updatedAt: string;
   members: CoopMemberData[];
+  mission: string | null;
+  vision: string | null;
   shortDescription: string | null;
   /** Rich JSON description from backend */
   description: Record<string, unknown> | null;

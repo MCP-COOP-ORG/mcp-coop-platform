@@ -49,6 +49,7 @@ export interface ProfileFullData {
   contacts: MappedContacts;
   wallets: MappedWallets;
   blockchainAccount: string | null;
+  headline: string | null;
   shortDescription: string | null;
   /** Rich JSON description from backend */
   description: Record<string, unknown> | null;

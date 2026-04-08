@@ -4,6 +4,7 @@
  * Do not edit manually.
  * Micro App API
  */
+import type { ProfileSkillDto } from './profileSkillDto';
 
 export interface ProfileExperienceDto {
   id: string;
@@ -14,4 +15,5 @@ export interface ProfileExperienceDto {
   endDate?: string | null;
   /** @nullable */
   description?: string | null;
+  skills: ProfileSkillDto[];
 }

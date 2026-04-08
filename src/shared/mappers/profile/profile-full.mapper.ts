@@ -16,8 +16,7 @@ function mapExperience(dto: ProfileExperienceDto): ProfileExperienceData {
     startDate: dto.startDate,
     endDate: dto.endDate ?? null,
     description: dto.description ?? null,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    skills: (dto as any).skills ?? [],
+    skills: mapSkills(dto.skills).skills,
   };
 }
 
@@ -43,6 +42,7 @@ export function mapProfileFullDto(dto: ProfileFullResponseDto): ProfileFullData 
     contacts: mapContacts(dto.contacts as Record<string, unknown> | undefined),
     wallets: mapWallets(dto.wallets as Record<string, unknown> | undefined),
     blockchainAccount: dto.blockchainAccount ?? null,
+    headline: dto.headline ?? null,
     shortDescription: dto.shortDescription ?? null,
     description: dto.description as Record<string, unknown> | null ?? null,
     location: dto.location ?? null,

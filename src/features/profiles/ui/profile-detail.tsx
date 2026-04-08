@@ -90,9 +90,14 @@ export const ProfileDetail = async ({ id }: ProfileDetailProps) => {
 
         {/* Right Column: Personal Data */}
         <div className="flex-1 min-w-0 flex flex-col pt-2 w-full">
-          <h1 id="personal-info-heading" className="text-3xl md:text-4xl font-normal tracking-tight text-foreground mb-6">
+          <h1 id="personal-info-heading" className="text-3xl md:text-4xl font-normal tracking-tight text-foreground mb-1">
             {profile.fullName || profile.username || t("unnamedProfile")}
           </h1>
+          {profile.headline && (
+            <p className="text-lg md:text-xl text-primary font-normal tracking-wide mb-6">
+              {profile.headline}
+            </p>
+          )}
           
           <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
             {/* Column 1: Email & Availability */}
@@ -212,10 +217,10 @@ export const ProfileDetail = async ({ id }: ProfileDetailProps) => {
                     
                     {/* Skills & Dates */}
                     <div className="flex items-center gap-4 shrink-0 mt-0.5">
-                      {skills && skills.length > 0 && (
+                      {exp.skills && exp.skills.length > 0 && (
                         <div className="hidden sm:block">
                           <Skills 
-                            skills={skills}
+                            skills={exp.skills}
                             maxItems={7}
                             size="sm"
                             showCategories={false}

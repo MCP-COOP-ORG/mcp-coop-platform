@@ -19,6 +19,8 @@ export interface ProfileFullResponseDto {
   /** @nullable */
   email?: string | null;
   /** @nullable */
+  headline?: string | null;
+  /** @nullable */
   avatarUrl?: string | null;
   rating: number;
   skills: ProfileSkillDto[];

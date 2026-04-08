@@ -164,7 +164,29 @@ export const CoopDetail = async ({ id }: CoopDetailProps) => {
         </div>
       </section>
 
-      {/* SECTION 2: Description & Categories */}
+      {/* SECTION 2: Mission & Vision */}
+      {(coop.mission || coop.vision) && (
+        <section aria-labelledby="mission-heading" className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          {coop.mission && (
+            <Card className="bg-default-50 border border-default-200 shadow-[0_0_15px_rgba(0,0,0,0.03)]" shadow="none" radius="none">
+              <CardBody className="p-8 flex flex-col gap-4">
+                <h3 className="text-xl font-light uppercase tracking-widest text-foreground">Mission</h3>
+                <p className="text-base text-foreground/80 leading-relaxed font-normal">{coop.mission}</p>
+              </CardBody>
+            </Card>
+          )}
+          {coop.vision && (
+            <Card className="bg-default-50 border border-default-200 shadow-[0_0_15px_rgba(0,0,0,0.03)]" shadow="none" radius="none">
+              <CardBody className="p-8 flex flex-col gap-4">
+                <h3 className="text-xl font-light uppercase tracking-widest text-foreground">Vision</h3>
+                <p className="text-base text-foreground/80 leading-relaxed font-normal">{coop.vision}</p>
+              </CardBody>
+            </Card>
+          )}
+        </section>
+      )}
+
+      {/* SECTION 3: Description & Categories */}
       {(coop.description || categories.length > 0) && (
         <section aria-labelledby="about-heading" className="flex flex-col gap-2 w-full">
           <h4 id="about-heading" className="text-2xl font-normal uppercase text-center text-foreground tracking-wider">
