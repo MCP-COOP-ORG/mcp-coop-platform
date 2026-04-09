@@ -7,7 +7,8 @@
     "signedInAs": "Signed in as",
     "closeMenu": "Close menu",
     "openMenu": "Open menu",
-    "linkTelegram": "Link Telegram"
+    "linkTelegram": "Link Telegram",
+    "userMenuLabel": "User menu"
   },
   "Locale": {
     "en": "English",

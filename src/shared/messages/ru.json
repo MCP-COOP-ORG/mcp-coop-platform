@@ -7,7 +7,8 @@
     "signedInAs": "Вы вошли как",
     "closeMenu": "Закрыть меню",
     "openMenu": "Открыть меню",
-    "linkTelegram": "Привязать Telegram"
+    "linkTelegram": "Привязать Telegram",
+    "userMenuLabel": "Меню пользователя"
   },
   "Locale": {
     "en": "Английский",
