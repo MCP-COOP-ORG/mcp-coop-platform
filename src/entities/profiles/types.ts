@@ -56,6 +56,7 @@ export interface ProfileFullData {
   location: string | null;
   timezone: string | null;
   availabilityStatus: string | null;
+  languages: string[];
   experiences: ProfileExperienceData[];
 }
 

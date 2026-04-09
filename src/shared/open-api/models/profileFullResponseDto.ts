@@ -41,5 +41,6 @@ export interface ProfileFullResponseDto {
   timezone?: string | null;
   /** @nullable */
   availabilityStatus?: string | null;
+  languages: string[];
   experiences: ProfileExperienceDto[];
 }

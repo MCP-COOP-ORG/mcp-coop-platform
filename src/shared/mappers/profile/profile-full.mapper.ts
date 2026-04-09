@@ -48,6 +48,7 @@ export function mapProfileFullDto(dto: ProfileFullResponseDto): ProfileFullData 
     location: dto.location ?? null,
     timezone: dto.timezone ?? null,
     availabilityStatus: dto.availabilityStatus ?? null,
+    languages: dto.languages ?? [],
     experiences: (dto.experiences ?? []).map(mapExperience),
   };
 }

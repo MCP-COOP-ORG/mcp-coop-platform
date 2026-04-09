@@ -146,15 +146,17 @@ export const ProfileDetail = async ({ id }: ProfileDetailProps) => {
 
             {/* Column 3: Languages */}
             <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-3">
-                <Globe className="w-5 h-5 text-primary shrink-0" />
-                <div>
-                  <dt className="text-xs text-foreground/50 font-medium uppercase tracking-wider mb-1">{t("languages")}</dt>
-                  <dd className="text-sm text-foreground">
-                    English, Russian
-                  </dd>
+              {profile.languages && profile.languages.length > 0 && (
+                <div className="flex items-center gap-3">
+                  <Globe className="w-5 h-5 text-primary shrink-0" />
+                  <div>
+                    <dt className="text-xs text-foreground/50 font-medium uppercase tracking-wider mb-1">{t("languages")}</dt>
+                    <dd className="text-sm text-foreground">
+                      {profile.languages.join(", ")}
+                    </dd>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </dl>
 
