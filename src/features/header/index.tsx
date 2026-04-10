@@ -14,7 +14,7 @@ export function Header() {
   const headerT = useTranslations("Header");
 
   return (
-    <header className="w-full p-[20px] bg-transparent relative z-[9999]">
+    <header className="w-full px-4 py-0 lg:p-[20px] sticky top-0 lg:relative lg:top-auto bg-background/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none z-[9999] border-b border-dashed border-divider/50 lg:border-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between h-[60px]">
         <HeaderLogo />
         <HeaderNav className="max-lg:hidden" />

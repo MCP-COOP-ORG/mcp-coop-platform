@@ -24,6 +24,8 @@
     "coops": "Coops",
     "members": "Specialists",
     "membersDescription": "List of all registered specialists.",
+    "contactUs": "Contact Us",
+    "contactUsDescription": "Have any questions or suggestions? Fill out the form, and we will get back to you shortly.",
     "contacts": "Contact Us",
     "workspace": "Workspace",
     "coopsDescription": "List of all registered cooperatives."

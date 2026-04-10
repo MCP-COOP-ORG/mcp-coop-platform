@@ -1,6 +1,5 @@
 /**
- * Page keys used by PageContentLayout to fetch content from Prisma.
- * Must match the `key` field in the PageContent table.
+ * Keys used for page routing and fetching JSON schema contents.
  */
 export const PAGE_KEYS = {
   home: "home",

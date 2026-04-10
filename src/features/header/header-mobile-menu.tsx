@@ -14,13 +14,13 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
   return (
     <motion.div
       initial={{ height: 0, opacity: 0 }}
-      animate={{ height: "calc(100dvh - 60px)", opacity: 1 }}
+      animate={{ height: "calc(100dvh - 61px)", opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ type: "spring", damping: 30, stiffness: 300 }}
-      className="fixed top-[60px] left-0 w-full bg-background/95 backdrop-blur-xl border-b border-divider z-[9998] lg:hidden overflow-hidden flex flex-col"
+      className="fixed top-[61px] left-0 w-full bg-background/95 backdrop-blur-xl border-b border-divider z-[9998] lg:hidden overflow-hidden flex flex-col"
     >
-      <div className="px-6 py-4 flex flex-col gap-8 flex-1 overflow-y-auto">
-        <div className="flex justify-end py-3 mb-2 border-y border-dashed border-divider/50">
+      <div className="px-6 pt-0 pb-4 flex flex-col gap-8 flex-1 overflow-y-auto">
+        <div className="flex justify-end py-3 mb-2 border-b border-dashed border-divider/50">
           <HeaderActions className="flex" />
         </div>
 

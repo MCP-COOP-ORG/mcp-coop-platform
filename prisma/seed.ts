@@ -8,6 +8,7 @@ import { seedDocs } from "./seeds/docs";
 import { seedBlockchainStatus } from "./seeds/blockchain-status";
 import { seedMembers } from "./seeds/members";
 import { seedCoops } from "./seeds/coops";
+import { seedContactUs } from "./seeds/contact-us";
 
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({ connectionString });
@@ -19,7 +20,6 @@ async function main() {
 
   console.log("Clearing existing data...");
   await prisma.page.deleteMany();
-  await prisma.pageContent.deleteMany();
 
   // Modular Page Seeding logic
   await seedHome(prisma);
@@ -29,6 +29,7 @@ async function main() {
   // Other components
   await seedMembers(prisma);
   await seedCoops(prisma);
+  await seedContactUs(prisma);
 
   console.log("Seeding finished.");
 }

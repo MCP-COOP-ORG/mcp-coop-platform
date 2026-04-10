@@ -17,19 +17,3 @@ model Page {
 
   @@unique([pageName, language])
 }
-
-model PageContent {
-  id          String   @id @default(uuid())
-  page        String
-  language    String
-  title       String
-  subtitle    String?
-  description String
-  image       String?
-  video       String?
-  jsonContent Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@unique([page, language])
-}
