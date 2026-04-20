@@ -40,7 +40,12 @@ server {
         proxy_pass http://${KANBAN_MFE_CONTAINER_NAME}:${MFE_PORT}/assets/;
     }
 
-    # 4. Frontend - Next.js (Всё остальное)
+    # 4. UnBoGi — Telegram Mini App (Vite SPA)
+    location /unbogi/ {
+        proxy_pass http://${UNBOGI_CONTAINER_NAME}:${UNBOGI_PORT}/unbogi/;
+    }
+
+    # 5. Frontend - Next.js (Всё остальное)
     location / {
         proxy_pass http://${PLATFORM_CONTAINER_NAME}:${PLATFORM_PORT};
     }
