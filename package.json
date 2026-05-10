@@ -12,6 +12,7 @@
   },
   "_dev_note": "TODO: remove --webpack from dev after upgrading Next/HeroUI in a few months.",
   "dependencies": {
+    "@heroui/input-otp": "^2.1.32",
     "@heroui/react": "^2.8.9",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",

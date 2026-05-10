@@ -33,7 +33,7 @@ export interface CryptoWalletsProps {
   className?: string;
 }
 
-const NETWORK_ICONS_MAP = {
+export const NETWORK_ICONS_MAP = {
   solana: Icons.Solana,
   bitcoin: Icons.Bitcoin,
   ethereum: Icons.Ethereum,

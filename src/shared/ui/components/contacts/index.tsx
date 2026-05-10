@@ -10,7 +10,7 @@ export interface ContactsProps {
   className?: string;
 }
 
-const CONTACT_ICONS_MAP: Record<keyof MappedContacts, React.ElementType> = {
+export const CONTACT_ICONS_MAP: Record<keyof MappedContacts, React.ElementType> = {
   telegram: Icons.Telegram,
   whatsapp: Icons.WhatsApp,
   viber: Icons.Viber,

@@ -5,7 +5,7 @@ export default defineConfig({
     input: {
       target: 'http://localhost:3001/api-json',
       filters: {
-        tags: ['Auth', 'Profiles', 'Coops'],
+        tags: ['Auth', 'Profiles', 'Skills', 'Coops'],
       },
     },
     output: {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link2, LogOut } from "lucide-react";
+import { Link2, LogOut, UserPen } from "lucide-react";
 
 export type NavigationRouteKey = "home" | "docs" | "blockchain" | "networkStatus" | "community" | "coops" | "members" | "contacts" | "workspace";
 
@@ -49,11 +49,17 @@ export const headerI18nKeys = {
 } as const;
 
 export const PROFILE_ACTION_KEYS = {
+  EDIT_PROFILE: "edit-profile",
   LINK_TELEGRAM: "link-telegram",
   LOGOUT: "logout",
 } as const;
 
 export const headerProfileDropdownActions = [
+  {
+    key: PROFILE_ACTION_KEYS.EDIT_PROFILE,
+    translationKey: "editProfile",
+    icon: React.createElement(UserPen, { size: 18 }),
+  },
   {
     key: PROFILE_ACTION_KEYS.LINK_TELEGRAM,
     translationKey: "linkTelegram",
