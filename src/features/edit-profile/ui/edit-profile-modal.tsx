@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { Modal, ModalContent, ModalHeader, ModalBody, Tabs, Tab, Spinner } from "@/shared/ui/primitives";
 import { GeneralInfoTab, ContactsTab, SkillsTab, ExperienceTab, WalletsTab } from "./tabs";
@@ -17,19 +17,20 @@ export function EditProfileModal({ isOpen, onOpenChange }: EditProfileModalProps
   const [profile, setProfile] = useState<ProfileFullData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadProfile = async () => {
+  const loadProfile = useCallback(async () => {
     setIsLoading(true);
     const result = await getMyFullProfileAction();
     if (result.data) {
       setProfile(result.data);
     }
     setIsLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
-    loadProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (isOpen) {
+      Promise.resolve().then(() => loadProfile());
+    }
+  }, [isOpen, loadProfile]);
 
   const handleSaved = () => {
     loadProfile();
