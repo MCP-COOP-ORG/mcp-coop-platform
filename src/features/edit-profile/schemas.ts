@@ -29,7 +29,7 @@ export const editExperienceSchema = z.object({
   skills: z.array(selectedSkillSchema).catch([]),
 });
 
-export const editContactsSchema = z.record(z.string(), z.string());
+export const editContactsSchema = z.record(z.string(), z.string().nullable().optional());
 
 export const editWalletsSchema = z.record(
   z.string(),

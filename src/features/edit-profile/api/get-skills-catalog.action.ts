@@ -2,6 +2,7 @@
 
 import { skillsControllerFindAll } from "@/shared/open-api/skills/skills";
 import type { SkillCatalogItem } from "../types";
+import { PAGINATION_CONSTANTS } from "@/shared/constants/pagination";
 import { isNextRedirect } from "@/shared/helpers/is-next-redirect";
 
 export interface GetSkillsCatalogResult {
@@ -11,7 +12,10 @@ export interface GetSkillsCatalogResult {
 
 export async function getSkillsCatalogAction(): Promise<GetSkillsCatalogResult> {
   try {
-    const response = await skillsControllerFindAll({ limit: 1000 }); // fetch all
+    const response = await skillsControllerFindAll({ 
+      page: PAGINATION_CONSTANTS.DEFAULT_PAGE, 
+      limit: PAGINATION_CONSTANTS.MAX_LIMIT 
+    });
 
     if (!response.data || !Array.isArray(response.data.data)) {
       return { data: [], error: "FETCH_SKILLS_INVALID_RESPONSE" };
