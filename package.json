@@ -6,7 +6,8 @@
     "dev": "next dev -p 80 --webpack",
     "build": "next build",
     "start": "next start -p 80",
-    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint && npm run typecheck",
     "clean": "rm -rf .next && npm cache clean --force",
     "generate:api": "orval --tsconfig ./tsconfig.json"
   },
@@ -14,6 +15,7 @@
   "dependencies": {
     "@heroui/input-otp": "^2.1.32",
     "@heroui/react": "^2.8.9",
+    "@hookform/resolvers": "^5.2.2",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "@prisma/extension-accelerate": "^3.0.1",
@@ -33,11 +35,12 @@
     "pg": "^8.20.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-hook-form": "^7.75.0",
     "react-markdown": "^10.1.0",
     "react-qr-code": "^2.0.18",
     "remark-gfm": "^4.0.1",
     "set-cookie-parser": "^3.0.1",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

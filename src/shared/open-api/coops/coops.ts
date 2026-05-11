@@ -134,6 +134,41 @@ export const coopsControllerFindOne = async (id: string, options?: RequestInit):
 
 
 /**
+ * @summary Delete cooperative presentation slide
+ */
+export type coopsControllerDeleteCoopResponse200 = {
+  data: void
+  status: 200
+}
+    
+export type coopsControllerDeleteCoopResponseSuccess = (coopsControllerDeleteCoopResponse200) & {
+  headers: Headers;
+};
+;
+
+export type coopsControllerDeleteCoopResponse = (coopsControllerDeleteCoopResponseSuccess)
+
+export const getCoopsControllerDeleteCoopUrl = (id: string,) => {
+
+
+  
+
+  return `/api/coops/${id}`
+}
+
+export const coopsControllerDeleteCoop = async (id: string, options?: RequestInit): Promise<coopsControllerDeleteCoopResponse> => {
+  
+  return openApiMutator<coopsControllerDeleteCoopResponse>(getCoopsControllerDeleteCoopUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+);}
+
+
+/**
  * @summary Publish off-chain cooperative to blockchain
  */
 export type coopsControllerPublishResponse200 = {

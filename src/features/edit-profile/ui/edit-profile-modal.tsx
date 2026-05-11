@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { Modal, ModalContent, ModalHeader, ModalBody, Tabs, Tab, Spinner } from "@/shared/ui/primitives";
-import { GeneralInfoTab, ContactsTab, SkillsTab, ExperienceTab, WalletsTab } from "./tabs";
+import { GeneralInfoTab, ContactsTab, SkillsTab, ExperienceTab, WalletsTab, CoopsTab } from "./tabs";
 import { getMyFullProfileAction } from "../api";
 import type { ProfileFullData } from "@/entities/profiles/types";
 
@@ -98,6 +98,9 @@ export function EditProfileModal({ isOpen, onOpenChange }: EditProfileModalProps
                       initialData={profile.wallets || {}}
                       onSaved={handleSaved}
                     />
+                  </Tab>
+                  <Tab key="coops" title={t("tabCoops") || "Cooperatives"}>
+                    <CoopsTab proposerAddress={profile.blockchainAccount} />
                   </Tab>
                 </Tabs>
               )}

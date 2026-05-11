@@ -15,7 +15,7 @@ export function HomeView({ content }: HomeViewProps) {
   const { hero, features, highlightWords, articlesSection, roadmapSection } = content.jsonContent;
 
   return (
-    <main className="w-full flex flex-col pt-[20px] gap-12 pb-[60px]">
+    <div className="w-full flex flex-col pt-[20px] gap-12 pb-[60px]">
       <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
         <h1 className="text-center text-[42px] font-normal uppercase">
           <HighlightedText
@@ -132,6 +132,6 @@ export function HomeView({ content }: HomeViewProps) {
           })}
         </div>
       </section>
-    </main>
+    </div>
   );
 }

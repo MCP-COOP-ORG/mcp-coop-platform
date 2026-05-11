@@ -1,14 +1,23 @@
 "use server";
 
 import { coopsControllerFindAll } from "@/shared/open-api/coops/coops";
-import { mapCoopCardDto, withPaginatedAction } from "@/shared/mappers";
+import { mapPaginated, mapCoopCardDto } from "@/shared/mappers";
+import { isNextRedirect } from "@/shared/helpers/is-next-redirect";
+import type { PaginatedResult } from "@/shared/mappers/primitives/types";
+import type { CoopCardData } from "@/entities/coops/types";
+import type { CoopsControllerFindAllParams } from "@/shared/open-api/models";
 
-/**
- * Server Action: fetch paginated cooperatives list.
- * Decorator HOF eliminates boilerplate — mapping and error handling are centralised.
- */
-export const getCoopsAction = withPaginatedAction(
-  coopsControllerFindAll,
-  mapCoopCardDto,
-  "getCoopsAction",
-);
+export async function getCoopsAction(
+  page: number = 1,
+  limit: number = 100,
+  params?: Omit<CoopsControllerFindAllParams, "page" | "limit">
+): Promise<PaginatedResult<CoopCardData>> {
+  try {
+    const response = await coopsControllerFindAll({ page, limit, ...params });
+    return mapPaginated(response.data, mapCoopCardDto);
+  } catch (error: unknown) {
+    if (isNextRedirect(error)) throw error;
+    console.error("[getCoopsAction] Error:", error);
+    return { data: [], total: 0 };
+  }
+}

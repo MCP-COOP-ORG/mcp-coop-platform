@@ -21,4 +21,8 @@ limit?: number;
  * Search by name (case-insensitive)
  */
 name?: string;
+/**
+ * Filter by proposer blockchain address
+ */
+proposerAddress?: string;
 };

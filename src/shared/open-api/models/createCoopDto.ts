@@ -18,4 +18,24 @@ export interface CreateCoopDto {
   description?: string;
   /** Industry categories associated with this cooperative */
   categories?: string[];
+  /**
+   * Website URL
+   * @maxLength 500
+   */
+  website?: string;
+  /**
+   * Logo image URL
+   * @maxLength 500
+   */
+  logoUrl?: string;
+  /**
+   * Mission of the Cooperative
+   * @maxLength 500
+   */
+  mission?: string;
+  /**
+   * Vision of the Cooperative
+   * @maxLength 500
+   */
+  vision?: string;
 }
