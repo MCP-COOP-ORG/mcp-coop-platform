@@ -3,7 +3,7 @@ import { PrismaClient } from "../../generated/prisma/client";
 const HOME_PAGE_CONTENT_RU = {
   highlightWords: ["Твой"],
   hero: {
-    tagline: "Твой кооператив | Твой труд | Твой продукт",
+    tagline: "Твой кооператив\u00A0\u00A0\u00A0Твой труд\u00A0\u00A0\u00A0 Твой продукт",
     subtitle: "Наша платформа помогает найти команду, чтобы создавать продукты вместе",
     buttonText: "НАЧАТЬ",
   },
@@ -24,6 +24,12 @@ const HOME_PAGE_CONTENT_RU = {
       description: "AI дал нам возможность создавать масштабные продукты, оставаясь небольшой профессиональной командой."
     }
   ],
+  agentBuilderSection: {
+    title: "Agent Builder",
+    description: "Представляем MCP COOP Agent Builder — наш новый веб-инструмент для визуальной сборки AI-агентов под ваши задачи.\nБольше никаких абстрактных ИИ-ассистентов: система генерирует готовое решение на основе вашего стека, избавляя от необходимости постоянно искать подходящий набор навыков и правил.\nПереходите на AI-Driven Development для создания продуктов, соответствующих лучшим стандартам разработки.",
+    buttonText: "Попробовать сейчас",
+    highlightWords: ['MCP COOP Agent Builder', 'визуальной сборки', 'готовое решение', 'AI-Driven Development', 'лучшим стандартам'],
+  },
   roadmapSection: {
     title: "Дорожная Карта",
     releaseDate: "Бета релиз: 1 мая 2026",
@@ -90,7 +96,7 @@ const HOME_PAGE_CONTENT_RU = {
 const HOME_PAGE_CONTENT_EN = {
   highlightWords: ["Your"],
   hero: {
-    tagline: "Your coop | Your work | Your product",
+    tagline: "Your coop\u00A0\u00A0\u00A0 Your work\u00A0\u00A0\u00A0 Your product",
     subtitle: "Our platform helps you find a team to build apps together",
     buttonText: "GET STARTED",
   },
@@ -111,6 +117,12 @@ const HOME_PAGE_CONTENT_EN = {
       description: "AI has unlocked the ability to build massive products as a small, professional team."
     }
   ],
+  agentBuilderSection: {
+    title: "Agent Builder",
+    description: "Introducing MCP COOP Agent Builder — our new web tool for visually assembling AI agents tailored to your needs.\nNo more abstract AI assistants: the system generates a ready-to-use solution based on your tech stack, eliminating the need to constantly search for the right set of skills and rules.\nEmbrace AI-Driven Development to build products that meet the highest engineering standards.",
+    buttonText: "Try it now",
+    highlightWords: ['MCP COOP Agent Builder', 'visually assembling', 'ready-to-use solution', 'AI-Driven Development', 'highest engineering standards'],
+  },
   roadmapSection: {
     title: "Roadmap",
     releaseDate: "Beta release: May 1, 2026",

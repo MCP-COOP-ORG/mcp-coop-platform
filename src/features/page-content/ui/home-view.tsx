@@ -1,5 +1,5 @@
 import type { PageDto, HomePageJsonContent } from "@/entities/page-content/types";
-import { HighlightedText } from "@/shared/ui/primitives";
+import { HighlightedText, Button } from "@/shared/ui/primitives";
 import { EngineeringWatermark, AiChipWatermark } from "@/shared/ui/icons";
 import { blueprintBackgroundStyle, getArticleCardClasses } from "@/shared/constants/styles";
 import { GetStartedButton } from "./get-started-button";
@@ -12,16 +12,20 @@ interface HomeViewProps {
 export function HomeView({ content }: HomeViewProps) {
   if (!content) return null;
 
-  const { hero, features, highlightWords, articlesSection, roadmapSection } = content.jsonContent;
+  const { hero, features, highlightWords, articlesSection, roadmapSection, agentBuilderSection } = content.jsonContent;
 
   return (
     <div className="w-full flex flex-col pt-[20px] gap-12 pb-[60px]">
       <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
-        <h1 className="text-center text-[42px] font-normal uppercase">
-          <HighlightedText
-            text={hero.tagline}
-            words={highlightWords}
-          />
+        <h1 className="text-center text-[42px] font-normal uppercase flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+          {hero.tagline.split(/[\s\u00A0]{2,}/).map((part, index) => (
+            <span key={index} className="block">
+              <HighlightedText
+                text={part}
+                words={highlightWords}
+              />
+            </span>
+          ))}
         </h1>
         <h2 className="text-center text-[32px] font-light uppercase mt-4">
           {hero.subtitle}
@@ -67,6 +71,26 @@ export function HomeView({ content }: HomeViewProps) {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
+        <h2 className="text-center text-[32px] font-light uppercase mt-4">
+          {agentBuilderSection.title}
+        </h2>
+        <div className="w-full flex flex-col text-foreground/80">
+          <p className="text-center text-[17px] leading-relaxed whitespace-pre-line max-w-4xl mx-auto">
+            <HighlightedText
+              text={agentBuilderSection.description}
+              words={agentBuilderSection.highlightWords || []}
+            />
+          </p>
+          <a
+            href="/agent-builder/"
+            className="mt-8 mx-auto inline-flex items-center justify-center bg-primary text-primary-foreground rounded-medium hover:opacity-90 transition-opacity px-10 h-12 text-md tracking-wider uppercase"
+          >
+            {agentBuilderSection.buttonText}
+          </a>
         </div>
       </section>
 
