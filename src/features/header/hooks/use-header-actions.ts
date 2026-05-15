@@ -7,9 +7,7 @@ import { logout } from "@/features/auth/actions";
 import { THEME } from "@/shared/constants/theme";
 import { PROFILE_ACTION_KEYS } from "@/shared/constants/header";
 import { useAuthModals } from "@/features/auth/context/auth-modals-context";
-import { useEditProfileModal } from "@/features/edit-profile/context";
-
-export function useHeaderActions() {
+export function useHeaderActions(onEditProfile?: () => void) {
   const tHeader = useTranslations("Header");
   const { theme, setTheme } = useTheme();
   const session = useSession();
@@ -24,7 +22,6 @@ export function useHeaderActions() {
   const toggleTheme = () => setTheme(isDark ? THEME.light : THEME.dark);
 
   const authModals = useAuthModals();
-  const editProfileContext = useEditProfileModal();
 
   const handleLogout = async () => {
     const result = await logout();
@@ -34,7 +31,7 @@ export function useHeaderActions() {
   const handleUserAction = (key: string) => {
     if (key === PROFILE_ACTION_KEYS.LOGOUT) handleLogout();
     if (key === PROFILE_ACTION_KEYS.LINK_TELEGRAM) authModals.telegramModal.onOpen();
-    if (key === PROFILE_ACTION_KEYS.EDIT_PROFILE) editProfileContext.editProfileModal.onOpen();
+    if (key === PROFILE_ACTION_KEYS.EDIT_PROFILE && onEditProfile) onEditProfile();
   };
 
   return {

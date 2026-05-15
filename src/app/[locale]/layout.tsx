@@ -2,7 +2,6 @@ import { ibmPlexSans, ibmPlexMono } from "@/core/configs/theme/fonts.config";
 import { metadataConfig, viewportConfig } from "@/core/configs/seo/seo.config";
 import "../globals.css";
 import { Providers } from "@/core/providers/providers";
-import { EditProfileProvider } from "@/features/edit-profile/context";
 import { Header } from "@/features/header";
 import Footer from "@/shared/ui/layout/footer";
 import { NextIntlClientProvider } from 'next-intl';
@@ -37,15 +36,13 @@ export default async function RootLayout(props: {
       <body className="antialiased font-sans">
         <NextIntlClientProvider messages={messages}>
           <Providers session={session}>
-            <EditProfileProvider>
-              <div className="app min-h-screen flex flex-col">
-                <Header />
-                <main className="flex-1">
-                  {children}
-                </main>
-                <Footer />
-              </div>
-            </EditProfileProvider>
+            <div className="app min-h-screen flex flex-col">
+              <Header />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
           </Providers>
         </NextIntlClientProvider>
       </body>

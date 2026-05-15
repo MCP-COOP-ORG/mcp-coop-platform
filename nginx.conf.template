@@ -45,7 +45,12 @@ server {
         proxy_pass http://${UNBOGI_CONTAINER_NAME}:${UNBOGI_PORT}/unbogi/;
     }
 
-    # 5. Frontend - Next.js (Всё остальное)
+    # 5. Agent Builder - Standalone Web App
+    location /agent-builder/ {
+        proxy_pass http://${AGENT_BUILDER_CONTAINER_NAME}:${AGENT_BUILDER_PORT}/agent-builder/;
+    }
+
+    # 6. Frontend - Next.js (Всё остальное)
     location / {
         proxy_pass http://${PLATFORM_CONTAINER_NAME}:${PLATFORM_PORT};
     }

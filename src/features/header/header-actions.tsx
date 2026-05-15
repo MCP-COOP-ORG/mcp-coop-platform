@@ -7,14 +7,18 @@ import { useHeaderActions } from "./hooks";
 import { getHeaderActionConfig } from "@/shared/constants/header";
 import type { HeaderComponentBaseProps } from "@/entities/header/types";
 
-export function HeaderActions({ className = "" }: HeaderComponentBaseProps) {
+export interface HeaderActionsProps extends HeaderComponentBaseProps {
+  onEditProfile?: () => void;
+}
+
+export function HeaderActions({ className = "", onEditProfile }: HeaderActionsProps) {
   const {
     theme: { mounted, isDark, toggleTheme },
     user: { profile },
     authModals: { loginModal },
     actions: { handleUserAction },
     localization: { tHeader }
-  } = useHeaderActions();
+  } = useHeaderActions(onEditProfile);
 
   const userName = profile?.fullName || profile?.email || "User";
 

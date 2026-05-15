@@ -6,7 +6,11 @@ import { HeaderActions } from "./header-actions";
 import { useHeaderNavigation } from "./hooks";
 import type { HeaderMobileMenuProps } from "@/entities/header/types";
 
-export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
+export interface HeaderMobileMenuExtendedProps extends HeaderMobileMenuProps {
+  onEditProfile?: () => void;
+}
+
+export function HeaderMobileMenu({ isOpen, onClose, onEditProfile }: HeaderMobileMenuExtendedProps) {
   const { links } = useHeaderNavigation();
 
   if (!isOpen) return null;
@@ -21,7 +25,7 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
     >
       <div className="px-6 pt-0 pb-4 flex flex-col gap-8 flex-1 overflow-y-auto">
         <div className="flex justify-end py-3 mb-2 border-b border-dashed border-divider/50">
-          <HeaderActions className="flex" />
+          <HeaderActions className="flex" onEditProfile={onEditProfile} />
         </div>
 
         <nav className="flex flex-col gap-6 antialiased">
