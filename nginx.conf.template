@@ -20,39 +20,49 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-Port $server_port;
+    # Встроенный DNS резолвер Docker: позволяет Nginx стартовать без падений, даже если другие сервисы еще не подняты
+    resolver 127.0.0.11 valid=30s ipv6=off;
+
     # 1. API - NestJS Backend
     location /api/ {
-        proxy_pass http://${BACKEND_CONTAINER_NAME}-app:${BACKEND_PORT};
+        set $backend_target http://${BACKEND_CONTAINER_NAME:-mcp-coop-backend}-app:${BACKEND_PORT:-3001};
+        proxy_pass $backend_target;
     }
 
     # 2. Kanban MFE - Standalone SPA (Telegram Mini App)
     location /mcp-coop-kanban-mfe/ {
-        proxy_pass http://${KANBAN_MFE_CONTAINER_NAME}:${MFE_PORT}/;
+        set $kanban_target http://${KANBAN_MFE_CONTAINER_NAME:-mcp-coop-kanban-mfe}:${MFE_PORT:-3000}/;
+        proxy_pass $kanban_target;
     }
 
     # 3. Kanban MFE - Микрофронтенд (JS файл)
     # Файл должен отдаваться из корня MFE контейнера
     location /kanban-mfe.js {
-        proxy_pass http://${KANBAN_MFE_CONTAINER_NAME}:${MFE_PORT}/kanban-mfe.js;
+        set $kanban_js_target http://${KANBAN_MFE_CONTAINER_NAME:-mcp-coop-kanban-mfe}:${MFE_PORT:-3000}/kanban-mfe.js;
+        proxy_pass $kanban_js_target;
     }
 
     # 4. Kanban MFE - Ассеты
     location /assets/ {
-        proxy_pass http://${KANBAN_MFE_CONTAINER_NAME}:${MFE_PORT}/assets/;
+        set $kanban_assets_target http://${KANBAN_MFE_CONTAINER_NAME:-mcp-coop-kanban-mfe}:${MFE_PORT:-3000}/assets/;
+        proxy_pass $kanban_assets_target;
     }
 
-    # 4. UnBoGi — Telegram Mini App (Vite SPA)
+    # 5. UnBoGi — Telegram Mini App (Vite SPA)
     location /unbogi/ {
-        proxy_pass http://${UNBOGI_CONTAINER_NAME}:${UNBOGI_PORT}/unbogi/;
+        set $unbogi_target http://${UNBOGI_CONTAINER_NAME:-unbogi-mfe}:${UNBOGI_PORT:-3000}/unbogi/;
+        proxy_pass $unbogi_target;
     }
 
-    # 5. Agent Builder - Standalone Web App
+    # 6. Agent Builder - Standalone Web App
     location /agent-builder/ {
-        proxy_pass http://${AGENT_BUILDER_CONTAINER_NAME}:${AGENT_BUILDER_PORT}/agent-builder/;
+        set $agent_builder_target http://${AGENT_BUILDER_CONTAINER_NAME:-mcp-coop-agent-builder}:${AGENT_BUILDER_PORT:-3000}/agent-builder/;
+        proxy_pass $agent_builder_target;
     }
 
-    # 6. Frontend - Next.js (Всё остальное)
+    # 7. Frontend - Next.js (Всё остальное)
     location / {
-        proxy_pass http://${PLATFORM_CONTAINER_NAME}:${PLATFORM_PORT};
+        set $platform_target http://${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}:${PLATFORM_PORT:-80};
+        proxy_pass $platform_target;
     }
 }

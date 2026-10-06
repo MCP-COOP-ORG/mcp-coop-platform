@@ -26,7 +26,7 @@ services:
     env_file:
       - ~/.env
     environment:
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres-platform:${PLATFORM_DB_PORT:-5432}/${MCP_COOP_PLARFORM_DB}?schema=public
+      - DATABASE_URL=postgresql://${MCP_COOP_PLATFORM:-${MCP_COOP_PLARFORM:-postgres}}:${MCP_COOP_PLATFORM_PASSWORD:-${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}}@postgres-platform:${PLATFORM_DB_PORT:-5432}/${MCP_COOP_PLATFORM_DB:-${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}}?schema=public
       - INTERNAL_API_URL=http://${BACKEND_CONTAINER_NAME:-mcp-coop-backend}-app:${BACKEND_PORT:-3001}/api
     depends_on:
       setup-db:
@@ -40,7 +40,7 @@ services:
     env_file:
       - ~/.env
     environment:
-      - DATABASE_URL=postgresql://${MCP_COOP_PLARFORM}:${MCP_COOP_PLARFORM_PASSWORD}@postgres-platform:${PLATFORM_DB_PORT:-5432}/${MCP_COOP_PLARFORM_DB}?schema=public
+      - DATABASE_URL=postgresql://${MCP_COOP_PLATFORM:-${MCP_COOP_PLARFORM:-postgres}}:${MCP_COOP_PLATFORM_PASSWORD:-${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}}@postgres-platform:${PLATFORM_DB_PORT:-5432}/${MCP_COOP_PLATFORM_DB:-${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}}?schema=public
     depends_on:
       postgres-platform:
         condition: service_healthy
@@ -56,9 +56,9 @@ services:
     env_file:
       - ~/.env
     environment:
-      POSTGRES_USER: ${MCP_COOP_PLARFORM}
-      POSTGRES_PASSWORD: ${MCP_COOP_PLARFORM_PASSWORD}
-      POSTGRES_DB: ${MCP_COOP_PLARFORM_DB}
+      POSTGRES_USER: ${MCP_COOP_PLATFORM:-${MCP_COOP_PLARFORM:-postgres}}
+      POSTGRES_PASSWORD: ${MCP_COOP_PLATFORM_PASSWORD:-${MCP_COOP_PLARFORM_PASSWORD:-CHANGE_ME}}
+      POSTGRES_DB: ${MCP_COOP_PLATFORM_DB:-${MCP_COOP_PLARFORM_DB:-mcp_coop_platform}}
     ports:
       - "${EXTERNAL_DB_PORT:-5432}:${PLATFORM_DB_PORT:-5432}"
     volumes:
@@ -79,4 +79,3 @@ volumes:
 networks:
   mcp-network:
     name: ${MCP_COOP_NETWORK:-mcp-network}
-    external: true

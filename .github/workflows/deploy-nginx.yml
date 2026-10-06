@@ -4,11 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: ${{ secrets.MCP_COOP_ORG_PROJECT_ID }}
-  REGION: ${{ secrets.MCP_COOP_ORG_REGION }}
-  REPO_NAME: ${{ secrets.MCP_COOP_ORG_REPO_NAME }}
   IMAGE_NAME: 'mcp-coop-platform'
-  GAR_LOCATION: ${{ secrets.MCP_COOP_ORG_GAR_LOCATION }}
 
 jobs:
   deploy-nginx:
@@ -18,6 +14,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Set Image URI
+        run: |
+          IMAGE_URI_LOWER=$(echo "ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_URI=$IMAGE_URI_LOWER" >> $GITHUB_ENV
 
       # 1. Copy Nginx template to the VM root
       - name: Copy Nginx Config via SCP
@@ -33,6 +34,7 @@ jobs:
       - name: Restart Nginx via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
+          IMAGE_URI: ${{ env.IMAGE_URI }}
           VPS_HOST: ${{ secrets.MCP_COOP_ORG_VM_IP }}
           CLOUDFLARE_SSL_CERT: ${{ secrets.MCP_COOP_ORG_CLOUDFLARE_SSL_CERT }}
           CLOUDFLARE_SSL_KEY: ${{ secrets.MCP_COOP_ORG_CLOUDFLARE_SSL_KEY }}
@@ -41,13 +43,10 @@ jobs:
           host: ${{ secrets.MCP_COOP_ORG_VM_IP }}
           username: ${{ secrets.MCP_COOP_ORG_VM_USER }}
           key: ${{ secrets.MCP_COOP_ORG_VM_SSH_KEY }}
-          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY
+          envs: IMAGE_URI, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY
           script: |
             set -e
 
-            # Compute full image URI just so docker-compose doesn't complain about other services
-            export IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
-            
             # Ensure the platform directory exists
             mkdir -p ~/mcp-coop-platform
             cd ~/mcp-coop-platform
@@ -66,8 +65,13 @@ jobs:
             # Rename config for standard convenience
             mv ~/nginx.conf.template ./nginx.conf.template || true
 
+            DOCKER_COMPOSE_CMD="docker compose"
+            if ! docker compose version > /dev/null 2>&1; then
+              DOCKER_COMPOSE_CMD="docker-compose"
+            fi
+
             # Recreate just the nginx container to apply new template and potentially new env vars
-            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} up -d --force-recreate nginx
+            IMAGE_URI=${IMAGE_URI} $DOCKER_COMPOSE_CMD --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} up -d --force-recreate nginx
             
             # Reload nginx process inside just to be absolutely sure
             docker exec mcp-coop-nginx nginx -s reload || true

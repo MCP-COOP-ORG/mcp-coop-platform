@@ -1,4 +1,4 @@
-name: Deploy to GCP VM
+name: Deploy to Oracle VM
 
 on:
   push:
@@ -7,11 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: ${{ secrets.MCP_COOP_ORG_PROJECT_ID }}
-  REGION: ${{ secrets.MCP_COOP_ORG_REGION }}
-  REPO_NAME: ${{ secrets.MCP_COOP_ORG_REPO_NAME }}
   IMAGE_NAME: 'mcp-coop-platform'
-  GAR_LOCATION: ${{ secrets.MCP_COOP_ORG_GAR_LOCATION }}
 
 jobs:
   build-and-push:
@@ -19,33 +15,26 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
-      id-token: 'write' # Required for Workload Identity Federation
+      packages: 'write'
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. Authenticate to Google Cloud without JSON keys (WIF)
-      - name: Authenticate to Google Cloud
-        id: auth
-        uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: ${{ secrets.MCP_COOP_ORG_GCP_WIF_PROVIDER }}
-          service_account: 'mcp-coop-github-actions@${{ secrets.MCP_COOP_ORG_PROJECT_ID }}.iam.gserviceaccount.com'
-          token_format: 'access_token'
+      - name: Set Image URI
+        run: |
+          IMAGE_URI_LOWER=$(echo "ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_URI=$IMAGE_URI_LOWER" >> $GITHUB_ENV
 
-      # 2. Configure Docker for Google Artifact Registry
-      - name: Configure Docker for GAR
-        uses: 'docker/login-action@v3'
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
         with:
-          registry: '${{ env.GAR_LOCATION }}'
-          username: 'oauth2accesstoken'
-          password: '${{ steps.auth.outputs.access_token }}'
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3. Build and Push 
       - name: Build and Push Docker Image
         run: |
-          IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
           # We pass environment variables for Next.js build time here
           docker build \
             --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
@@ -82,6 +71,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Set Image URI
+        run: |
+          IMAGE_URI_LOWER=$(echo "ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_URI=$IMAGE_URI_LOWER" >> $GITHUB_ENV
+
       # 1. Copy the production docker-compose file to the VM root
       - name: Copy docker-compose via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -107,6 +101,9 @@ jobs:
       - name: Run Deploy scripts via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
+          IMAGE_URI: ${{ env.IMAGE_URI }}
+          GH_ACTOR: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VPS_HOST: ${{ secrets.MCP_COOP_ORG_VM_IP }}
           CLOUDFLARE_SSL_CERT: ${{ secrets.MCP_COOP_ORG_CLOUDFLARE_SSL_CERT }}
           CLOUDFLARE_SSL_KEY: ${{ secrets.MCP_COOP_ORG_CLOUDFLARE_SSL_KEY }}
@@ -115,43 +112,43 @@ jobs:
           host: ${{ secrets.MCP_COOP_ORG_VM_IP }}
           username: ${{ secrets.MCP_COOP_ORG_VM_USER }}
           key: ${{ secrets.MCP_COOP_ORG_VM_SSH_KEY }}
-          envs: GAR_LOCATION, PROJECT_ID, REPO_NAME, IMAGE_NAME, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY
+          envs: IMAGE_URI, GH_ACTOR, GH_TOKEN, VPS_HOST, CLOUDFLARE_SSL_CERT, CLOUDFLARE_SSL_KEY
           script: |
-            set -e # Make the script fail immediately if any command fails, so GitHub shows the RED error!
+            set -e
 
-            # Compute full image URI
-            export IMAGE_URI="${GAR_LOCATION}/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}"
-            
             # Ensure the platform directory exists (SCP creates it if missing, but just in case)
             mkdir -p ~/mcp-coop-platform
             cd ~/mcp-coop-platform
 
             # --- ENV SETUP ---
-            # We strictly use the root .env file at ~/.env. Creating it if it doesn't exist.
             touch ~/.env
             
-            # JWT_SECRET is already present in ~/.env on VPS (shared with NestJS backend)
             sed -i '/^PORT=/d' ~/.env || true
             echo "PORT=80" >> ~/.env
 
             # --- SSL CERTIFICATES SETUP ---
-            # Создаем папку certs внутри директории платформы и записываем сертификаты
             mkdir -p certs
             echo "$CLOUDFLARE_SSL_CERT" > certs/cert.pem
             echo "$CLOUDFLARE_SSL_KEY" > certs/key.pem
             chmod 600 certs/key.pem
 
-            # Configure Docker auth on the VM using the VM's default service account
-            gcloud auth configure-docker ${GAR_LOCATION} --quiet || true
+            # Authenticate with GitHub Container Registry on the VM
+            if [ ! -z "$GH_TOKEN" ]; then
+              echo "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+            fi
 
             # Rename config for standard convenience (SCP puts it here)
             mv ~/docker-compose.prod.yml ./docker-compose.yml || true
             mv ~/nginx.conf.template ./nginx.conf.template || true
 
             # Pull the new image and recreate containers using dynamic project name
-            # We explicitly point to the global ~/.env file so no symlinks are needed
-            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} pull
-            IMAGE_URI=${IMAGE_URI} docker-compose --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} up -d --remove-orphans
+            DOCKER_COMPOSE_CMD="docker compose"
+            if ! docker compose version > /dev/null 2>&1; then
+              DOCKER_COMPOSE_CMD="docker-compose"
+            fi
+
+            IMAGE_URI=${IMAGE_URI} $DOCKER_COMPOSE_CMD --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} pull
+            IMAGE_URI=${IMAGE_URI} $DOCKER_COMPOSE_CMD --env-file ~/.env -p ${PLATFORM_CONTAINER_NAME:-mcp-coop-platform} up -d --remove-orphans
 
             # Clean up old images to explicitly save disk space
             docker image prune -a -f
