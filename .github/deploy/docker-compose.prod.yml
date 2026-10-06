@@ -10,6 +10,17 @@ services:
       - "443:443"
     env_file:
       - ~/.env
+    environment:
+      - BACKEND_CONTAINER_NAME=${BACKEND_CONTAINER_NAME:-mcp-coop-backend}
+      - BACKEND_PORT=${BACKEND_PORT:-3001}
+      - KANBAN_MFE_CONTAINER_NAME=${KANBAN_MFE_CONTAINER_NAME:-mcp-coop-kanban-mfe}
+      - MFE_PORT=${MFE_PORT:-3000}
+      - UNBOGI_CONTAINER_NAME=${UNBOGI_CONTAINER_NAME:-unbogi-mfe}
+      - UNBOGI_PORT=${UNBOGI_PORT:-3000}
+      - AGENT_BUILDER_CONTAINER_NAME=${AGENT_BUILDER_CONTAINER_NAME:-mcp-coop-agent-builder}
+      - AGENT_BUILDER_PORT=${AGENT_BUILDER_PORT:-3000}
+      - PLATFORM_CONTAINER_NAME=${PLATFORM_CONTAINER_NAME:-mcp-coop-platform}
+      - PLATFORM_PORT=${PLATFORM_PORT:-80}
     volumes:
       - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
       - ./certs:/etc/nginx/certs:ro
