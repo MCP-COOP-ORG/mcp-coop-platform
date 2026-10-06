@@ -20,6 +20,7 @@ export function HeaderActions({ className = "", onEditProfile }: HeaderActionsPr
     localization: { tHeader }
   } = useHeaderActions(onEditProfile);
 
+  /*
   const userName = profile?.fullName || profile?.email || "User";
 
   const UserBlock = profile ? (
@@ -53,10 +54,11 @@ export function HeaderActions({ className = "", onEditProfile }: HeaderActionsPr
       </Button>
     </Tooltip>
   );
+  */
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {UserBlock}
+      {/* {UserBlock} */}
       <LanguageSelector />
       <Tooltip content={tHeader("themeToggleLabel")} placement="bottom">
         <Button
