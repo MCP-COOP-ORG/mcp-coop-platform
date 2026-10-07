@@ -41,7 +41,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
   const handleScroll = (direction: "left" | "right") => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
-        left: direction === "left" ? -420 : 420,
+        left: direction === "left" ? -380 : 380,
         behavior: "smooth",
       });
     }
@@ -75,7 +75,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
               className={`min-h-[38px] px-4 py-2 inline-flex items-center justify-center rounded-small font-mono text-[13px] tracking-wider uppercase transition-colors cursor-pointer select-none ${
                 isSelected
                   ? "bg-primary text-white shadow-sm border border-primary font-medium"
-                  : "bg-transparent border border-dashed border-default-300 hover:border-primary text-default-600 hover:text-primary"
+                  : "bg-transparent border border-dashed border-foreground/25 hover:border-primary text-foreground/75 hover:text-primary hover:bg-primary/5"
               }`}
             >
               {displayLabel}
@@ -86,7 +86,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
       {/* Engineering Control / Navigation Bar */}
       <div className="flex items-center justify-between mt-6 mb-3">
-        <div className="font-mono text-[11px] text-default-400 uppercase tracking-widest select-none">
+        <div className="font-mono text-[11px] text-foreground/60 uppercase tracking-widest select-none">
           {`// MODULES: ${filteredProjects.length.toString().padStart(2, "0")} UNITS //`}
         </div>
 
@@ -95,7 +95,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           <button
             type="button"
             onClick={() => handleScroll("left")}
-            className="h-9 min-w-9 px-3 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-default-300 hover:border-primary hover:text-primary text-default-600 rounded-small transition-colors cursor-pointer select-none"
+            className="h-9 min-w-9 px-3 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-foreground/25 hover:border-primary hover:text-primary text-foreground/75 hover:bg-primary/5 rounded-small transition-colors cursor-pointer select-none"
             aria-label="Previous projects"
           >
             [ &lt; ]
@@ -103,7 +103,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           <button
             type="button"
             onClick={() => handleScroll("right")}
-            className="h-9 min-w-9 px-3 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-default-300 hover:border-primary hover:text-primary text-default-600 rounded-small transition-colors cursor-pointer select-none"
+            className="h-9 min-w-9 px-3 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-foreground/25 hover:border-primary hover:text-primary text-foreground/75 hover:bg-primary/5 rounded-small transition-colors cursor-pointer select-none"
             aria-label="Next projects"
           >
             [ &gt; ]
@@ -133,7 +133,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
       ) : (
         <div
           ref={sliderRef}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 pt-2 px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 pt-2 px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {filteredProjects.map((project) => {
             const formattedSpec = project.specId
@@ -145,27 +145,27 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
             return (
               <article
                 key={project.id}
-                className="flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px] snap-start flex flex-col justify-between p-6 border-[2px] border-dashed border-default-200 rounded-medium bg-background hover:border-primary/50 transition-all duration-300 group relative"
+                className="flex-shrink-0 w-[290px] sm:w-[330px] md:w-[360px] snap-start flex flex-col justify-between p-4 sm:p-5 border-[2px] border-dashed border-foreground/20 rounded-medium bg-background hover:border-primary/60 transition-all duration-300 group relative"
               >
                 <div className="flex flex-col flex-grow">
                   {/* Top Spec ID Plate */}
-                  <div className="font-mono text-[12px] text-default-500 uppercase tracking-widest">
+                  <div className="font-mono text-[11px] text-foreground/60 uppercase tracking-widest">
                     {formattedSpec}
                   </div>
 
                   {/* Blueprint Image Frame */}
-                  <div className="aspect-video border border-dashed border-default-200/80 rounded-small overflow-hidden relative bg-default-100 my-4">
+                  <div className="aspect-video border border-dashed border-foreground/20 rounded-small overflow-hidden relative bg-default-100/50 my-3">
                     {/* Micro-crosshairs in corners */}
-                    <span className="absolute top-1 left-1.5 font-mono text-[11px] text-default-400 select-none z-10 pointer-events-none leading-none">
+                    <span className="absolute top-1 left-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
                       +
                     </span>
-                    <span className="absolute top-1 right-1.5 font-mono text-[11px] text-default-400 select-none z-10 pointer-events-none leading-none">
+                    <span className="absolute top-1 right-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
                       +
                     </span>
-                    <span className="absolute bottom-1 left-1.5 font-mono text-[11px] text-default-400 select-none z-10 pointer-events-none leading-none">
+                    <span className="absolute bottom-1 left-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
                       +
                     </span>
-                    <span className="absolute bottom-1 right-1.5 font-mono text-[11px] text-default-400 select-none z-10 pointer-events-none leading-none">
+                    <span className="absolute bottom-1 right-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
                       +
                     </span>
 
@@ -180,23 +180,23 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
                   {/* Title and Description */}
                   <div>
-                    <h3 className="text-[20px] font-medium leading-tight group-hover:text-primary transition-colors">
+                    <h3 className="text-[18px] font-medium leading-tight group-hover:text-primary transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-[14px] text-foreground/80 leading-relaxed mt-2 line-clamp-3">
+                    <p className="text-[13px] text-foreground/80 leading-relaxed mt-1.5 line-clamp-3">
                       {project.description}
                     </p>
                   </div>
 
                   {/* Tech Stack Chips */}
                   {project.techStack && project.techStack.length > 0 && (
-                    <div className="font-mono text-[12px] text-primary flex flex-wrap gap-1.5 mt-4">
+                    <div className="font-mono text-[11px] text-primary flex flex-wrap gap-1 mt-3 pt-2.5 border-t border-dashed border-foreground/15">
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2 py-0.5 border border-dashed border-primary/30 rounded-small bg-primary/5"
+                          className="px-1.5 py-0.5 border border-dashed border-primary/30 rounded-small bg-primary/5"
                         >
-                          #{tech}
+                          #{tech.replace(/^#/, "")}
                         </span>
                       ))}
                     </div>
@@ -204,21 +204,21 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                 </div>
 
                 {/* Footer Links */}
-                <div className="mt-6 pt-4 border-t border-dashed border-default-200 flex items-center justify-between gap-3">
+                <div className="mt-4 pt-3 border-t border-dashed border-foreground/20 flex items-center justify-between gap-3">
                   {project.links?.liveUrl ? (
                     <a
                       href={project.links.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[13px] text-primary hover:underline flex items-center gap-1.5 transition-colors group/link"
+                      className="font-mono text-[12px] text-primary no-underline flex items-center gap-1.5 transition-colors group/link"
                     >
-                      <span>Смотреть проект</span>
-                      <span className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
+                      <span className="group-hover/link:underline underline-offset-4">Смотреть проект</span>
+                      <span className="no-underline inline-block transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
                         ↗
                       </span>
                     </a>
                   ) : (
-                    <span className="font-mono text-[12px] text-default-400 select-none">
+                    <span className="font-mono text-[11px] text-foreground/40 select-none">
                       {"// INTERNAL //"}
                     </span>
                   )}
@@ -228,10 +228,10 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                       href={project.links.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[13px] text-default-600 hover:text-primary flex items-center gap-1.5 transition-colors"
+                      className="font-mono text-[12px] text-foreground/70 hover:text-primary flex items-center gap-1.5 transition-colors"
                       aria-label={`GitHub repository for ${project.title}`}
                     >
-                      <GitHub className="w-4 h-4" />
+                      <GitHub className="w-3.5 h-3.5" />
                       <span>GitHub</span>
                     </a>
                   )}

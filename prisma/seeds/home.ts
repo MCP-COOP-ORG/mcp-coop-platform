@@ -6,7 +6,7 @@ const HOME_PAGE_CONTENT_RU = {
   hero: {
     tagline: "Твой кооператив\u00A0\u00A0\u00A0Твой труд\u00A0\u00A0\u00A0 Твой продукт",
     subtitle: "Наша платформа помогает найти команду, чтобы создавать продукты вместе",
-    buttonText: "НАЧАТЬ",
+    buttonText: "СВЯЗАТЬСЯ С НАМИ",
   },
   features: [
     {
@@ -93,8 +93,8 @@ const HOME_PAGE_CONTENT_RU = {
     ]
   },
   projectsSection: {
-    title: "Инженерные Проекты",
-    subtitle: "Архитектурные решения, модули и производственные системы, созданные нашей командой",
+    title: "Наши проекты",
+    subtitle: "Продукты и архитектурные решения, созданные нашей командой",
     categories: [
       { id: "all", label: "Все" },
       { id: "web", label: "Web" },
@@ -171,20 +171,20 @@ const HOME_PAGE_CONTENT_RU = {
     ],
   },
   teamSection: {
-    title: "Инженерное Ядро",
-    subtitle: "Команда архитекторов и разработчиков, стоящая за инфраструктурой и продуктами",
+    title: "Наша команда",
+    subtitle: "Специалисты, которые проектируют и развивают наши продукты",
     members: [
       {
         id: "vitali-shpakowski",
         name: "Vitali Shpakowski",
         role: "Tech Lead & System Architect",
         experience: "10+ лет опыта",
-        photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        photoUrl: "https://avatars.githubusercontent.com/u/3286958?v=4",
         techStack: ["Architecture", "TypeScript", "Next.js", "Go", "PostgreSQL", "Docker"],
         links: {
-          github: "https://github.com/vitalishpakowski",
-          linkedin: "https://linkedin.com/in/vitalishpakowski",
-          telegram: "https://t.me/vitali_shpakowski",
+          github: "https://github.com/Shpakowski",
+          linkedin: "https://www.linkedin.com/in/vitali-shpakowski-73256568/",
+          telegram: "https://t.me/Shpakich_BLR",
         },
       },
       {
@@ -222,7 +222,7 @@ const HOME_PAGE_CONTENT_EN = {
   hero: {
     tagline: "Your coop\u00A0\u00A0\u00A0 Your work\u00A0\u00A0\u00A0 Your product",
     subtitle: "Our platform helps you find a team to build apps together",
-    buttonText: "GET STARTED",
+    buttonText: "CONTACT US",
   },
   features: [
     {
@@ -309,8 +309,8 @@ const HOME_PAGE_CONTENT_EN = {
     ]
   },
   projectsSection: {
-    title: "Engineering Projects",
-    subtitle: "Architectural solutions, production systems, and open-source modules built by our team",
+    title: "Our Projects",
+    subtitle: "Products and architectural solutions built by our team",
     categories: [
       { id: "all", label: "All" },
       { id: "web", label: "Web" },
@@ -387,20 +387,20 @@ const HOME_PAGE_CONTENT_EN = {
     ],
   },
   teamSection: {
-    title: "Core Engineering Team",
-    subtitle: "Architects and senior engineers driving the platform infrastructure and ecosystem",
+    title: "Our Team",
+    subtitle: "Specialists who design and build our products",
     members: [
       {
         id: "vitali-shpakowski",
         name: "Vitali Shpakowski",
         role: "Tech Lead & System Architect",
         experience: "10+ years exp",
-        photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        photoUrl: "https://avatars.githubusercontent.com/u/3286958?v=4",
         techStack: ["Architecture", "TypeScript", "Next.js", "Go", "PostgreSQL", "Docker"],
         links: {
-          github: "https://github.com/vitalishpakowski",
-          linkedin: "https://linkedin.com/in/vitalishpakowski",
-          telegram: "https://t.me/vitali_shpakowski",
+          github: "https://github.com/Shpakowski",
+          linkedin: "https://www.linkedin.com/in/vitali-shpakowski-73256568/",
+          telegram: "https://t.me/Shpakich_BLR",
         },
       },
       {

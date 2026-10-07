@@ -1,8 +1,7 @@
 import type { PageDto, HomePageJsonContent } from "@/entities/page-content/types";
 import { HighlightedText } from "@/shared/ui/primitives";
 import { EngineeringWatermark, AiChipWatermark } from "@/shared/ui/icons";
-import { blueprintBackgroundStyle, getArticleCardClasses, dashedSeparator } from "@/shared/constants/styles";
-import { GetStartedButton } from "./get-started-button";
+import { blueprintBackgroundStyle, getArticleCardClasses } from "@/shared/constants/styles";
 import { getLucideIcon } from "@/shared/helpers/icon.helper";
 import { ProjectsSection } from "./projects-section";
 import { TeamSection } from "./team-section";
@@ -77,9 +76,14 @@ export function HomeView({ content }: HomeViewProps) {
                 </p>
 
                 {isMiddle ? (
-                  <GetStartedButton label={hero.buttonText} />
+                  <Link
+                    href="/contact-us"
+                    className="mt-auto inline-flex items-center justify-center bg-primary text-white rounded-medium hover:opacity-90 transition-opacity px-10 py-3.5 text-md font-medium tracking-wider uppercase shadow-md z-10 select-none"
+                  >
+                    {hero.buttonText}
+                  </Link>
                 ) : (
-                  <div className="mt-auto h-[72px]" aria-hidden="true" />
+                  <div className="mt-auto h-[52px]" aria-hidden="true" />
                 )}
               </div>
             );
@@ -89,15 +93,7 @@ export function HomeView({ content }: HomeViewProps) {
 
       {projectsSection && <ProjectsSection data={projectsSection} />}
 
-      <div className="max-w-7xl mx-auto w-full px-[20px]">
-        <div className={dashedSeparator} />
-      </div>
-
       {teamSection && <TeamSection data={teamSection} />}
-
-      <div className="max-w-7xl mx-auto w-full px-[20px]">
-        <div className={dashedSeparator} />
-      </div>
 
       <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
         <h2 className="text-center text-[32px] font-light uppercase mt-4">
