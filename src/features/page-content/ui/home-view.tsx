@@ -1,9 +1,12 @@
 import type { PageDto, HomePageJsonContent } from "@/entities/page-content/types";
-import { HighlightedText, Button } from "@/shared/ui/primitives";
+import { HighlightedText } from "@/shared/ui/primitives";
 import { EngineeringWatermark, AiChipWatermark } from "@/shared/ui/icons";
-import { blueprintBackgroundStyle, getArticleCardClasses } from "@/shared/constants/styles";
+import { blueprintBackgroundStyle, getArticleCardClasses, dashedSeparator } from "@/shared/constants/styles";
 import { GetStartedButton } from "./get-started-button";
 import { getLucideIcon } from "@/shared/helpers/icon.helper";
+import { ProjectsSection } from "./projects-section";
+import { TeamSection } from "./team-section";
+import { Link } from "@/core/configs/i18n/routing";
 
 interface HomeViewProps {
   content: PageDto<HomePageJsonContent> | null;
@@ -12,7 +15,17 @@ interface HomeViewProps {
 export function HomeView({ content }: HomeViewProps) {
   if (!content) return null;
 
-  const { hero, features, highlightWords, articlesSection, roadmapSection, agentBuilderSection } = content.jsonContent;
+  const {
+    hero,
+    features,
+    highlightWords,
+    articlesSection,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    roadmapSection,
+    agentBuilderSection,
+    projectsSection,
+    teamSection,
+  } = content.jsonContent;
 
   return (
     <div className="w-full flex flex-col pt-[20px] gap-12 pb-[60px]">
@@ -74,6 +87,18 @@ export function HomeView({ content }: HomeViewProps) {
         </div>
       </section>
 
+      {projectsSection && <ProjectsSection data={projectsSection} />}
+
+      <div className="max-w-7xl mx-auto w-full px-[20px]">
+        <div className={dashedSeparator} />
+      </div>
+
+      {teamSection && <TeamSection data={teamSection} />}
+
+      <div className="max-w-7xl mx-auto w-full px-[20px]">
+        <div className={dashedSeparator} />
+      </div>
+
       <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
         <h2 className="text-center text-[32px] font-light uppercase mt-4">
           {agentBuilderSection.title}
@@ -85,15 +110,16 @@ export function HomeView({ content }: HomeViewProps) {
               words={agentBuilderSection.highlightWords || []}
             />
           </p>
-          <a
+          <Link
             href="/agent-builder/"
             className="mt-8 mx-auto inline-flex items-center justify-center bg-primary text-primary-foreground rounded-medium hover:opacity-90 transition-opacity px-10 h-12 text-md tracking-wider uppercase"
           >
             {agentBuilderSection.buttonText}
-          </a>
+          </Link>
         </div>
       </section>
 
+      {/* ROADMAP SECTION COMMENTED OUT AS PER PORTFOLIO REDESIGN
       {roadmapSection && (
         <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
           <h2 className="text-center text-[32px] font-light uppercase mt-4">
@@ -127,6 +153,7 @@ export function HomeView({ content }: HomeViewProps) {
           </div>
         </section>
       )}
+      */}
 
       <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
         <h2 className="text-center text-[32px] font-light uppercase mt-4">
