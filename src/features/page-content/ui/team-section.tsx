@@ -112,7 +112,7 @@ export function TeamSection({ data }: TeamSectionProps) {
                       href={member.links.telegram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-default-500 hover:text-primary transition-colors p-1"
+                      className="text-default-500 hover:text-primary transition-colors p-2 min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded"
                       aria-label={`${member.name} Telegram`}
                     >
                       <Telegram className="w-4 h-4" />
@@ -123,7 +123,7 @@ export function TeamSection({ data }: TeamSectionProps) {
                       href={member.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-default-500 hover:text-primary transition-colors p-1"
+                      className="text-default-500 hover:text-primary transition-colors p-2 min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded"
                       aria-label={`${member.name} LinkedIn`}
                     >
                       <LinkedIn className="w-4 h-4" />
@@ -134,7 +134,7 @@ export function TeamSection({ data }: TeamSectionProps) {
                       href={member.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-default-500 hover:text-primary transition-colors p-1"
+                      className="text-default-500 hover:text-primary transition-colors p-2 min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded"
                       aria-label={`${member.name} GitHub`}
                     >
                       <GitHub className="w-4 h-4" />
