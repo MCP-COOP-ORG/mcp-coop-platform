@@ -1,4 +1,5 @@
 import { PrismaClient } from "../../generated/prisma/client";
+import type { HomePageJsonContent } from "../../src/entities/page-content/types";
 
 const HOME_PAGE_CONTENT_RU = {
   highlightWords: ["Твой"],
@@ -90,8 +91,131 @@ const HOME_PAGE_CONTENT_RU = {
         content: "В основе системы — идентификация через криптокошелёк, а не через реальные имена. Ты можешь оставаться полностью анонимным участником сети и представлять себя только через навыки, роль и репутацию. При этом, если захочешь, ты можешь добровольно добавить контакты, портфолио или внешние профили, чтобы упростить сотрудничество с командами и заказчиками."
       }
     ]
-  }
-};
+  },
+  projectsSection: {
+    title: "Инженерные Проекты",
+    subtitle: "Архитектурные решения, модули и производственные системы, созданные нашей командой",
+    categories: [
+      { id: "all", label: "Все" },
+      { id: "web", label: "Web" },
+      { id: "ios", label: "iOS" },
+      { id: "ai", label: "AI" },
+      { id: "backend", label: "Backend" },
+    ],
+    projects: [
+      {
+        id: "ai-agent-orchestrator",
+        specId: "SYS-01",
+        title: "AI Agent Orchestrator",
+        description: "Распределенная среда координации автономных ИИ-агентов с поддержкой протокола MCP, динамическим планированием графа задач и контролем контекста.",
+        imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+        categories: ["ai", "backend", "web"],
+        techStack: ["Next.js 15", "TypeScript", "Python", "FastAPI", "LangGraph", "Docker"],
+        links: {
+          liveUrl: "https://agent-builder.mcpcoop.org",
+          githubUrl: "https://github.com/MCP-COOP-DAO/agent-builder",
+        },
+      },
+      {
+        id: "mobile-crypto-wallet",
+        specId: "SYS-02",
+        title: "Decentralized Mobile Wallet",
+        description: "Нативный некастодиальный криптокошелек с поддержкой Account Abstraction (ERC-4337), биометрическим подтверждением ключей через Secure Enclave и оффлайн-подписью транзакций.",
+        imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80",
+        categories: ["ios"],
+        techStack: ["SwiftUI", "Combine", "TCA", "Web3.swift", "CryptoKit", "CoreData"],
+        links: {
+          liveUrl: "https://apps.apple.com",
+          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-wallet-ios",
+        },
+      },
+      {
+        id: "distributed-task-engine",
+        specId: "SYS-03",
+        title: "Distributed Task Engine",
+        description: "Высоконагруженный распределенный движок фоновых задач и очередей с гарантией at-least-once доставки, консенсусом Raft и автоматическим шардированием воркеров.",
+        imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+        categories: ["backend"],
+        techStack: ["Go", "gRPC", "Redis", "PostgreSQL", "Kafka", "Prometheus"],
+        links: {
+          liveUrl: "https://status.mcpcoop.org",
+          githubUrl: "https://github.com/MCP-COOP-DAO/task-engine",
+        },
+      },
+      {
+        id: "dao-governance-platform",
+        specId: "SYS-04",
+        title: "DAO Governance Platform",
+        description: "Он-чейн платформа децентрализованного управления кооперативами: квадратичное голосование, делегирование голосов через snapshot-пруфы и казначейские мультисиг-хранилища.",
+        imageUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80",
+        categories: ["web", "backend"],
+        techStack: ["React 19", "Next.js", "Tailwind CSS", "Solidity", "Viem", "Prisma"],
+        links: {
+          liveUrl: "https://mcpcoop.org/coops",
+          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-coop-platform",
+        },
+      },
+      {
+        id: "neural-knowledge-mesh",
+        specId: "SYS-05",
+        title: "Neural Knowledge Mesh",
+        description: "Векторный поисковый движок и база знаний на базе гибридного RAG: семантическая индексация технической документации в реальном времени с квантованными эмбеддингами.",
+        imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
+        categories: ["ai", "backend", "web"],
+        techStack: ["Python", "Qdrant", "Rust", "TypeScript", "OpenAI API", "Hugging Face"],
+        links: {
+          liveUrl: "https://docs.mcpcoop.org",
+          githubUrl: "https://github.com/MCP-COOP-DAO/knowledge-mesh",
+        },
+      },
+    ],
+  },
+  teamSection: {
+    title: "Инженерное Ядро",
+    subtitle: "Команда архитекторов и разработчиков, стоящая за инфраструктурой и продуктами",
+    members: [
+      {
+        id: "vitali-shpakowski",
+        name: "Vitali Shpakowski",
+        role: "Tech Lead & System Architect",
+        experience: "10+ лет опыта",
+        photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        techStack: ["Architecture", "TypeScript", "Next.js", "Go", "PostgreSQL", "Docker"],
+        links: {
+          github: "https://github.com/vitalishpakowski",
+          linkedin: "https://linkedin.com/in/vitalishpakowski",
+          telegram: "https://t.me/vitali_shpakowski",
+        },
+      },
+      {
+        id: "alex-smirnov",
+        name: "Alex Smirnov",
+        role: "Senior iOS Engineer",
+        experience: "8+ лет опыта",
+        photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        techStack: ["Swift", "SwiftUI", "Combine", "TCA", "CoreData", "Metal"],
+        links: {
+          github: "https://github.com/alex-smirnov-ios",
+          linkedin: "https://linkedin.com/in/alex-smirnov-ios",
+          telegram: "https://t.me/alex_smirnov_ios",
+        },
+      },
+      {
+        id: "elena-rostova",
+        name: "Elena Rostova",
+        role: "Senior AI / Backend Engineer",
+        experience: "8+ лет опыта",
+        photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
+        techStack: ["Python", "PyTorch", "LangGraph", "FastAPI", "Rust", "Vector DBs"],
+        links: {
+          github: "https://github.com/elena-rostova-ai",
+          linkedin: "https://linkedin.com/in/elena-rostova-ai",
+          telegram: "https://t.me/elena_rostova_ai",
+        },
+      },
+    ],
+  },
+} satisfies HomePageJsonContent;
 
 const HOME_PAGE_CONTENT_EN = {
   highlightWords: ["Your"],
@@ -183,8 +307,131 @@ const HOME_PAGE_CONTENT_EN = {
         content: "The system is based on identification via crypto wallet rather than real names. You can remain a fully anonymous network participant and represent yourself only through skills, roles, and reputation. At the same time, if you want, you can voluntarily add contacts, a portfolio, or external profiles to simplify collaboration with teams and clients."
       }
     ]
-  }
-};
+  },
+  projectsSection: {
+    title: "Engineering Projects",
+    subtitle: "Architectural solutions, production systems, and open-source modules built by our team",
+    categories: [
+      { id: "all", label: "All" },
+      { id: "web", label: "Web" },
+      { id: "ios", label: "iOS" },
+      { id: "ai", label: "AI" },
+      { id: "backend", label: "Backend" },
+    ],
+    projects: [
+      {
+        id: "ai-agent-orchestrator",
+        specId: "SYS-01",
+        title: "AI Agent Orchestrator",
+        description: "Distributed runtime for autonomous AI agent coordination featuring MCP protocol support, dynamic DAG execution, and strict context management.",
+        imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+        categories: ["ai", "backend", "web"],
+        techStack: ["Next.js 15", "TypeScript", "Python", "FastAPI", "LangGraph", "Docker"],
+        links: {
+          liveUrl: "https://agent-builder.mcpcoop.org",
+          githubUrl: "https://github.com/MCP-COOP-DAO/agent-builder",
+        },
+      },
+      {
+        id: "mobile-crypto-wallet",
+        specId: "SYS-02",
+        title: "Decentralized Mobile Wallet",
+        description: "Native non-custodial Web3 wallet powered by ERC-4337 Account Abstraction, Secure Enclave biometric key signing, and air-gapped transaction verification.",
+        imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80",
+        categories: ["ios"],
+        techStack: ["SwiftUI", "Combine", "TCA", "Web3.swift", "CryptoKit", "CoreData"],
+        links: {
+          liveUrl: "https://apps.apple.com",
+          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-wallet-ios",
+        },
+      },
+      {
+        id: "distributed-task-engine",
+        specId: "SYS-03",
+        title: "Distributed Task Engine",
+        description: "High-throughput distributed background task scheduler featuring at-least-once delivery guarantees, Raft consensus, and autonomous worker sharding.",
+        imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+        categories: ["backend"],
+        techStack: ["Go", "gRPC", "Redis", "PostgreSQL", "Kafka", "Prometheus"],
+        links: {
+          liveUrl: "https://status.mcpcoop.org",
+          githubUrl: "https://github.com/MCP-COOP-DAO/task-engine",
+        },
+      },
+      {
+        id: "dao-governance-platform",
+        specId: "SYS-04",
+        title: "DAO Governance Platform",
+        description: "On-chain cooperative governance suite offering quadratic voting, snapshot-proof delegation, and automated multi-signature treasury execution.",
+        imageUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80",
+        categories: ["web", "backend"],
+        techStack: ["React 19", "Next.js", "Tailwind CSS", "Solidity", "Viem", "Prisma"],
+        links: {
+          liveUrl: "https://mcpcoop.org/coops",
+          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-coop-platform",
+        },
+      },
+      {
+        id: "neural-knowledge-mesh",
+        specId: "SYS-05",
+        title: "Neural Knowledge Mesh",
+        description: "Real-time hybrid RAG vector search engine for technical documentation, featuring quantized embeddings, graph retrieval, and sub-10ms response latency.",
+        imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
+        categories: ["ai", "backend", "web"],
+        techStack: ["Python", "Qdrant", "Rust", "TypeScript", "OpenAI API", "Hugging Face"],
+        links: {
+          liveUrl: "https://docs.mcpcoop.org",
+          githubUrl: "https://github.com/MCP-COOP-DAO/knowledge-mesh",
+        },
+      },
+    ],
+  },
+  teamSection: {
+    title: "Core Engineering Team",
+    subtitle: "Architects and senior engineers driving the platform infrastructure and ecosystem",
+    members: [
+      {
+        id: "vitali-shpakowski",
+        name: "Vitali Shpakowski",
+        role: "Tech Lead & System Architect",
+        experience: "10+ years exp",
+        photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        techStack: ["Architecture", "TypeScript", "Next.js", "Go", "PostgreSQL", "Docker"],
+        links: {
+          github: "https://github.com/vitalishpakowski",
+          linkedin: "https://linkedin.com/in/vitalishpakowski",
+          telegram: "https://t.me/vitali_shpakowski",
+        },
+      },
+      {
+        id: "alex-smirnov",
+        name: "Alex Smirnov",
+        role: "Senior iOS Engineer",
+        experience: "8+ years exp",
+        photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        techStack: ["Swift", "SwiftUI", "Combine", "TCA", "CoreData", "Metal"],
+        links: {
+          github: "https://github.com/alex-smirnov-ios",
+          linkedin: "https://linkedin.com/in/alex-smirnov-ios",
+          telegram: "https://t.me/alex_smirnov_ios",
+        },
+      },
+      {
+        id: "elena-rostova",
+        name: "Elena Rostova",
+        role: "Senior AI / Backend Engineer",
+        experience: "8+ years exp",
+        photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
+        techStack: ["Python", "PyTorch", "LangGraph", "FastAPI", "Rust", "Vector DBs"],
+        links: {
+          github: "https://github.com/elena-rostova-ai",
+          linkedin: "https://linkedin.com/in/elena-rostova-ai",
+          telegram: "https://t.me/elena_rostova_ai",
+        },
+      },
+    ],
+  },
+} satisfies HomePageJsonContent;
 
 export async function seedHome(prisma: PrismaClient) {
   console.log("Seeding Home page (Page model)...");

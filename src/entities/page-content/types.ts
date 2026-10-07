@@ -10,11 +10,54 @@ export interface GetPageParams {
   language?: string;
 }
 
+export interface ProjectItem {
+  id: string;
+  specId: string; // "SYS-01", "MOD-02"
+  title: string;
+  description: string;
+  imageUrl: string;
+  categories: string[]; // ["ios", "mobile"], ["web", "ai"]
+  techStack: string[];  // ["SwiftUI", "Combine"]
+  links: {
+    liveUrl?: string;
+    githubUrl?: string;
+  };
+}
+
+export interface ProjectsSection {
+  title: string;
+  subtitle?: string;
+  categories: Array<{ id: string; label: string }>;
+  projects: ProjectItem[];
+}
+
+export interface TeamMemberItem {
+  id: string;
+  name: string;
+  role: string;
+  experience: string;
+  photoUrl: string;
+  techStack: string[];
+  links: {
+    github?: string;
+    linkedin?: string;
+    telegram?: string;
+  };
+}
+
+export interface TeamSection {
+  title: string;
+  subtitle?: string;
+  members: TeamMemberItem[];
+}
+
 export interface HomePageJsonContent {
   highlightWords: string[];
   hero: { tagline: string; subtitle: string; buttonText: string };
   features: Array<{ id: string; title: string; description: string }>;
-  roadmapSection: {
+  projectsSection?: ProjectsSection;
+  teamSection?: TeamSection;
+  roadmapSection?: {
     title: string;
     releaseDate: string;
     goals: Array<{

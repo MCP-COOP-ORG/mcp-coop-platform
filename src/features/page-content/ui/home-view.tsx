@@ -94,37 +94,39 @@ export function HomeView({ content }: HomeViewProps) {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
-        <h2 className="text-center text-[32px] font-light uppercase mt-4">
-          {roadmapSection.title}
-        </h2>
-        <div className="w-full flex flex-col mt-4 mb-8 text-foreground/80">
-          <div className="w-full py-4 relative border-b border-primary/30">
-            <div className="absolute bottom-0 left-0 w-full text-center translate-y-1/2">
-              <span className="text-[11px] font-mono uppercase tracking-widest text-primary px-4 bg-background">
-                {roadmapSection.releaseDate}
-              </span>
-            </div>
-          </div>
-
-          {roadmapSection.goals.map((goal) => (
-            <div
-              key={goal.id}
-              className={`w-full py-4 flex items-center justify-center text-center relative border-b transition-colors ${goal.completed ? "border-success/30 text-success" : "border-default-200/50 text-default-500"
-                }`}
-            >
-              <h3 className="font-medium text-[17px] tracking-wide">{goal.goal}</h3>
-
+      {roadmapSection && (
+        <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
+          <h2 className="text-center text-[32px] font-light uppercase mt-4">
+            {roadmapSection.title}
+          </h2>
+          <div className="w-full flex flex-col mt-4 mb-8 text-foreground/80">
+            <div className="w-full py-4 relative border-b border-primary/30">
               <div className="absolute bottom-0 left-0 w-full text-center translate-y-1/2">
-                <span className={`text-[11px] font-mono uppercase tracking-widest px-4 bg-background ${goal.completed ? "text-success" : "text-default-500"
-                  }`}>
-                  {goal.endDate}
+                <span className="text-[11px] font-mono uppercase tracking-widest text-primary px-4 bg-background">
+                  {roadmapSection.releaseDate}
                 </span>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+
+            {roadmapSection.goals.map((goal) => (
+              <div
+                key={goal.id}
+                className={`w-full py-4 flex items-center justify-center text-center relative border-b transition-colors ${goal.completed ? "border-success/30 text-success" : "border-default-200/50 text-default-500"
+                  }`}
+              >
+                <h3 className="font-medium text-[17px] tracking-wide">{goal.goal}</h3>
+
+                <div className="absolute bottom-0 left-0 w-full text-center translate-y-1/2">
+                  <span className={`text-[11px] font-mono uppercase tracking-widest px-4 bg-background ${goal.completed ? "text-success" : "text-default-500"
+                    }`}>
+                    {goal.endDate}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
         <h2 className="text-center text-[32px] font-light uppercase mt-4">
