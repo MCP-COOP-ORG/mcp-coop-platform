@@ -67,13 +67,13 @@ export interface HomePageJsonContent {
       endDate: string;
     }>;
   };
-  agentBuilderSection: {
+  agentBuilderSection?: {
     title: string;
     description: string;
     buttonText: string;
     highlightWords?: string[];
   };
-  articlesSection: {
+  articlesSection?: {
     title: string;
     articles: Array<{ id: string; title: string; subtitle: string; icon: string; content: string }>;
   };
