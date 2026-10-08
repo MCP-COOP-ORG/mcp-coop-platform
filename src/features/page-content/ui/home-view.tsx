@@ -1,9 +1,10 @@
 import type { PageDto, HomePageJsonContent } from "@/entities/page-content/types";
 import { HighlightedText } from "@/shared/ui/primitives";
 import { EngineeringWatermark, AiChipWatermark } from "@/shared/ui/icons";
-import { blueprintBackgroundStyle } from "@/shared/constants/styles";
+import { blueprintBackgroundStyle, dashedSeparator } from "@/shared/constants/styles";
 import { ProjectsSection } from "./projects-section";
 import { TeamSection } from "./team-section";
+import { WorkflowSection } from "./workflow-section";
 import { Link } from "@/core/configs/i18n/routing";
 
 interface HomeViewProps {
@@ -19,6 +20,7 @@ export function HomeView({ content }: HomeViewProps) {
     highlightWords,
     projectsSection,
     teamSection,
+    workflowSection,
   } = content.jsonContent;
 
   const taglineParts = hero.tagline.split(/[\s\u00A0]{2,}/);
@@ -106,6 +108,15 @@ export function HomeView({ content }: HomeViewProps) {
       {projectsSection && <ProjectsSection data={projectsSection} />}
 
       {teamSection && <TeamSection data={teamSection} />}
+
+      {workflowSection && (
+        <>
+          <div className="max-w-7xl mx-auto w-full px-[20px]">
+            <div className={dashedSeparator} />
+          </div>
+          <WorkflowSection data={workflowSection} />
+        </>
+      )}
 
       {/* SECTIONS TEMPORARILY COMMENTED OUT AS PER REPOSITIONING:
          - agentBuilderSection
