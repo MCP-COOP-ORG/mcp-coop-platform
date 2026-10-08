@@ -5,9 +5,10 @@
  */
 export const APP_INFO = {
   shortName: "MCP COOP",
-  fullName: "MCP COOP DAO",
-  copyright: "© 2025 MCP COOP DAO",
+  fullName: "MCP COOP — Команда инженеров для вашего бизнеса | Web, Mobile & AI",
+  copyright: "© 2025 MCP COOP",
   logo: "/logo.png",
   description:
-    "Decentralized infrastructure for AI engineers and product teams. Create cooperatives, find partners, and launch onchain products.",
+    "Опытные разработчики с многолетним стажем. Создаем веб-платформы, мобильные приложения под iOS/Android и AI-решения под ключ под ваш бюджет. Запуск и поддержка.",
 } as const;
+
