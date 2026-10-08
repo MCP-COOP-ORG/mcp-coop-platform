@@ -87,7 +87,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
       {/* Engineering Control / Navigation Bar */}
       <div className="flex items-center justify-between mt-6 mb-3">
         <div className="font-mono text-[11px] text-foreground/60 uppercase tracking-widest select-none">
-          {`// MODULES: ${filteredProjects.length.toString().padStart(2, "0")} UNITS //`}
+          {`// PROJECTS: ${filteredProjects.length.toString().padStart(2, "0")} UNITS //`}
         </div>
 
         {/* Blueprint Arrow Navigation Buttons */}
@@ -127,7 +127,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
             Проекты в разработке
           </h3>
           <p className="font-mono text-[13px] text-default-500 max-w-md">
-            В данной категории модули и спецификации находятся на этапе проектирования. Обновления появятся в ближайших релизах.
+            В данной категории проекты находятся на этапе проектирования. Обновления появятся в ближайших релизах.
           </p>
         </div>
       ) : (

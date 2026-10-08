@@ -94,7 +94,7 @@ const HOME_PAGE_CONTENT_RU = {
   },
   projectsSection: {
     title: "Наши проекты",
-    subtitle: "Продукты и архитектурные решения, созданные нашей командой",
+    subtitle: "Примеры проектов, за которые мы отвечаем",
     categories: [
       { id: "all", label: "Все" },
       { id: "web", label: "Web" },
@@ -172,7 +172,7 @@ const HOME_PAGE_CONTENT_RU = {
   },
   teamSection: {
     title: "Наша команда",
-    subtitle: "Специалисты, которые проектируют и развивают наши продукты",
+    subtitle: "Инженеры, которые ведут ваш проект",
     members: [
       {
         id: "vitali-shpakowski",
@@ -259,7 +259,7 @@ const HOME_PAGE_CONTENT_RU = {
       ],
       checklistNote: "Нет четкого описания? Не проблема — поможем сформулировать и упаковать требования на коротком созвоне.",
       primaryButtonText: "НАПИСАТЬ В TELEGRAM ↗",
-      primaryButtonLink: "https://t.me/vitali_shpakowski",
+      primaryButtonLink: "https://t.me/Shpakich_BLR",
       secondaryButtonText: "ОСТАВИТЬ ЗАЯВКУ",
       secondaryButtonLink: "/contact-us",
       responseTimeBadge: "// СРЕДНЕЕ ВРЕМЯ ОТВЕТА: ДО 2 ЧАСОВ",
@@ -360,7 +360,7 @@ const HOME_PAGE_CONTENT_EN = {
   },
   projectsSection: {
     title: "Our Projects",
-    subtitle: "Products and architectural solutions built by our team",
+    subtitle: "Real-world projects we stand behind",
     categories: [
       { id: "all", label: "All" },
       { id: "web", label: "Web" },
@@ -438,7 +438,7 @@ const HOME_PAGE_CONTENT_EN = {
   },
   teamSection: {
     title: "Our Team",
-    subtitle: "Specialists who design and build our products",
+    subtitle: "The engineers who build your product",
     members: [
       {
         id: "vitali-shpakowski",
@@ -525,7 +525,7 @@ const HOME_PAGE_CONTENT_EN = {
       ],
       checklistNote: "No formal specs? No problem — we will help define and shape your requirements during our quick intro call.",
       primaryButtonText: "MESSAGE ON TELEGRAM ↗",
-      primaryButtonLink: "https://t.me/vitali_shpakowski",
+      primaryButtonLink: "https://t.me/Shpakich_BLR",
       secondaryButtonText: "SUBMIT INQUIRY",
       secondaryButtonLink: "/contact-us",
       responseTimeBadge: "// AVERAGE RESPONSE TIME: < 2 HOURS",
