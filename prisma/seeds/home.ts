@@ -2,7 +2,7 @@ import { PrismaClient } from "../../generated/prisma/client";
 import type { HomePageJsonContent } from "../../src/entities/page-content/types";
 
 const HOME_PAGE_CONTENT_RU = {
-  highlightWords: ["ИНЖЕНЕРОВ", "БИЗНЕСА"],
+  highlightWords: ["КОМАНДА", "ДЛЯ", "БИЗНЕСА"],
   hero: {
     tagline: "КОМАНДА ИНЖЕНЕРОВ ДЛЯ ВАШЕГО БИЗНЕСА",
     subtitle: "Опытные разработчики с многолетним стажем создания реальных продуктов.\nБерем на себя весь цикл — от проектирования до запуска и поддержки, подбирая надежные решения под ваш бюджет.",
