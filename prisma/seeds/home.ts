@@ -268,28 +268,28 @@ const HOME_PAGE_CONTENT_RU = {
 } satisfies HomePageJsonContent;
 
 const HOME_PAGE_CONTENT_EN = {
-  highlightWords: ["Your"],
+  highlightWords: ["BUSINESS"],
   hero: {
-    tagline: "Your coop\u00A0\u00A0\u00A0 Your work\u00A0\u00A0\u00A0 Your product",
-    subtitle: "Our platform helps you find a team to build apps together",
+    tagline: "ENGINEERING TEAM FOR YOUR BUSINESS",
+    subtitle: "Experienced developers with years of track record building production products. We take on the entire lifecycle — from architecture to launch and support, delivering reliable solutions tailored to your budget.",
     buttonText: "CONTACT US",
   },
   features: [
     {
-      id: "experience",
-      title: "Engineering Focus",
-      description: "Channel your engineering skills into building products you truly believe in."
+      id: "web",
+      title: "WEB DEVELOPMENT",
+      description: "We build modern online services, scalable web platforms, and high-impact websites for business. Resilient backend, high-performance interfaces, and databases designed to handle business growth.",
     },
     {
-      id: "coop",
-      title: "Coloboration",
-      description: "Create your own coop to build apps and startups in a team where everyone's opinion is valued."
+      id: "ai",
+      title: "AI SOLUTIONS",
+      description: "We use AI daily in our workflow to speed up development and cut costs without sacrificing quality. We know how to practically integrate neural networks into your business: automate routine tasks, deploy intelligent assistants, and give your product a technological edge.",
     },
     {
-      id: "ai-tools",
-      title: "AI Expertise",
-      description: "AI has unlocked the ability to build massive products as a small, professional team."
-    }
+      id: "mobile",
+      title: "MOBILE DEVELOPMENT",
+      description: "We build optimized iOS and Android applications with thoughtful UX. End-to-end delivery: from business logic and payment integrations to successful releases in the App Store and Google Play and post-launch support.",
+    },
   ],
   agentBuilderSection: {
     title: "Agent Builder",
