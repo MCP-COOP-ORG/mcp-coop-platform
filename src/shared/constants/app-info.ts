@@ -6,7 +6,7 @@
 export const APP_INFO = {
   shortName: "MCP COOP",
   fullName: "MCP COOP — Команда инженеров для вашего бизнеса | Web, Mobile & AI",
-  copyright: "© 2025 MCP COOP",
+  copyright: "© 2025-2026 MCP COOP",
   logo: "/logo.png",
   description:
     "Опытные разработчики с многолетним стажем. Создаем веб-платформы, мобильные приложения под iOS/Android и AI-решения под ключ под ваш бюджет. Запуск и поддержка.",
