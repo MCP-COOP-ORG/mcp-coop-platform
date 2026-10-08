@@ -1,8 +1,7 @@
 import type { PageDto, HomePageJsonContent } from "@/entities/page-content/types";
 import { HighlightedText } from "@/shared/ui/primitives";
 import { EngineeringWatermark, AiChipWatermark } from "@/shared/ui/icons";
-import { blueprintBackgroundStyle, getArticleCardClasses } from "@/shared/constants/styles";
-import { getLucideIcon } from "@/shared/helpers/icon.helper";
+import { blueprintBackgroundStyle } from "@/shared/constants/styles";
 import { ProjectsSection } from "./projects-section";
 import { TeamSection } from "./team-section";
 import { Link } from "@/core/configs/i18n/routing";
@@ -18,35 +17,48 @@ export function HomeView({ content }: HomeViewProps) {
     hero,
     features,
     highlightWords,
-    articlesSection,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    roadmapSection,
-    agentBuilderSection,
     projectsSection,
     teamSection,
   } = content.jsonContent;
 
+  const taglineParts = hero.tagline.split(/[\s\u00A0]{2,}/);
+  const isMultiPartTagline = taglineParts.length > 1;
+
   return (
     <div className="w-full flex flex-col pt-[20px] gap-12 pb-[60px]">
       <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
-        <h1 className="text-center text-[42px] font-normal uppercase flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-          {hero.tagline.split(/[\s\u00A0]{2,}/).map((part, index) => (
-            <span key={index} className="block">
-              <HighlightedText
-                text={part}
-                words={highlightWords}
-              />
-            </span>
-          ))}
+        <h1
+          className={`text-center text-[32px] sm:text-[38px] md:text-[42px] font-normal uppercase leading-tight ${
+            isMultiPartTagline
+              ? "flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8"
+              : ""
+          }`}
+        >
+          {isMultiPartTagline ? (
+            taglineParts.map((part, index) => (
+              <span key={index} className="block">
+                <HighlightedText
+                  text={part}
+                  words={highlightWords}
+                />
+              </span>
+            ))
+          ) : (
+            <HighlightedText
+              text={hero.tagline}
+              words={highlightWords}
+            />
+          )}
         </h1>
-        <h2 className="text-center text-[32px] font-light uppercase mt-4">
+        <h2 className="text-center text-[20px] sm:text-[26px] md:text-[32px] font-light uppercase mt-4">
           {hero.subtitle}
         </h2>
       </section>
       <section className="w-full py-[60px] relative z-0 overflow-hidden" style={blueprintBackgroundStyle}>
         <div className="max-w-7xl mx-auto w-full px-[20px] grid grid-cols-1 md:grid-cols-3 md:gap-0 relative z-10">
           {features.map((feature, idx) => {
-            const isMiddle = idx === 1;
+            const isLeft = feature.id === "web" || idx === 0;
+            const isMiddle = feature.id === "ai" || idx === 1;
 
             return (
               <div
@@ -56,13 +68,13 @@ export function HomeView({ content }: HomeViewProps) {
                   ${isMiddle ? "md:border-x-[2px] border-dashed border-white" : ""}
                 `}
               >
-                {idx === 0 && (
+                {isLeft && (
                   <EngineeringWatermark
                     className="absolute bottom-4 left-4 w-[200px] h-[200px] text-white/15 pointer-events-none transition-colors duration-700 ease-in-out group-hover:text-white/30 z-0"
                   />
                 )}
 
-                {idx === 2 && (
+                {isMiddle && (
                   <AiChipWatermark
                     className="absolute bottom-4 right-4 w-[200px] h-[200px] text-white/15 pointer-events-none transition-colors duration-700 ease-in-out group-hover:text-white/30 z-0"
                   />
@@ -95,92 +107,11 @@ export function HomeView({ content }: HomeViewProps) {
 
       {teamSection && <TeamSection data={teamSection} />}
 
-      <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
-        <h2 className="text-center text-[32px] font-light uppercase mt-4">
-          {agentBuilderSection.title}
-        </h2>
-        <div className="w-full flex flex-col text-foreground/80">
-          <p className="text-center text-[17px] leading-relaxed whitespace-pre-line max-w-4xl mx-auto">
-            <HighlightedText
-              text={agentBuilderSection.description}
-              words={agentBuilderSection.highlightWords || []}
-            />
-          </p>
-          <Link
-            href="/agent-builder/"
-            className="mt-8 mx-auto inline-flex items-center justify-center bg-primary text-primary-foreground rounded-medium hover:opacity-90 transition-opacity px-10 h-12 text-md tracking-wider uppercase"
-          >
-            {agentBuilderSection.buttonText}
-          </Link>
-        </div>
-      </section>
-
-      {/* ROADMAP SECTION COMMENTED OUT AS PER PORTFOLIO REDESIGN
-      {roadmapSection && (
-        <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
-          <h2 className="text-center text-[32px] font-light uppercase mt-4">
-            {roadmapSection.title}
-          </h2>
-          <div className="w-full flex flex-col mt-4 mb-8 text-foreground/80">
-            <div className="w-full py-4 relative border-b border-primary/30">
-              <div className="absolute bottom-0 left-0 w-full text-center translate-y-1/2">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-primary px-4 bg-background">
-                  {roadmapSection.releaseDate}
-                </span>
-              </div>
-            </div>
-
-            {roadmapSection.goals.map((goal) => (
-              <div
-                key={goal.id}
-                className={`w-full py-4 flex items-center justify-center text-center relative border-b transition-colors ${goal.completed ? "border-success/30 text-success" : "border-default-200/50 text-default-500"
-                  }`}
-              >
-                <h3 className="font-medium text-[17px] tracking-wide">{goal.goal}</h3>
-
-                <div className="absolute bottom-0 left-0 w-full text-center translate-y-1/2">
-                  <span className={`text-[11px] font-mono uppercase tracking-widest px-4 bg-background ${goal.completed ? "text-success" : "text-default-500"
-                    }`}>
-                    {goal.endDate}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* SECTIONS TEMPORARILY COMMENTED OUT AS PER REPOSITIONING:
+         - agentBuilderSection
+         - roadmapSection
+         - articlesSection
       */}
-
-      <section className="max-w-7xl mx-auto w-full px-[20px] flex flex-col justify-center">
-        <h2 className="text-center text-[32px] font-light uppercase mt-4">
-          {articlesSection.title}
-        </h2>
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 mt-12">
-          {articlesSection.articles.map((article, idx, arr) => {
-            const cardClasses = getArticleCardClasses(idx, arr.length);
-            const Icon = getLucideIcon(article.icon);
-
-            return (
-              <div key={article.id} className={cardClasses}>
-                <div className="flex items-center gap-[14px]">
-                  {Icon ? (
-                    <Icon className="w-[26px] h-[26px] text-primary flex-shrink-0" />
-                  ) : (
-                    <div className="w-[26px] h-[26px] rounded bg-white/10 flex-shrink-0" />
-                  )}
-                  <div className="flex flex-col">
-                    <h3 className="text-[17px] font-medium text-primary leading-tight">{article.title}</h3>
-                    <p className="text-[13px] text-foreground mt-0.5">{article.subtitle}</p>
-                  </div>
-                </div>
-                <p className="text-[15px] leading-relaxed text-foreground/80 mt-1">
-                  {article.content}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
     </div>
   );
 }
