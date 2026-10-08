@@ -52,7 +52,7 @@ export function HomeView({ content }: HomeViewProps) {
             />
           )}
         </h1>
-        <h2 className="text-center text-[20px] sm:text-[26px] md:text-[32px] font-light uppercase mt-4">
+        <h2 className="text-center text-[16px] sm:text-[20px] md:text-[24px] font-light uppercase mt-4 whitespace-pre-line leading-relaxed max-w-4xl mx-auto">
           {hero.subtitle}
         </h2>
       </section>

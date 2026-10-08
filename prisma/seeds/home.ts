@@ -2,10 +2,10 @@ import { PrismaClient } from "../../generated/prisma/client";
 import type { HomePageJsonContent } from "../../src/entities/page-content/types";
 
 const HOME_PAGE_CONTENT_RU = {
-  highlightWords: ["БИЗНЕСА"],
+  highlightWords: ["ИНЖЕНЕРОВ"],
   hero: {
     tagline: "КОМАНДА ИНЖЕНЕРОВ ДЛЯ ВАШЕГО БИЗНЕСА",
-    subtitle: "Опытные разработчики с многолетним стажем создания реальных продуктов. Берем на себя весь цикл — от проектирования до запуска и поддержки, подбирая надежные решения под ваш бюджет.",
+    subtitle: "Опытные разработчики с многолетним стажем создания реальных продуктов.\nБерем на себя весь цикл — от проектирования до запуска и поддержки, подбирая надежные решения под ваш бюджет.",
     buttonText: "СВЯЗАТЬСЯ С НАМИ",
   },
   features: [
@@ -268,10 +268,10 @@ const HOME_PAGE_CONTENT_RU = {
 } satisfies HomePageJsonContent;
 
 const HOME_PAGE_CONTENT_EN = {
-  highlightWords: ["BUSINESS"],
+  highlightWords: ["ENGINEERING"],
   hero: {
     tagline: "ENGINEERING TEAM FOR YOUR BUSINESS",
-    subtitle: "Experienced developers with years of track record building production products. We take on the entire lifecycle — from architecture to launch and support, delivering reliable solutions tailored to your budget.",
+    subtitle: "Experienced developers with years of track record building production products.\nWe take on the entire lifecycle — from architecture to launch and support, delivering reliable solutions tailored to your budget.",
     buttonText: "CONTACT US",
   },
   features: [
