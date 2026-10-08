@@ -2,7 +2,7 @@ import { PrismaClient } from "../../generated/prisma/client";
 import type { HomePageJsonContent } from "../../src/entities/page-content/types";
 
 const HOME_PAGE_CONTENT_RU = {
-  highlightWords: ["ИНЖЕНЕРОВ"],
+  highlightWords: ["ИНЖЕНЕРОВ", "БИЗНЕСА"],
   hero: {
     tagline: "КОМАНДА ИНЖЕНЕРОВ ДЛЯ ВАШЕГО БИЗНЕСА",
     subtitle: "Опытные разработчики с многолетним стажем создания реальных продуктов.\nБерем на себя весь цикл — от проектирования до запуска и поддержки, подбирая надежные решения под ваш бюджет.",
@@ -268,7 +268,7 @@ const HOME_PAGE_CONTENT_RU = {
 } satisfies HomePageJsonContent;
 
 const HOME_PAGE_CONTENT_EN = {
-  highlightWords: ["ENGINEERING"],
+  highlightWords: ["ENGINEERING", "FOR", "BUSINESS"],
   hero: {
     tagline: "ENGINEERING TEAM FOR YOUR BUSINESS",
     subtitle: "Experienced developers with years of track record building production products.\nWe take on the entire lifecycle — from architecture to launch and support, delivering reliable solutions tailored to your budget.",
