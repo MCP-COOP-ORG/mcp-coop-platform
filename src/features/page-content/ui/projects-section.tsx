@@ -72,7 +72,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
               key={category.id}
               type="button"
               onClick={() => setSelectedCategory(category.id)}
-              className={`min-h-[38px] px-4 py-2 inline-flex items-center justify-center rounded-small font-mono text-[13px] tracking-wider uppercase transition-colors cursor-pointer select-none ${
+              className={`min-h-[44px] px-4 py-2 inline-flex items-center justify-center rounded-small font-mono text-[13px] tracking-wider uppercase transition-colors cursor-pointer select-none ${
                 isSelected
                   ? "bg-primary text-white shadow-sm border border-primary font-medium"
                   : "bg-transparent border border-dashed border-foreground/25 hover:border-primary text-foreground/75 hover:text-primary hover:bg-primary/5"
@@ -95,7 +95,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           <button
             type="button"
             onClick={() => handleScroll("left")}
-            className="h-9 min-w-9 px-3 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-foreground/25 hover:border-primary hover:text-primary text-foreground/75 hover:bg-primary/5 rounded-small transition-colors cursor-pointer select-none"
+            className="h-11 min-w-11 px-3.5 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-foreground/25 hover:border-primary hover:text-primary text-foreground/75 hover:bg-primary/5 rounded-small transition-colors cursor-pointer select-none"
             aria-label="Previous projects"
           >
             [ &lt; ]
@@ -103,7 +103,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           <button
             type="button"
             onClick={() => handleScroll("right")}
-            className="h-9 min-w-9 px-3 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-foreground/25 hover:border-primary hover:text-primary text-foreground/75 hover:bg-primary/5 rounded-small transition-colors cursor-pointer select-none"
+            className="h-11 min-w-11 px-3.5 inline-flex items-center justify-center font-mono text-[13px] border border-dashed border-foreground/25 hover:border-primary hover:text-primary text-foreground/75 hover:bg-primary/5 rounded-small transition-colors cursor-pointer select-none"
             aria-label="Next projects"
           >
             [ &gt; ]

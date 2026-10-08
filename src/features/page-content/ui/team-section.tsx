@@ -106,13 +106,13 @@ export function TeamSection({ data }: TeamSectionProps) {
                   {"// CONTACTS //"}
                 </span>
 
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   {member.links?.telegram && (
                     <a
                       href={member.links.telegram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-foreground/70 hover:text-primary transition-transform hover:scale-110 p-1 inline-flex items-center justify-center"
+                      className="text-foreground/70 hover:text-primary transition-transform hover:scale-110 p-2 min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded"
                       aria-label={`${member.name} Telegram`}
                     >
                       <Telegram className="w-[18px] h-[18px]" />
@@ -123,7 +123,7 @@ export function TeamSection({ data }: TeamSectionProps) {
                       href={member.links.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-foreground/70 hover:text-primary transition-transform hover:scale-110 p-1 inline-flex items-center justify-center"
+                      className="text-foreground/70 hover:text-primary transition-transform hover:scale-110 p-2 min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded"
                       aria-label={`${member.name} LinkedIn`}
                     >
                       <LinkedIn className="w-[18px] h-[18px]" />
@@ -134,7 +134,7 @@ export function TeamSection({ data }: TeamSectionProps) {
                       href={member.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-foreground/70 hover:text-primary transition-transform hover:scale-110 p-1 inline-flex items-center justify-center"
+                      className="text-foreground/70 hover:text-primary transition-transform hover:scale-110 p-2 min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded"
                       aria-label={`${member.name} GitHub`}
                     >
                       <GitHub className="w-[18px] h-[18px]" />
