@@ -217,7 +217,7 @@ const HOME_PAGE_CONTENT_RU = {
   },
   workflowSection: {
     title: "КАК МЫ НАЧИНАЕМ РАБОТУ",
-    subtitle: "Простой путь от первой идеи до старта разработки. Без душных ТЗ, лишних посредников и бюрократии.",
+    subtitle: "Простой путь от первой идеи до старта разработки.\nБез душных ТЗ, лишних посредников и бюрократии.",
     steps: [
       {
         id: "contact",
@@ -230,15 +230,15 @@ const HOME_PAGE_CONTENT_RU = {
         id: "discovery",
         stepNumber: "02",
         tag: "ПОГРУЖЕНИЕ",
-        title: "20 минут на созвон или чат",
-        description: "Без душных опросников и формализма вникаем в суть бизнеса, цели продукта и отсекаем лишнее.",
+        title: "Короткий созвон или чат",
+        description: "В удобном для вас формате без душных опросников и бюрократии вникаем в суть задачи, цели продукта и отсекаем лишнее.",
       },
       {
         id: "estimate",
         stepNumber: "03",
         tag: "СМЕТА И СРОКИ",
-        title: "Понятный план за 1–2 дня",
-        description: "Формируем архитектурный стек, прозрачную вилку бюджета и реалистичные сроки запуска без скрытых доплат.",
+        title: "Быстрая оценка и план",
+        description: "Оперативно возвращаемся с конкретикой: архитектурный стек, прозрачная вилка бюджета и реалистичные сроки запуска без скрытых условий.",
       },
       {
         id: "kickoff",
@@ -483,7 +483,7 @@ const HOME_PAGE_CONTENT_EN = {
   },
   workflowSection: {
     title: "HOW WE START",
-    subtitle: "A clear and simple path from your first idea to development kickoff. No tedious specs, unnecessary middlemen, or bureaucracy.",
+    subtitle: "A clear and simple path from your first idea to development kickoff.\nNo tedious specs, unnecessary middlemen, or bureaucracy.",
     steps: [
       {
         id: "contact",
@@ -496,15 +496,15 @@ const HOME_PAGE_CONTENT_EN = {
         id: "discovery",
         stepNumber: "02",
         tag: "DISCOVERY",
-        title: "20-Min Call or Chat",
-        description: "No tedious questionnaires. We dive straight into your business goals, target audience, and cut out unnecessary scope.",
+        title: "Quick Intro Call or Chat",
+        description: "A brief call or message exchange in any convenient format. No tedious questionnaires — we focus directly on your product goals and cut out unnecessary scope.",
       },
       {
         id: "estimate",
         stepNumber: "03",
         tag: "ESTIMATE",
-        title: "Roadmap in 1–2 Days",
-        description: "We deliver an optimal tech stack, transparent budget range, and realistic launch milestones without hidden fees.",
+        title: "Fast Scope & Estimate",
+        description: "We promptly get back to you with specifics: optimal tech stack, transparent budget range, and realistic launch milestones without hidden fees.",
       },
       {
         id: "kickoff",
