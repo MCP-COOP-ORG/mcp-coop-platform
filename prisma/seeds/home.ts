@@ -215,6 +215,56 @@ const HOME_PAGE_CONTENT_RU = {
       },
     ],
   },
+  workflowSection: {
+    title: "КАК МЫ НАЧИНАЕМ РАБОТУ",
+    subtitle: "Простой путь от первой идеи до старта разработки. Без душных ТЗ, лишних посредников и бюрократии.",
+    steps: [
+      {
+        id: "contact",
+        stepNumber: "01",
+        tag: "СВЯЗЬ",
+        title: "Первый контакт",
+        description: "Напишите нам в Telegram или оставьте заявку. Опишите задачу своими словами — текстом, голосовым или ссылками на референсы.",
+      },
+      {
+        id: "discovery",
+        stepNumber: "02",
+        tag: "ПОГРУЖЕНИЕ",
+        title: "20 минут на созвон или чат",
+        description: "Без душных опросников и формализма вникаем в суть бизнеса, цели продукта и отсекаем лишнее.",
+      },
+      {
+        id: "estimate",
+        stepNumber: "03",
+        tag: "СМЕТА И СРОКИ",
+        title: "Понятный план за 1–2 дня",
+        description: "Формируем архитектурный стек, прозрачную вилку бюджета и реалистичные сроки запуска без скрытых доплат.",
+      },
+      {
+        id: "kickoff",
+        stepNumber: "04",
+        tag: "СТАРТ",
+        title: "Запуск разработки",
+        description: "Фиксируем договоренности и сразу берем проект в работу с прямым доступом к ведущим инженерам.",
+      },
+    ],
+    cta: {
+      title: "ГОТОВЫ ОБСУДИТЬ ВАШ ПРОЕКТ?",
+      subtitle: "Подберем надежные архитектурные решения и поможем запуститься в срок.",
+      checklistTitle: "// ЧТО ПОЛЕЗНО УКАЗАТЬ ПРИ ОБРАЩЕНИИ:",
+      checklistItems: [
+        "Суть задачи: онлайн-сервис, мобильное приложение, AI-автоматизация или MVP с нуля.",
+        "Что уже есть: готовый дизайн/код или проектируем продукт с чистого листа.",
+        "Ориентир по срокам: к какой дате или событию планируете запуск.",
+      ],
+      checklistNote: "Нет четкого описания? Не проблема — поможем сформулировать и упаковать требования на коротком созвоне.",
+      primaryButtonText: "НАПИСАТЬ В TELEGRAM ↗",
+      primaryButtonLink: "https://t.me/vitali_shpakowski",
+      secondaryButtonText: "ОСТАВИТЬ ЗАЯВКУ",
+      secondaryButtonLink: "/contact-us",
+      responseTimeBadge: "// СРЕДНЕЕ ВРЕМЯ ОТВЕТА: ДО 2 ЧАСОВ",
+    },
+  },
 } satisfies HomePageJsonContent;
 
 const HOME_PAGE_CONTENT_EN = {
@@ -430,6 +480,56 @@ const HOME_PAGE_CONTENT_EN = {
         },
       },
     ],
+  },
+  workflowSection: {
+    title: "HOW WE START",
+    subtitle: "A clear and simple path from your first idea to development kickoff. No tedious specs, unnecessary middlemen, or bureaucracy.",
+    steps: [
+      {
+        id: "contact",
+        stepNumber: "01",
+        tag: "CONTACT",
+        title: "First Contact",
+        description: "Drop us a line on Telegram or submit an inquiry. Describe your idea in your own words — text, voice notes, or reference links.",
+      },
+      {
+        id: "discovery",
+        stepNumber: "02",
+        tag: "DISCOVERY",
+        title: "20-Min Call or Chat",
+        description: "No tedious questionnaires. We dive straight into your business goals, target audience, and cut out unnecessary scope.",
+      },
+      {
+        id: "estimate",
+        stepNumber: "03",
+        tag: "ESTIMATE",
+        title: "Roadmap in 1–2 Days",
+        description: "We deliver an optimal tech stack, transparent budget range, and realistic launch milestones without hidden fees.",
+      },
+      {
+        id: "kickoff",
+        stepNumber: "04",
+        tag: "KICKOFF",
+        title: "Development Kickoff",
+        description: "We lock in agreements and immediately start engineering with direct, transparent access to lead developers.",
+      },
+    ],
+    cta: {
+      title: "READY TO BUILD YOUR PRODUCT?",
+      subtitle: "We'll engineer the right architecture and help you launch reliably and on schedule.",
+      checklistTitle: "// HELPFUL DETAILS TO SHARE:",
+      checklistItems: [
+        "The core idea: web platform, mobile app, AI solution, or MVP from scratch.",
+        "Current assets: existing code/designs, or starting completely from scratch.",
+        "Target timeline: specific deadlines or target launch dates.",
+      ],
+      checklistNote: "No formal specs? No problem — we will help define and shape your requirements during our quick intro call.",
+      primaryButtonText: "MESSAGE ON TELEGRAM ↗",
+      primaryButtonLink: "https://t.me/vitali_shpakowski",
+      secondaryButtonText: "SUBMIT INQUIRY",
+      secondaryButtonLink: "/contact-us",
+      responseTimeBadge: "// AVERAGE RESPONSE TIME: < 2 HOURS",
+    },
   },
 } satisfies HomePageJsonContent;
 

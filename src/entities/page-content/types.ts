@@ -51,12 +51,41 @@ export interface TeamSection {
   members: TeamMemberItem[];
 }
 
+export interface WorkflowStepItem {
+  id: string;
+  stepNumber: string; // "01", "02", "03", "04"
+  tag: string;        // "СВЯЗЬ" / "CONTACT"
+  title: string;
+  description: string;
+}
+
+export interface WorkflowCta {
+  title: string;
+  subtitle?: string;
+  checklistTitle: string;
+  checklistItems: string[];
+  checklistNote: string;
+  primaryButtonText: string;
+  primaryButtonLink: string;
+  secondaryButtonText: string;
+  secondaryButtonLink: string;
+  responseTimeBadge: string;
+}
+
+export interface WorkflowSection {
+  title: string;
+  subtitle?: string;
+  steps: WorkflowStepItem[];
+  cta: WorkflowCta;
+}
+
 export interface HomePageJsonContent {
   highlightWords: string[];
   hero: { tagline: string; subtitle: string; buttonText: string };
   features: Array<{ id: string; title: string; description: string }>;
   projectsSection?: ProjectsSection;
   teamSection?: TeamSection;
+  workflowSection?: WorkflowSection;
   roadmapSection?: {
     title: string;
     releaseDate: string;
