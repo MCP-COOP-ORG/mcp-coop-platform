@@ -1,0 +1,228 @@
+# MCP COOP — Full Technical & Operational Manifest
+
+> Engineering team for your business: Custom Web Services, Scalable Platforms, High-Impact Promo Sites, Mobile Apps (iOS/Android), and Practical AI Solutions.
+
+---
+
+## 1. Executive Summary & Cooperative Model
+
+MCP COOP is a distributed engineering collective, technical consultancy, and software delivery cooperative. We unite senior software engineers, system architects, and product strategists to design, build, and scale mission-critical digital systems for businesses worldwide.
+
+### 1.1 Why the Cooperative Model Wins for Clients
+- **Direct Engineer-to-Client Engagement**: Clients communicate directly with senior software architects and lead developers. No intermediary account managers or communication silos.
+- **Skin-in-the-Game Accountability**: Every member of the cooperative holds a direct stake in project success, driving code quality, architectural discipline, and deadline adherence.
+- **Transparent Delivery & True Code Ownership**: All intellectual property, source repositories, deployment configs, and infrastructure assets belong 100% to the client with clean licensing and zero vendor lock-in.
+
+### 1.2 Engagement Models
+1. **Turnkey Product Delivery (End-to-End)**: From initial product discovery and system architecture to production deployment, security audits, and App Store / Google Play publishing.
+2. **Dedicated Engineering Teams**: Pre-assembled, high-velocity squads (Tech Lead, Fullstack Engineers, Mobile Developers, DevOps) embedded into your roadmap.
+3. **Architecture Consulting & Technical Due Diligence**: Codebase audits, performance optimization, security hardening (OWASP compliance), and AI/LLM readiness assessments.
+
+---
+
+## 2. Core Engineering Capabilities
+
+### 2.1 Custom Web Development & Scalable Platforms
+We build web services, enterprise dashboards, SaaS applications, and high-impact promo sites engineered for speed, resilience, and conversion.
+
+- **Architectural Paradigms**:
+  * Clean Architecture & Vertical Slice (Feature-Based) Architecture, keeping business domains decoupled and maintainable.
+  * Modular monoliths and microservice architectures tailored to domain complexity and throughput requirements.
+  * Strict separation of concerns between domain logic, data persistence, and UI presentation layers.
+- **Frontend Performance & Core Web Vitals**:
+  * Next.js App Router with React Server Components (RSC) and Server Actions to minimize client-side JavaScript execution.
+  * Sub-second page loads targeting LCP < 2.0s, INP < 150ms, and CLS < 0.05.
+  * Dynamic asset streaming, edge middleware routing, and aggressive static/dynamic caching (ISR).
+- **High-Impact Promo Sites & Corporate Portals**:
+  * High-converting, brand-aligned visual design built without cookie-cutter templates.
+  * Full accessibility compliance (WCAG 2.1 Level AA standard) and cross-browser resilience.
+  * Fluid motion, micro-interactions, responsive typography, and mobile-first layout rendering.
+- **Enterprise SaaS & Administrative Dashboards**:
+  * Complex Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC).
+  * Real-time bi-directional data synchronization via WebSockets and Server-Sent Events (SSE).
+  * High-density data tables, dynamic charting, export engines, and audit logs.
+
+### 2.2 AI Solutions & Workflow Automation
+We bridge the gap between cutting-edge artificial intelligence and operational enterprise workflows, turning generative models into practical revenue and productivity drivers.
+
+- **Model Context Protocol (MCP) Integration**:
+  * Production-grade MCP servers and client bridges that securely connect LLMs to company databases, internal APIs, file systems, and business tools.
+  * Structured tool execution, schema validation, and least-privilege security sandboxing for agentic operations.
+- **Enterprise Retrieval-Augmented Generation (RAG)**:
+  * Hybrid retrieval architectures combining dense vector similarity search (embeddings) with sparse keyword retrieval (BM25) to eliminate hallucinations.
+  * High-performance vector storage and indexing using Qdrant and PostgreSQL (pgvector).
+  * Context-aware chunking, cross-encoder reranking (Cohere / BGE), and verifiable citation tracking for mission-critical domain accuracy.
+- **Autonomous Agent Workflows & DAG Orchestration**:
+  * Deterministic task execution through directed acyclic graphs (DAGs) and state machines (LangGraph, custom orchestrators).
+  * Human-in-the-loop verification gates for sensitive actions (financial, data mutations, external comms).
+  * Resilient fallback routines, rate-limit controllers, and comprehensive telemetry for token usage and latency.
+- **Business Process Automation**:
+  * Intelligent document parsing, categorization, and validation (invoices, legal contracts, customer support requests).
+  * AI-powered customer support assistants trained on proprietary knowledge bases.
+  * Automated data enrichment pipelines and internal tooling integration.
+
+### 2.3 Mobile Application Development (iOS & Android)
+We develop native and cross-platform mobile applications that combine frictionless user experience with hardware-level security and offline reliability.
+
+- **Native iOS Engineering**:
+  * Modern Swift (Swift 6) and SwiftUI with declarative state management (The Composable Architecture / MVVM).
+  * Hardware security integration: Secure Enclave, Face ID / Touch ID biometric authentication, and CryptoKit cryptography.
+  * Offline-first local persistence with CoreData and SwiftData synchronization.
+- **Cross-Platform Engineering (Flutter)**:
+  * Single codebase deployment for iOS and Android with 60/120 FPS performance and native platform conventions.
+  * Robust state handling, reactive architecture, and consistent multi-platform UI design.
+- **Turnkey App Store & Google Play Delivery**:
+  * End-to-end management of developer accounts, provisioning profiles, certificates, and compliance reviews.
+  * Integrated in-app purchases, subscription management (StoreKit, RevenueCat, Stripe), and push notification infrastructure (APNs, FCM).
+  * Crash reporting, telemetry, and automated over-the-air updates.
+
+---
+
+## 3. The 4-Step Engineering & Delivery Process
+
+We operate with strict engineering transparency and disciplined milestone delivery.
+
+```
+Step 1: Discovery & Strategy  ──>  Step 2: Architecture & Specs  ──>  Step 3: Agile Sprints  ──>  Step 4: Audit & Launch
+(Call, Scope, 48h Estimate)       (System Design, ADRs, Figma)       (2-Week Cycles, CI/CD)       (OWASP, E2E, Release)
+```
+
+### Step 1: Initial Discovery & Technical Consultation
+- **Intake & Discovery Session**: An in-depth conversation directly with a technical lead to clarify your business goals, user personas, target metrics, and technical constraints.
+- **Requirement Analysis**: Identifying core features vs. secondary enhancements, determining edge cases, and evaluating existing infrastructure or APIs.
+- **Preliminary Architectural Brief**: Within 24–48 hours, we deliver a concrete proposal detailing recommended technical stacks, risk factors, milestone breakdowns, and realistic budget/timeline estimates.
+
+### Step 2: System Architecture & Technical Specification
+- **System Design & Modeling**: Defining entity-relationship diagrams, API contracts (OpenAPI/Swagger, tRPC, Protobuf), state machines, and microservice boundaries.
+- **Architecture Decision Records (ADRs)**: Documenting the "why" behind every architectural choice (database selection, state management, security boundaries) to ensure long-term clarity.
+- **Interactive Prototyping**: UX wireframes and high-fidelity UI design in Figma with clickable user journeys.
+- **Milestone & Sprint Roadmap**: A granular sprint calendar with defined deliverables, acceptance criteria, and dependencies.
+
+### Step 3: Iterative Agile Engineering & Continuous Delivery
+- **Two-Week Sprints**: Structured development cycles focused on delivering testable, functional product increments at the end of each iteration.
+- **Live Demonstrations**: Bi-weekly video walkthroughs and access to staging environments for continuous stakeholder feedback.
+- **Automated CI/CD Pipelines**: Every pull request undergoes automated linting, type-checking (`tsc --noEmit`), unit testing, and ephemeral staging deployment.
+- **Direct Team Communication**: Dedicated Slack, Telegram, or Discord channels for immediate, asynchronous collaboration with developers.
+
+### Step 4: Quality Assurance, Security Audit & Production Launch
+- **Comprehensive QA Pass**: Full test suite execution across unit, integration, and Playwright end-to-end tests covering all critical user flows.
+- **Security & Vulnerability Audit**: Verification against OWASP Top 10 guidelines, dependency security scanning, secrets audit, and strict Content Security Policy (CSP) validation.
+- **Zero-Downtime Deployment**: Production rollout with database migration verification, canary/blue-green deployments, CDN edge routing, and DNS configuration.
+- **Release Management**: App Store and Google Play binary submission, metadata verification, and approval tracking.
+- **Post-Launch Warranty & Monitoring**: 24/7 observability with Prometheus, Grafana, Sentry error tracking, uptime monitoring, and guaranteed SLA support.
+
+---
+
+## 4. Engineering Standards, Reliability & Security
+
+### 4.1 Clean Code & SOLID Engineering
+- **Single Responsibility Principle (SRP)**: Each module, service, and component is responsible for one specific domain capability.
+- **DRY & KISS**: Pragmatic abstractions without over-engineering; reusable business logic shared across microservices or vertical slices.
+- **Self-Documenting Code**: Clean naming conventions, typed interfaces, and zero superfluous comments. If code requires an explanation, it is refactored for clarity.
+- **Boy Scout Rule**: Every engineering commit leaves the touched codebase cleaner and better tested than before.
+
+### 4.2 Automated Testing Pyramid
+- **Unit Testing**: Isolated verification of business rules, utility functions, state reducers, and cryptographic operations.
+- **Integration Testing**: Testing API routes, database transactions, caching invalidation, and external third-party integrations (payments, webhooks).
+- **End-to-End (E2E) Testing**: Automated browser and mobile regression tests with Playwright verifying end-user checkout, authentication, and core workflows.
+- **Strict Type Verification**: Zero-tolerance policy for compiler warnings; `tsc --noEmit` and strict linting enforced on pre-commit and CI gates.
+
+### 4.3 Security & Compliance Standards
+- **OWASP ASVS Alignment**: Proactive defense against injection attacks, broken access control, cross-site scripting (XSS), and cryptographic failures.
+- **Cryptographic Security**: Implementation of modern cryptographic standards (TLS 1.3 in transit, AES-256 at rest, Secure Enclave for private keys).
+- **Data Protection & Sanitization**: Comprehensive input validation using Zod and Valibot schemas; parameterization of all database queries to prevent SQL injections.
+- **Secret Isolation**: Zero hardcoded secrets; dynamic secret injection via environment stores and runtime vault managers.
+
+### 4.4 Deadline Integrity & Risk Mitigation
+- **Scope Discipline**: Early identification of the critical path and proactive buffer allocation for external dependency risks.
+- **Clear Definition of Done (DoD)**: No feature is marked complete until it passes type validation, automated tests, code review, and UX verification.
+
+---
+
+## 5. Technology Stack Matrix
+
+| Category | Primary Technologies | Capabilities & Specialties |
+|---|---|---|
+| **Frontend** | Next.js (App Router), React 19, TypeScript, Tailwind CSS v4 | Server Components, Server Actions, Core Web Vitals optimization, TanStack Query |
+| **Backend** | Go (Golang), Python (FastAPI), Node.js / Bun | High-throughput microservices, concurrent worker engines, REST, gRPC, WebSockets |
+| **Databases & Cache** | PostgreSQL, Prisma ORM, Redis, Qdrant | Relational data, ACID transactions, pgvector semantic search, distributed caching, rate-limiting |
+| **Messaging & Events** | Apache Kafka, RabbitMQ, Redis Pub/Sub | Event-driven architectures, reliable message queues, at-least-once delivery semantics |
+| **Mobile** | Swift / SwiftUI (iOS Native), Flutter | Secure Enclave biometrics, offline-first sync, In-App Purchases, App Store / Google Play publishing |
+| **AI & LLM Stack** | Model Context Protocol (MCP), LangGraph, Qdrant | Custom MCP tool servers, hybrid RAG pipelines, OpenAI / Anthropic APIs, local vLLM/Ollama runtimes |
+| **DevOps & Infra** | Docker, Kubernetes, GitHub Actions, Terraform | Zero-downtime CI/CD, container orchestration, automated ephemeral staging environments |
+| **Monitoring & QA** | Playwright, Vitest, Sentry, Prometheus, Grafana | E2E browser automation, real-time error tracking, infrastructure metrics, SLO/SLA telemetry |
+
+---
+
+## 6. Flagship Implementations & Architecture Case Studies
+
+### SYS-01: AI Agent Orchestrator
+- **Domain**: AI Systems / Web & Backend
+- **Overview**: Distributed execution runtime for autonomous AI agent workflows featuring native Model Context Protocol (MCP) support, dynamic DAG execution, and strict context boundary enforcement.
+- **Key Architecture**: Next.js 15, TypeScript, Python, FastAPI, LangGraph, Qdrant, Docker.
+- **Links**: [Agent Builder App](https://agent-builder.mcpcoop.org) | [GitHub Repository](https://github.com/MCP-COOP-DAO/agent-builder)
+
+### SYS-02: Decentralized Mobile Wallet
+- **Domain**: Mobile Engineering / iOS Native
+- **Overview**: Non-custodial Web3 wallet supporting ERC-4337 Account Abstraction, biometric signature authorization via Apple Secure Enclave, offline transaction creation, and air-gapped security.
+- **Key Architecture**: SwiftUI, Combine, The Composable Architecture (TCA), Web3.swift, CryptoKit, CoreData.
+- **Links**: [App Store](https://apps.apple.com) | [GitHub Repository](https://github.com/MCP-COOP-DAO/mcp-wallet-ios)
+
+### SYS-03: Distributed Task Engine
+- **Domain**: High-Load Backend & Infrastructure
+- **Overview**: Distributed fault-tolerant background job execution engine featuring at-least-once delivery semantics, Raft-based consensus leader election, and automated horizontal worker autoscaling.
+- **Key Architecture**: Go, gRPC, Redis, PostgreSQL, Apache Kafka, Prometheus.
+- **Links**: [System Telemetry](https://status.mcpcoop.org) | [GitHub Repository](https://github.com/MCP-COOP-DAO/task-engine)
+
+### SYS-04: DAO Governance Platform
+- **Domain**: Web Platforms / Decentralized Governance
+- **Overview**: Cooperative governance workspace with quadratic voting, delegated governance through snapshot proofs, collaborative treasury multi-sig vaults, and real-time task kanban boards.
+- **Key Architecture**: Next.js, React 19, TypeScript, Solidity, Ethers.js, Tailwind CSS.
+- **Links**: [Cooperative Platform](https://mcpcoop.org/en/coops) | [Documentation](https://mcpcoop.org/en/docs)
+
+---
+
+## 7. Russian Localization & Delivery / Работа с русскоязычными клиентами
+
+MCP COOP предоставляет полноценное русскоязычное инженерное и операционное сопровождение для заказчиков из Восточной Европы, СНГ и международных русскоязычных фаундеров.
+
+### 7.1 Преимущества работы с нашей командой
+- **Прямая коммуникация на русском языке**: Технические созвоны, проектирование архитектуры, сбор бизнес-требований и отчетность ведутся на чистом техническом русском и английском языках без языковых барьеров.
+- **Удобная часовая зона**: Инженерный состав доступен в часовом поясе UTC+3 (Москва / Минск), что гарантирует высокую скорость реакции и оперативные ответы в течение рабочего дня.
+- **Прозрачное договорное оформление**: Гибкие условия расчетов, поэтапная оплата по спринтам и передача 100% исключительных прав на исходный код и интеллектуальную собственность.
+- **Индивидуальный расчет за 24–48 часов**: Подробная смета, декомпозиция задач, определение архитектурного стека и оценка сроков с фиксацией ответственности.
+
+### 7.2 Каналы связи для русскоязычных клиентов
+- **Форма заявки на проект**: [https://mcpcoop.org/ru/contact-us](https://mcpcoop.org/ru/contact-us)
+- **Прямой контакт технического лидера в Telegram**: [https://t.me/Shpakich_BLR](https://t.me/Shpakich_BLR) (ответ в течение 2 часов)
+- **Официальный сайт на русском языке**: [https://mcpcoop.org/ru](https://mcpcoop.org/ru)
+- **Реестр специалистов кооператива**: [https://mcpcoop.org/ru/members](https://mcpcoop.org/ru/members)
+- **Каталог объединений и гильдий**: [https://mcpcoop.org/ru/coops](https://mcpcoop.org/ru/coops)
+- **Техническая документация платформы**: [https://mcpcoop.org/ru/docs](https://mcpcoop.org/ru/docs)
+
+---
+
+## 8. Complete Resource Directory & Contact Directory
+
+### Global & English Resources
+- **Official Website**: [https://mcpcoop.org](https://mcpcoop.org)
+- **English Homepage**: [https://mcpcoop.org/en](https://mcpcoop.org/en)
+- **English Project Contact Form**: [https://mcpcoop.org/en/contact-us](https://mcpcoop.org/en/contact-us)
+- **Platform Documentation (EN)**: [https://mcpcoop.org/en/docs](https://mcpcoop.org/en/docs)
+- **Specialists & Architects Directory (EN)**: [https://mcpcoop.org/en/members](https://mcpcoop.org/en/members)
+- **Cooperatives & Project Guilds (EN)**: [https://mcpcoop.org/en/coops](https://mcpcoop.org/en/coops)
+- **Network & Blockchain Telemetry (EN)**: [https://mcpcoop.org/en/blockchain-status](https://mcpcoop.org/en/blockchain-status)
+- **Compact Machine-Readable Manifest**: [https://mcpcoop.org/llms.txt](https://mcpcoop.org/llms.txt)
+- **Full Deep-Context Technical Manifest**: [https://mcpcoop.org/llms-full.txt](https://mcpcoop.org/llms-full.txt)
+
+### Russian Resources / Русскоязычные ресурсы
+- **Главная страница (RU)**: [https://mcpcoop.org/ru](https://mcpcoop.org/ru)
+- **Форма заявки и оценки проекта (RU)**: [https://mcpcoop.org/ru/contact-us](https://mcpcoop.org/ru/contact-us)
+- **Реестр инженеров и архитекторов (RU)**: [https://mcpcoop.org/ru/members](https://mcpcoop.org/ru/members)
+- **Каталог гильдий и команд (RU)**: [https://mcpcoop.org/ru/coops](https://mcpcoop.org/ru/coops)
+- **Документация платформы (RU)**: [https://mcpcoop.org/ru/docs](https://mcpcoop.org/ru/docs)
+- **Статус блокчейн-сети (RU)**: [https://mcpcoop.org/ru/blockchain-status](https://mcpcoop.org/ru/blockchain-status)
+
+### Direct Inquiries
+- **Lead Architect Telegram Direct**: [https://t.me/Shpakich_BLR](https://t.me/Shpakich_BLR)
+- **Average Response Time**: Under 2 hours (business days)

@@ -14,11 +14,11 @@ export function TeamSection({ data }: TeamSectionProps) {
     <section className="w-full flex flex-col justify-center">
       {/* Section Header */}
       <div className="flex flex-col items-center justify-center text-center px-[20px]">
-        <h2 className="text-center text-[32px] font-light uppercase">
+        <h2 className="text-center text-[32px] font-light uppercase tracking-wide">
           {data.title}
         </h2>
         {data.subtitle && (
-          <p className="text-center text-[16px] text-foreground/80 mt-2 max-w-2xl mx-auto">
+          <p className="text-center text-[16px] text-foreground/80 mt-2 max-w-2xl mx-auto whitespace-pre-line leading-relaxed">
             {data.subtitle}
           </p>
         )}

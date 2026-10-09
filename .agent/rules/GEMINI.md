@@ -25,6 +25,15 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
     - ✅ Activate: Read Rules → Check Frontmatter → Load SKILL.md → Apply All.
 2. **Forbidden:** Never skip reading agent rules or skill instructions. "Read → Understand → Apply" is mandatory.
 
+### 3. Orchestration & Subagent Delegation Mandate (P0 Universal Rule)
+
+> 🔴 **STRICT BAN ON MAIN-AGENT MONOLITHIC EDITS WHEN SUBAGENTS ARE SPECIFIED:**
+> When an implementation plan (`{task-slug}.md`, `implementation-plan.md`, or user prompt) defines phases/tasks for subagents:
+> 1. **Zero Direct Edits by Main Agent:** The Main Agent is STRICTLY FORBIDDEN from calling `write_to_file`, `replace_file_content`, or running mutating shell commands directly in the root session.
+> 2. **Delegation via `invoke_subagent` ONLY:** Every phase MUST be dispatched exclusively to its dedicated subagent using `invoke_subagent` with its role, specialized prompt, and declared skills.
+> 3. **Role Enforcement:** The Main Agent acts strictly as Orchestrator & QA Gatekeeper (dispatching subagents, inspecting their deliverables, and reporting to the user). Any attempt by the Main Agent to edit code directly when subagents are allocated constitutes an immediate **CRITICAL PROTOCOL VIOLATION**.
+
+
 ---
 
 ## 📥 REQUEST CLASSIFIER (STEP 1)

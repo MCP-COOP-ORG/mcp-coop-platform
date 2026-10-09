@@ -55,7 +55,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
           {data.title}
         </h2>
         {data.subtitle && (
-          <p className="text-center text-[15px] text-foreground/70 mt-2 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-center text-[15px] text-foreground/70 mt-2 max-w-2xl mx-auto whitespace-pre-line leading-relaxed">
             {data.subtitle}
           </p>
         )}

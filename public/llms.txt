@@ -1,0 +1,46 @@
+# MCP COOP
+
+> Engineering team for your business: Custom Web Services, Scalable Platforms, High-Impact Promo Sites, Mobile Apps (iOS/Android), and Practical AI Solutions.
+
+MCP COOP is an engineering cooperative and software consultancy specializing in custom software development, digital platforms, and enterprise AI integrations. We design and deliver scalable web services, native mobile applications, and intelligent agentic workflows with clean architecture, strict reliability standards, and predictable delivery timelines.
+
+## Core Services
+
+- [Custom Web Development](https://mcpcoop.org/en): Engineering resilient web services, SaaS platforms, high-impact promotional websites, and client portals built with clean architecture, Next.js (App Router), React 19, TypeScript, and PostgreSQL.
+- [AI Solutions & Workflow Automation](https://mcpcoop.org/en): Practical AI integration for operational efficiency, including business process automation, enterprise AI assistants, RAG (Retrieval-Augmented Generation), Model Context Protocol (MCP) servers, and custom LLM workflows.
+- [Mobile Application Development](https://mcpcoop.org/en): Full-cycle native iOS (Swift/SwiftUI) and cross-platform (Flutter) mobile applications with biometric security, offline sync, payment processing, and end-to-end publishing on the App Store and Google Play.
+
+## Technology Stack
+
+- **Frontend**: Next.js (App Router, Server Components), React 19, TypeScript (Strict Mode), Tailwind CSS v4, TanStack Query
+- **Backend & Data**: Go, Python (FastAPI), PostgreSQL, Prisma ORM, Redis, Apache Kafka
+- **Mobile**: Swift / SwiftUI (iOS Native), Flutter (Cross-platform), CryptoKit, Secure Enclave
+- **AI & Agentic**: Model Context Protocol (MCP), LLM APIs (OpenAI, Anthropic Claude), Vector Databases (Qdrant, pgvector), RAG architectures
+- **DevOps & Infrastructure**: Docker, Kubernetes, CI/CD pipelines, Prometheus, Grafana
+
+## Contact & Project Inquiries
+
+- [English Contact Form](https://mcpcoop.org/en/contact-us): Submit project requirements, schedule architecture discovery, or request budget and timeline estimations.
+- [Russian Contact Form](https://mcpcoop.org/ru/contact-us): Форма для связи и обсуждения проектов на русском языке.
+- [Telegram Direct Contact](https://t.me/Shpakich_BLR): Direct messaging with technical leadership (response time under 2 hours).
+- [Official Website](https://mcpcoop.org): Global homepage and entry point to the MCP COOP platform.
+
+## Key Resources & Documentation
+
+- [Full Technical Manifest (llms-full.txt)](https://mcpcoop.org/llms-full.txt): Comprehensive technical specifications, delivery processes, reliability standards, and architecture details.
+- [Platform Documentation (EN)](https://mcpcoop.org/en/docs): Architecture blueprints, protocol documentation, and developer guides in English.
+- [Platform Documentation (RU)](https://mcpcoop.org/ru/docs): Архитектурные регламенты и техническая документация на русском языке.
+- [Specialists Directory (EN)](https://mcpcoop.org/en/members): Profiles of verified engineers, architects, and technical contributors.
+- [Specialists Directory (RU)](https://mcpcoop.org/ru/members): Реестр квалифицированных инженеров и участников кооператива.
+- [Cooperatives & Guilds (EN)](https://mcpcoop.org/en/coops): Specialized engineering guilds and project-based cooperative teams.
+- [Cooperatives & Guilds (RU)](https://mcpcoop.org/ru/coops): Проектные объединения и гильдии кооператива.
+- [Network & Blockchain Status (EN)](https://mcpcoop.org/en/blockchain-status): Real-time health and telemetry of the MCP Coop Chain.
+- [Network & Blockchain Status (RU)](https://mcpcoop.org/ru/blockchain-status): Мониторинг рабочего состояния и метрик сети MCP Coop Chain.
+
+## Russian Overview / Обзор на русском языке
+
+MCP COOP — распределенный инженерный кооператив разработчиков и продуктовых архитекторов. Мы специализируемся на заказной разработке веб-сервисов, масштабируемых платформ, промо-сайтов, мобильных приложений (iOS/Android) и прикладных решений на базе искусственного интеллекта (RAG, MCP, AI-агенты). Обеспечиваем чистую архитектуру, соблюдение сроков, полное автоматизированное тестирование и прозрачное взаимодействие.
+
+- [Официальный сайт (RU)](https://mcpcoop.org/ru): Главная страница на русском языке.
+- [Связаться с нами (RU)](https://mcpcoop.org/ru/contact-us): Форма заявки на проект с быстрым расчетом сроков и стоимости.
+- [Прямой контакт в Telegram](https://t.me/Shpakich_BLR): Прямая связь с техническим лидером команды.

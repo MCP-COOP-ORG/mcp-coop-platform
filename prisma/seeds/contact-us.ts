@@ -1,18 +1,18 @@
 import { PrismaClient } from "../../generated/prisma/client";
 
 const CONTACT_CONTENT_RU = {
-  highlightWords: ["вопросы", "предложения", "свяжемся"],
+  highlightWords: ["задачу", "сроки", "стоимость"],
   hero: {
     title: "Свяжитесь с нами",
-    subtitle: "Остались вопросы или есть предложения? Заполните форму, \nи мы свяжемся с вами в ближайшее время.",
+    subtitle: "Опишите задачу или идею вашего продукта.\nМы ответим в течение пары часов, чтобы обсудить детали, сроки и стоимость разработки.",
   }
 };
 
 const CONTACT_CONTENT_EN = {
-  highlightWords: ["questions", "suggestions", "get back"],
+  highlightWords: ["architecture", "timeline", "budget"],
   hero: {
     title: "Contact Us",
-    subtitle: "Have any questions or suggestions? Fill out the form, \nand we will get back to you shortly.",
+    subtitle: "Tell us about your project or product idea.\nWe'll get back to you within a couple of hours to discuss architecture, timeline, and budget.",
   }
 };
 

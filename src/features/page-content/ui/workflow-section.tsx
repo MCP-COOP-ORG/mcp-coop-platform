@@ -1,7 +1,7 @@
 "use client";
 
 import type { WorkflowSection as WorkflowSectionType } from "@/entities/page-content/types";
-import Link from "next/link";
+import { Link } from "@/core/configs/i18n/routing";
 
 export interface WorkflowSectionProps {
   data: WorkflowSectionType;
@@ -11,6 +11,16 @@ export function WorkflowSection({ data }: WorkflowSectionProps) {
   if (!data || !data.steps || data.steps.length === 0) {
     return null;
   }
+
+  const isPrimaryExternal =
+    data.cta.primaryButtonLink?.startsWith("http://") ||
+    data.cta.primaryButtonLink?.startsWith("https://") ||
+    data.cta.primaryButtonLink?.startsWith("//");
+
+  const isSecondaryExternal =
+    data.cta.secondaryButtonLink?.startsWith("http://") ||
+    data.cta.secondaryButtonLink?.startsWith("https://") ||
+    data.cta.secondaryButtonLink?.startsWith("//");
 
   return (
     <section className="w-full flex flex-col justify-center max-w-7xl mx-auto px-[20px]">
@@ -27,7 +37,7 @@ export function WorkflowSection({ data }: WorkflowSectionProps) {
       </div>
 
       {/* Unified Workflow & CTA Module */}
-      <div className="w-full border-[2px] border-dashed border-foreground/20 rounded-medium bg-background p-6 sm:p-10 relative">
+      <div className="w-full border-[2px] border-dashed border-foreground/20 rounded-medium bg-background p-5 sm:p-8 lg:p-10 relative overflow-hidden">
         {/* Technical Corner Crosshairs */}
         <span
           className="absolute top-2 left-2.5 font-mono text-foreground/40 text-[11px] select-none pointer-events-none leading-none"
@@ -55,7 +65,7 @@ export function WorkflowSection({ data }: WorkflowSectionProps) {
         </span>
 
         {/* 4 Process Steps */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {data.steps.map((step) => (
             <div
               key={step.id}
@@ -78,10 +88,10 @@ export function WorkflowSection({ data }: WorkflowSectionProps) {
               <div className="flex flex-col flex-grow">
                 {/* Top Metadata Line */}
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="font-mono text-[12px] tracking-wider text-primary font-medium uppercase px-2 py-0.5 border border-dashed border-primary/30 rounded bg-primary/5">
+                  <span className="font-mono text-[12px] tracking-wider text-primary font-medium uppercase px-2 py-0.5 border border-dashed border-primary/30 rounded bg-primary/5 shrink-0">
                     {step.stepNumber.startsWith("[") ? step.stepNumber : `[ ${step.stepNumber} ]`}
                   </span>
-                  <span className="font-mono text-[11px] text-foreground/60 uppercase tracking-wider select-none">
+                  <span className="font-mono text-[11px] text-foreground/60 uppercase tracking-wider select-none text-right truncate">
                     {step.tag}
                   </span>
                 </div>
@@ -102,7 +112,7 @@ export function WorkflowSection({ data }: WorkflowSectionProps) {
 
         {/* Inner Blueprint Transition */}
         <div className="border-t border-dashed border-foreground/20 my-8 sm:my-10 relative">
-          <span className="absolute -top-[9px] left-1/2 -translate-x-1/2 bg-background px-3 font-mono text-[11px] text-foreground/60 uppercase tracking-wider select-none">
+          <span className="absolute -top-[9px] left-1/2 -translate-x-1/2 bg-background px-3 font-mono text-[11px] text-foreground/60 uppercase tracking-wider select-none whitespace-nowrap">
             {"// ACTION PROTOCOL //"}
           </span>
         </div>
@@ -156,25 +166,43 @@ export function WorkflowSection({ data }: WorkflowSectionProps) {
             )}
 
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto">
-              {data.cta.primaryButtonText && (
-                <Link
-                  href={data.cta.primaryButtonLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary text-white hover:opacity-90 font-medium px-8 py-3.5 rounded-medium tracking-wider uppercase text-sm shadow-md transition-all min-h-[44px] select-none text-center"
-                >
-                  {data.cta.primaryButtonText}
-                </Link>
-              )}
+              {data.cta.primaryButtonText &&
+                (isPrimaryExternal ? (
+                  <a
+                    href={data.cta.primaryButtonLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary text-white hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 font-medium px-8 py-3.5 rounded-medium tracking-wider uppercase text-sm shadow-md transition-all min-h-[44px] select-none text-center cursor-pointer"
+                  >
+                    {data.cta.primaryButtonText}
+                  </a>
+                ) : (
+                  <Link
+                    href={data.cta.primaryButtonLink}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary text-white hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 font-medium px-8 py-3.5 rounded-medium tracking-wider uppercase text-sm shadow-md transition-all min-h-[44px] select-none text-center cursor-pointer"
+                  >
+                    {data.cta.primaryButtonText}
+                  </Link>
+                ))}
 
-              {data.cta.secondaryButtonText && (
-                <Link
-                  href={data.cta.secondaryButtonLink}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-[2px] border-dashed border-foreground/25 hover:border-primary text-foreground hover:text-primary hover:bg-primary/5 font-medium px-8 py-3.5 rounded-medium tracking-wider uppercase text-sm transition-all min-h-[44px] select-none text-center"
-                >
-                  {data.cta.secondaryButtonText}
-                </Link>
-              )}
+              {data.cta.secondaryButtonText &&
+                (isSecondaryExternal ? (
+                  <a
+                    href={data.cta.secondaryButtonLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-[2px] border-dashed border-foreground/25 hover:border-primary text-foreground hover:text-primary hover:bg-primary/5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 font-medium px-8 py-3.5 rounded-medium tracking-wider uppercase text-sm transition-all min-h-[44px] select-none text-center cursor-pointer"
+                  >
+                    {data.cta.secondaryButtonText}
+                  </a>
+                ) : (
+                  <Link
+                    href={data.cta.secondaryButtonLink}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-[2px] border-dashed border-foreground/25 hover:border-primary text-foreground hover:text-primary hover:bg-primary/5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 font-medium px-8 py-3.5 rounded-medium tracking-wider uppercase text-sm transition-all min-h-[44px] select-none text-center cursor-pointer"
+                  >
+                    {data.cta.secondaryButtonText}
+                  </Link>
+                ))}
             </div>
           </div>
         </div>

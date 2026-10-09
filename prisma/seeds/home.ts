@@ -5,24 +5,24 @@ const HOME_PAGE_CONTENT_RU = {
   highlightWords: ["КОМАНДА", "ДЛЯ", "БИЗНЕСА"],
   hero: {
     tagline: "КОМАНДА ИНЖЕНЕРОВ ДЛЯ ВАШЕГО БИЗНЕСА",
-    subtitle: "Опытные разработчики с многолетним стажем создания реальных продуктов.\nБерем на себя весь цикл — от проектирования до запуска и поддержки, подбирая надежные решения под ваш бюджет.",
-    buttonText: "СВЯЗАТЬСЯ С НАМИ",
+    subtitle: "Разрабатываем цифровые решения под задачи вашей компании.\nПроектируем архитектуру, соблюдаем сроки и запускаем продукты, которые работают без сбоев.",
+    buttonText: "ОБСУДИТЬ ПРОЕКТ",
   },
   features: [
     {
       id: "web",
       title: "ВЕБ-РАЗРАБОТКА",
-      description: "Создаем современные онлайн-сервисы, веб-платформы и промо-сайты любой сложности для бизнеса. Разрабатываем надежную серверную часть, быстрые интерфейсы и базы данных, рассчитанные на стабильную работу при росте нагрузок."
+      description: "Создаем веб-сервисы, онлайн-платформы и промо-сайты для бизнеса. Разрабатываем быстрые интерфейсы и надежную серверную часть, готовую к высоким нагрузкам."
     },
     {
       id: "ai",
       title: "AI-РЕШЕНИЯ",
-      description: "Мы сами ежедневно используем AI в работе, ускоряя и удешевляя разработку без потери качества. Поэтому мы точно знаем, как практично внедрить нейросети в ваш бизнес: автоматизировать рутину, запустить умных ассистентов и дать вашему продукту технологическое преимущество."
+      description: "Внедряем искусственный интеллект в реальные процессы компании: автоматизируем рутину, запускаем умных ассистентов и поиск по корпоративным данным для экономии времени и ресурсов."
     },
     {
       id: "mobile",
       title: "МОБИЛЬНАЯ РАЗРАБОТКА",
-      description: "Создаем оптимизированные мобильные приложения под iOS и Android с продуманным UX. Закрываем весь путь под ключ: от логики и подключения оплат до успешного релиза в App Store и Google Play и поддержки после запуска."
+      description: "Создаем мобильные приложения под iOS и Android с удобным интерфейсом и стабильной работой. Подключаем платежи, настраиваем интеграции и берем на себя релиз в App Store и Google Play."
     }
   ],
   agentBuilderSection: {
@@ -93,8 +93,8 @@ const HOME_PAGE_CONTENT_RU = {
     ]
   },
   projectsSection: {
-    title: "Наши проекты",
-    subtitle: "Примеры проектов, за которые мы отвечаем",
+    title: "НАШИ ПРОЕКТЫ",
+    subtitle: "Цифровые продукты и сервисы, разработанные и запущенные нашей командой.",
     categories: [
       { id: "all", label: "Все" },
       { id: "web", label: "Web" },
@@ -171,8 +171,8 @@ const HOME_PAGE_CONTENT_RU = {
     ],
   },
   teamSection: {
-    title: "Наша команда",
-    subtitle: "Инженеры, которые ведут ваш проект",
+    title: "НАША КОМАНДА",
+    subtitle: "Разработчики, которые создают ваш продукт и напрямую отвечают за результат.",
     members: [
       {
         id: "vitali-shpakowski",
@@ -216,48 +216,48 @@ const HOME_PAGE_CONTENT_RU = {
     ],
   },
   workflowSection: {
-    title: "КАК МЫ НАЧИНАЕМ РАБОТУ",
-    subtitle: "Простой путь от первой идеи до старта разработки.\nБез душных ТЗ, лишних посредников и бюрократии.",
+    title: "КАК МЫ РАБОТАЕМ",
+    subtitle: "Простой и прозрачный процесс от первой идеи до релиза.\nПрямая связь с нашей командой, понятные этапы и соблюдение сроков.",
     steps: [
       {
         id: "contact",
         stepNumber: "01",
         tag: "СВЯЗЬ",
         title: "Первый контакт",
-        description: "Напишите нам в Telegram или оставьте заявку. Опишите задачу своими словами — текстом, голосовым или ссылками на референсы.",
+        description: "Напишите нам в Telegram или оставьте заявку на сайте. Опишите задачу своими словами, приложите референсы или черновики.",
       },
       {
         id: "discovery",
         stepNumber: "02",
-        tag: "ПОГРУЖЕНИЕ",
-        title: "Короткий созвон или чат",
-        description: "В удобном для вас формате без душных опросников и бюрократии вникаем в суть задачи, цели продукта и отсекаем лишнее.",
+        tag: "РАЗБОР ЗАДАЧИ",
+        title: "Короткий созвон",
+        description: "Созваниваемся, чтобы вникнуть в цели бизнеса, обсудить ключевой функционал и определить приоритеты запуска.",
       },
       {
         id: "estimate",
         stepNumber: "03",
-        tag: "СМЕТА И СРОКИ",
-        title: "Быстрая оценка и план",
-        description: "Оперативно возвращаемся с конкретикой: архитектурный стек, прозрачная вилка бюджета и реалистичные сроки запуска без скрытых условий.",
+        tag: "ОЦЕНКА И ПЛАН",
+        title: "План и смета",
+        description: "Предлагаем оптимальное техническое решение, прозрачный бюджет и реалистичный график разработки.",
       },
       {
         id: "kickoff",
         stepNumber: "04",
         tag: "СТАРТ",
         title: "Запуск разработки",
-        description: "Фиксируем договоренности и сразу берем проект в работу с прямым доступом к ведущим инженерам.",
+        description: "Фиксируем договоренности и начинаем работу. Вы общаетесь напрямую с нашей командой и видите прогресс на каждом этапе.",
       },
     ],
     cta: {
       title: "ГОТОВЫ ОБСУДИТЬ ВАШ ПРОЕКТ?",
-      subtitle: "Подберем надежные архитектурные решения и поможем запуститься в срок.",
+      subtitle: "Подберем правильное решение под задачи вашей компании и поможем запуститься в срок.",
       checklistTitle: "// ЧТО ПОЛЕЗНО УКАЗАТЬ ПРИ ОБРАЩЕНИИ:",
       checklistItems: [
-        "Суть задачи: онлайн-сервис, мобильное приложение, AI-автоматизация или MVP с нуля.",
-        "Что уже есть: готовый дизайн/код или проектируем продукт с чистого листа.",
-        "Ориентир по срокам: к какой дате или событию планируете запуск.",
+        "Суть продукта: веб-сервис, мобильное приложение, AI-решение, промо-сайт или MVP.",
+        "Текущий статус: есть готовое описание и дизайн или начинаем с нуля.",
+        "Ориентир по срокам: к какой дате планируете запуск продукта.",
       ],
-      checklistNote: "Нет четкого описания? Не проблема — поможем сформулировать и упаковать требования на коротком созвоне.",
+      checklistNote: "Нет готового описания? Не проблема — поможем сформулировать требования на первой встрече.",
       primaryButtonText: "НАПИСАТЬ В TELEGRAM ↗",
       primaryButtonLink: "https://t.me/Shpakich_BLR",
       secondaryButtonText: "ОСТАВИТЬ ЗАЯВКУ",
@@ -271,24 +271,24 @@ const HOME_PAGE_CONTENT_EN = {
   highlightWords: ["ENGINEERING", "FOR", "BUSINESS"],
   hero: {
     tagline: "ENGINEERING TEAM FOR YOUR BUSINESS",
-    subtitle: "Experienced developers with years of track record building production products.\nWe take on the entire lifecycle — from architecture to launch and support, delivering reliable solutions tailored to your budget.",
-    buttonText: "CONTACT US",
+    subtitle: "Engineering digital solutions tailored to your business goals.\nWe design clean architecture, meet deadlines, and deliver software that runs without failure.",
+    buttonText: "DISCUSS PROJECT",
   },
   features: [
     {
       id: "web",
       title: "WEB DEVELOPMENT",
-      description: "We build modern online services, scalable web platforms, and high-impact websites for business. Resilient backend, high-performance interfaces, and databases designed to handle business growth.",
+      description: "We build web services, online platforms, and high-impact promo sites for business. Fast user interfaces, robust backend architecture, and databases ready for high traffic.",
     },
     {
       id: "ai",
       title: "AI SOLUTIONS",
-      description: "We use AI daily in our workflow to speed up development and cut costs without sacrificing quality. We know how to practically integrate neural networks into your business: automate routine tasks, deploy intelligent assistants, and give your product a technological edge.",
+      description: "We integrate practical AI into real-world business workflows: automating routine operations, launching intelligent assistants, and powering search across company data to save time and resources.",
     },
     {
       id: "mobile",
       title: "MOBILE DEVELOPMENT",
-      description: "We build optimized iOS and Android applications with thoughtful UX. End-to-end delivery: from business logic and payment integrations to successful releases in the App Store and Google Play and post-launch support.",
+      description: "We develop iOS and Android apps with intuitive UX and rock-solid stability. We integrate payments, connect APIs, and take full care of publishing to the App Store and Google Play.",
     },
   ],
   agentBuilderSection: {
@@ -359,8 +359,8 @@ const HOME_PAGE_CONTENT_EN = {
     ]
   },
   projectsSection: {
-    title: "Our Projects",
-    subtitle: "Real-world projects we stand behind",
+    title: "OUR PROJECTS",
+    subtitle: "Digital products and platforms engineered and launched by our team.",
     categories: [
       { id: "all", label: "All" },
       { id: "web", label: "Web" },
@@ -437,8 +437,8 @@ const HOME_PAGE_CONTENT_EN = {
     ],
   },
   teamSection: {
-    title: "Our Team",
-    subtitle: "The engineers who build your product",
+    title: "OUR TEAM",
+    subtitle: "The developers who build your product and take direct ownership of the results.",
     members: [
       {
         id: "vitali-shpakowski",
@@ -482,53 +482,53 @@ const HOME_PAGE_CONTENT_EN = {
     ],
   },
   workflowSection: {
-    title: "HOW WE START",
-    subtitle: "A clear and simple path from your first idea to development kickoff.\nNo tedious specs, unnecessary middlemen, or bureaucracy.",
+    title: "HOW WE WORK",
+    subtitle: "A straightforward process from initial concept to launch.\nDirect communication with our team, clear milestones, and strict deadlines.",
     steps: [
       {
         id: "contact",
         stepNumber: "01",
         tag: "CONTACT",
         title: "First Contact",
-        description: "Drop us a line on Telegram or submit an inquiry. Describe your idea in your own words — text, voice notes, or reference links.",
+        description: "Message us on Telegram or submit a request on the site. Describe your task in your own words, share references, or rough ideas.",
       },
       {
         id: "discovery",
         stepNumber: "02",
         tag: "DISCOVERY",
-        title: "Quick Intro Call or Chat",
-        description: "A brief call or message exchange in any convenient format. No tedious questionnaires — we focus directly on your product goals and cut out unnecessary scope.",
+        title: "Quick Call",
+        description: "We jump on a brief call to understand your business goals, discuss key features, and set launch priorities.",
       },
       {
         id: "estimate",
         stepNumber: "03",
         tag: "ESTIMATE",
-        title: "Fast Scope & Estimate",
-        description: "We promptly get back to you with specifics: optimal tech stack, transparent budget range, and realistic launch milestones without hidden fees.",
+        title: "Plan & Estimate",
+        description: "We propose the optimal technical approach, transparent budget, and a realistic release schedule.",
       },
       {
         id: "kickoff",
         stepNumber: "04",
         tag: "KICKOFF",
         title: "Development Kickoff",
-        description: "We lock in agreements and immediately start engineering with direct, transparent access to lead developers.",
+        description: "We confirm terms and start building. You communicate directly with our team and track progress at every stage.",
       },
     ],
     cta: {
-      title: "READY TO BUILD YOUR PRODUCT?",
-      subtitle: "We'll engineer the right architecture and help you launch reliably and on schedule.",
-      checklistTitle: "// HELPFUL DETAILS TO SHARE:",
+      title: "READY TO DISCUSS YOUR PROJECT?",
+      subtitle: "We'll find the right solution for your business goals and help you launch on time.",
+      checklistTitle: "// HELPFUL DETAILS FOR OUR FIRST TALK:",
       checklistItems: [
-        "The core idea: web platform, mobile app, AI solution, or MVP from scratch.",
-        "Current assets: existing code/designs, or starting completely from scratch.",
-        "Target timeline: specific deadlines or target launch dates.",
+        "Product type: web platform, mobile app, AI solution, promo website, or MVP.",
+        "Current status: existing specs/designs, or starting from scratch.",
+        "Timeline: target launch date or key business milestone.",
       ],
-      checklistNote: "No formal specs? No problem — we will help define and shape your requirements during our quick intro call.",
+      checklistNote: "No formal specification yet? Not a problem — we'll help define the requirements on our first call.",
       primaryButtonText: "MESSAGE ON TELEGRAM ↗",
       primaryButtonLink: "https://t.me/Shpakich_BLR",
       secondaryButtonText: "SUBMIT INQUIRY",
       secondaryButtonLink: "/contact-us",
-      responseTimeBadge: "// AVERAGE RESPONSE TIME: < 2 HOURS",
+      responseTimeBadge: "// AVERAGE RESPONSE TIME: UNDER 2 HOURS",
     },
   },
 } satisfies HomePageJsonContent;
