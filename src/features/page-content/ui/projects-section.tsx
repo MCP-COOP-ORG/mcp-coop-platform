@@ -27,26 +27,38 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
     })
     .map(({ project }) => project);
 
-  // Categories extracted 100% from project data (case-insensitive deduplication, preserving original string)
-  const categoryMap = new Map<string, string>();
+  // Categories extracted from project data with item count, sorted ascending by count with 'all' first
+  const categoryMap = new Map<string, { label: string; count: number }>();
   allProjects.forEach((project) => {
     project.categories?.forEach((cat) => {
       const trimmed = cat.trim();
       if (trimmed) {
         const lower = trimmed.toLowerCase();
-        if (!categoryMap.has(lower)) {
-          categoryMap.set(lower, trimmed);
+        const existing = categoryMap.get(lower);
+        if (existing) {
+          existing.count += 1;
+        } else {
+          categoryMap.set(lower, { label: trimmed, count: 1 });
         }
       }
     });
   });
 
-  const categories = [
-    { id: "all", label: t("all") },
-    ...Array.from(categoryMap.entries()).map(([id, label]) => ({
+  const sortedCategories = Array.from(categoryMap.entries())
+    .sort((a, b) => {
+      if (a[1].count !== b[1].count) {
+        return b[1].count - a[1].count;
+      }
+      return a[1].label.localeCompare(b[1].label);
+    })
+    .map(([id, { label }]) => ({
       id,
       label,
-    })),
+    }));
+
+  const categories = [
+    { id: "all", label: t("all") },
+    ...sortedCategories,
   ];
 
   // Fallback to "all" if selected category is not present in available categories

@@ -1,5 +1,6 @@
 import type { TeamSection as TeamSectionType } from "@/entities/page-content/types";
 import { GitHub, Telegram, LinkedIn } from "@/shared/ui/icons";
+import { Globe } from "lucide-react";
 import { blueprintCardClass } from "@/shared/constants/styles";
 
 export interface TeamSectionProps {
@@ -29,7 +30,7 @@ export function TeamSection({ data }: TeamSectionProps) {
       <div className="flex flex-wrap justify-center gap-5 sm:gap-6 max-w-7xl mx-auto w-full px-[20px] mt-8">
         {data.members.map((member) => {
           const hasLinks = Boolean(
-            member.links?.telegram || member.links?.linkedin || member.links?.github
+            member.links?.website || member.links?.telegram || member.links?.linkedin || member.links?.github
           );
 
           const formattedExp = member.experience
@@ -103,6 +104,17 @@ export function TeamSection({ data }: TeamSectionProps) {
                 </span>
 
                 <div className="flex items-center gap-1">
+                  {member.links?.website && (
+                    <a
+                      href={member.links.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground/70 hover:text-primary transition-transform hover:scale-110 p-2 min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded"
+                      aria-label={`${member.name} Website`}
+                    >
+                      <Globe className="w-[18px] h-[18px]" />
+                    </a>
+                  )}
                   {member.links?.telegram && (
                     <a
                       href={member.links.telegram}

@@ -35,7 +35,7 @@ export interface ProjectItem {
 export interface ProjectsSection {
   title: string;
   subtitle?: string;
-  categories: Array<{ id: string; label: string }>;
+  categories?: Array<{ id: string; label: string }>;
   projects: ProjectItem[];
 }
 
@@ -48,6 +48,7 @@ export interface TeamMemberItem {
   photoUrl: string;
   techStack: string[];
   links: {
+    website?: string;
     github?: string;
     linkedin?: string;
     telegram?: string;
