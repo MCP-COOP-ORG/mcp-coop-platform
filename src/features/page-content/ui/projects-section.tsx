@@ -217,7 +217,7 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
 
                   {/* Blueprint Image Frame */}
                   <div className="w-full h-36 flex items-center justify-center my-3">
-                    <div className="h-full w-fit max-w-full border border-dashed border-foreground/20 rounded-small overflow-hidden relative bg-default-100/50 flex items-center justify-center">
+                    <div className="h-full w-fit max-w-full rounded-xl overflow-hidden relative flex items-center justify-center border border-black/10 dark:border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.05)] dark:shadow-[0_6px_20px_rgba(0,0,0,0.4)] group-hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={project.imageUrl}
