@@ -81,7 +81,7 @@ export interface WorkflowSection {
 
 export interface HomePageJsonContent {
   highlightWords: string[];
-  hero: { tagline: string; subtitle: string; buttonText: string };
+  hero: { tagline: string; subtitle: string; buttonText: string; subtitleHighlightWords?: string[] };
   features: Array<{ id: string; title: string; description: string }>;
   projectsSection?: ProjectsSection;
   teamSection?: TeamSection;

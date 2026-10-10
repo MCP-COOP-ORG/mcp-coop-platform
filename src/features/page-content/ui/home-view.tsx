@@ -53,7 +53,11 @@ export function HomeView({ content }: HomeViewProps) {
           )}
         </h1>
         <h2 className="text-center text-[16px] sm:text-[20px] md:text-[24px] font-light uppercase mt-4 whitespace-pre-line leading-relaxed max-w-4xl mx-auto">
-          {hero.subtitle}
+          <HighlightedText
+            text={hero.subtitle}
+            words={hero.subtitleHighlightWords ?? []}
+            highlightClassName="text-primary font-normal"
+          />
         </h2>
       </section>
       <section className="w-full py-[60px] relative z-0 overflow-hidden" style={blueprintBackgroundStyle}>
@@ -86,23 +90,21 @@ export function HomeView({ content }: HomeViewProps) {
                 <h3 className="text-2xl font-medium uppercase mb-6 tracking-wide [text-shadow:0_1px_3px_rgba(0,0,0,0.35)] relative z-10">
                   {feature.title}
                 </h3>
-                <p className="text-white font-normal text-[17px] mb-10 flex-grow leading-relaxed [text-shadow:0_1px_3px_rgba(0,0,0,0.35)] relative z-10">
+                <p className="text-white font-normal text-[17px] leading-relaxed [text-shadow:0_1px_3px_rgba(0,0,0,0.35)] relative z-10">
                   {feature.description}
                 </p>
-
-                {isMiddle ? (
-                  <Link
-                    href="/contact-us"
-                    className="mt-auto inline-flex items-center justify-center bg-primary text-white rounded-medium hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#6ba0c0] transition-all duration-200 px-10 py-3.5 text-md font-medium tracking-wider uppercase shadow-md z-10 select-none cursor-pointer"
-                  >
-                    {hero.buttonText}
-                  </Link>
-                ) : (
-                  <div className="mt-auto h-[52px]" aria-hidden="true" />
-                )}
               </div>
             );
           })}
+        </div>
+
+        <div className="max-w-7xl mx-auto w-full px-[20px] mt-10 flex justify-center relative z-10">
+          <Link
+            href="/contact-us"
+            className="inline-flex items-center justify-center bg-primary text-white rounded-medium hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#6ba0c0] transition-all duration-200 px-10 py-3.5 text-md font-medium tracking-wider uppercase shadow-md z-10 select-none cursor-pointer"
+          >
+            {hero.buttonText}
+          </Link>
         </div>
       </section>
 

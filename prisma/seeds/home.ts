@@ -5,8 +5,9 @@ const HOME_PAGE_CONTENT_RU = {
   highlightWords: ["КОМАНДА", "ДЛЯ", "БИЗНЕСА"],
   hero: {
     tagline: "КОМАНДА ИНЖЕНЕРОВ ДЛЯ ВАШЕГО БИЗНЕСА",
-    subtitle: "Разрабатываем цифровые решения под задачи вашей компании.\nПроектируем архитектуру, соблюдаем сроки и запускаем продукты, которые работают без сбоев.",
+    subtitle: "Цифровые решения, улучшающие продуктивность вашего бизнеса.\nПолная ответственность за качество, надежность и запуск в срок.",
     buttonText: "ОБСУДИТЬ ПРОЕКТ",
+    subtitleHighlightWords: ["решения", "улучшающие продуктивность", "качество", "надежность"],
   },
   features: [
     {
@@ -271,8 +272,9 @@ const HOME_PAGE_CONTENT_EN = {
   highlightWords: ["ENGINEERING", "FOR", "BUSINESS"],
   hero: {
     tagline: "ENGINEERING TEAM FOR YOUR BUSINESS",
-    subtitle: "Engineering digital solutions tailored to your business goals.\nWe design clean architecture, meet deadlines, and deliver software that runs without failure.",
+    subtitle: "Digital solutions that boost your business productivity.\nFull accountability for quality, reliability, and on-time delivery.",
     buttonText: "DISCUSS PROJECT",
+    subtitleHighlightWords: ["solutions", "boost", "productivity", "quality", "reliability", "delivery"],
   },
   features: [
     {
