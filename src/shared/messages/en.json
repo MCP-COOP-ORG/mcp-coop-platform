@@ -213,5 +213,18 @@
     "platform": "Platform (e.g. Telegram)",
     "contactValue": "Link or Username",
     "noContacts": "No contacts added yet"
+  },
+  "Projects": {
+    "all": "All",
+    "counterPrefix": "// PROJECTS:",
+    "counterSuffix": "UNITS //",
+    "prevProjects": "Previous projects",
+    "nextProjects": "Next projects",
+    "emptyStatus": "// STATUS: SPECIFICATION IN PROGRESS //",
+    "emptyTitle": "Projects in Development",
+    "emptyDescription": "Projects in this category are currently in design phase. Updates will appear in upcoming releases.",
+    "viewProject": "View project",
+    "internalProject": "// INTERNAL //",
+    "githubRepo": "GitHub repository for {title}"
   }
 }

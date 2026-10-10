@@ -12,6 +12,7 @@ export interface GetPageParams {
 
 export interface ProjectItem {
   id: string;
+  order?: number; // Позиция в очереди показа слева направо (1, 2, 3...)
   specId: string; // "SYS-01", "MOD-02"
   title: string;
   description: string;

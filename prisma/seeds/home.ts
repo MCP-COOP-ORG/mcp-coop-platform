@@ -106,6 +106,7 @@ const HOME_PAGE_CONTENT_RU = {
     projects: [
       {
         id: "ai-agent-orchestrator",
+        order: 1,
         specId: "SYS-01",
         title: "AI Agent Orchestrator",
         description: "Распределенная среда координации автономных ИИ-агентов с поддержкой протокола MCP, динамическим планированием графа задач и контролем контекста.",
@@ -115,58 +116,6 @@ const HOME_PAGE_CONTENT_RU = {
         links: {
           liveUrl: "https://agent-builder.mcpcoop.org",
           githubUrl: "https://github.com/MCP-COOP-DAO/agent-builder",
-        },
-      },
-      {
-        id: "mobile-crypto-wallet",
-        specId: "SYS-02",
-        title: "Decentralized Mobile Wallet",
-        description: "Нативный некастодиальный криптокошелек с поддержкой Account Abstraction (ERC-4337), биометрическим подтверждением ключей через Secure Enclave и оффлайн-подписью транзакций.",
-        imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80",
-        categories: ["ios"],
-        techStack: ["SwiftUI", "Combine", "TCA", "Web3.swift", "CryptoKit", "CoreData"],
-        links: {
-          liveUrl: "https://apps.apple.com",
-          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-wallet-ios",
-        },
-      },
-      {
-        id: "distributed-task-engine",
-        specId: "SYS-03",
-        title: "Distributed Task Engine",
-        description: "Высоконагруженный распределенный движок фоновых задач и очередей с гарантией at-least-once доставки, консенсусом Raft и автоматическим шардированием воркеров.",
-        imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-        categories: ["backend"],
-        techStack: ["Go", "gRPC", "Redis", "PostgreSQL", "Kafka", "Prometheus"],
-        links: {
-          liveUrl: "https://status.mcpcoop.org",
-          githubUrl: "https://github.com/MCP-COOP-DAO/task-engine",
-        },
-      },
-      {
-        id: "dao-governance-platform",
-        specId: "SYS-04",
-        title: "DAO Governance Platform",
-        description: "Он-чейн платформа децентрализованного управления кооперативами: квадратичное голосование, делегирование голосов через snapshot-пруфы и казначейские мультисиг-хранилища.",
-        imageUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80",
-        categories: ["web", "backend"],
-        techStack: ["React 19", "Next.js", "Tailwind CSS", "Solidity", "Viem", "Prisma"],
-        links: {
-          liveUrl: "https://mcpcoop.org/coops",
-          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-coop-platform",
-        },
-      },
-      {
-        id: "neural-knowledge-mesh",
-        specId: "SYS-05",
-        title: "Neural Knowledge Mesh",
-        description: "Векторный поисковый движок и база знаний на базе гибридного RAG: семантическая индексация технической документации в реальном времени с квантованными эмбеддингами.",
-        imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
-        categories: ["ai", "backend", "web"],
-        techStack: ["Python", "Qdrant", "Rust", "TypeScript", "OpenAI API", "Hugging Face"],
-        links: {
-          liveUrl: "https://docs.mcpcoop.org",
-          githubUrl: "https://github.com/MCP-COOP-DAO/knowledge-mesh",
         },
       },
     ],
@@ -182,7 +131,7 @@ const HOME_PAGE_CONTENT_RU = {
         experience: "14+ лет опыта",
         description: "11+ лет работы в EPAM. Свыше 6 коммерческих проектов в бигтех, финтех и энтерпрайз.",
         photoUrl: "https://avatars.githubusercontent.com/u/3286958?v=4",
-        techStack: ["Architecture", "Databases", "Firebase", "FullstackNodeJS", "CloudPlatforms", "Flutter", "DevOps", "CI/CD"],
+        techStack: ["Architecture", "FullstackNodeJS", "CloudPlatforms", "Flutter", "CI/CD", "Firebase", "Databases", "DevOps"],
         links: {
           github: "https://github.com/Shpakowski",
           linkedin: "https://www.linkedin.com/in/vitali-shpakowski-73256568/",
@@ -374,6 +323,7 @@ const HOME_PAGE_CONTENT_EN = {
     projects: [
       {
         id: "ai-agent-orchestrator",
+        order: 1,
         specId: "SYS-01",
         title: "AI Agent Orchestrator",
         description: "Distributed runtime for autonomous AI agent coordination featuring MCP protocol support, dynamic DAG execution, and strict context management.",
@@ -383,58 +333,6 @@ const HOME_PAGE_CONTENT_EN = {
         links: {
           liveUrl: "https://agent-builder.mcpcoop.org",
           githubUrl: "https://github.com/MCP-COOP-DAO/agent-builder",
-        },
-      },
-      {
-        id: "mobile-crypto-wallet",
-        specId: "SYS-02",
-        title: "Decentralized Mobile Wallet",
-        description: "Native non-custodial Web3 wallet powered by ERC-4337 Account Abstraction, Secure Enclave biometric key signing, and air-gapped transaction verification.",
-        imageUrl: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80",
-        categories: ["ios"],
-        techStack: ["SwiftUI", "Combine", "TCA", "Web3.swift", "CryptoKit", "CoreData"],
-        links: {
-          liveUrl: "https://apps.apple.com",
-          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-wallet-ios",
-        },
-      },
-      {
-        id: "distributed-task-engine",
-        specId: "SYS-03",
-        title: "Distributed Task Engine",
-        description: "High-throughput distributed background task scheduler featuring at-least-once delivery guarantees, Raft consensus, and autonomous worker sharding.",
-        imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-        categories: ["backend"],
-        techStack: ["Go", "gRPC", "Redis", "PostgreSQL", "Kafka", "Prometheus"],
-        links: {
-          liveUrl: "https://status.mcpcoop.org",
-          githubUrl: "https://github.com/MCP-COOP-DAO/task-engine",
-        },
-      },
-      {
-        id: "dao-governance-platform",
-        specId: "SYS-04",
-        title: "DAO Governance Platform",
-        description: "On-chain cooperative governance suite offering quadratic voting, snapshot-proof delegation, and automated multi-signature treasury execution.",
-        imageUrl: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80",
-        categories: ["web", "backend"],
-        techStack: ["React 19", "Next.js", "Tailwind CSS", "Solidity", "Viem", "Prisma"],
-        links: {
-          liveUrl: "https://mcpcoop.org/coops",
-          githubUrl: "https://github.com/MCP-COOP-DAO/mcp-coop-platform",
-        },
-      },
-      {
-        id: "neural-knowledge-mesh",
-        specId: "SYS-05",
-        title: "Neural Knowledge Mesh",
-        description: "Real-time hybrid RAG vector search engine for technical documentation, featuring quantized embeddings, graph retrieval, and sub-10ms response latency.",
-        imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
-        categories: ["ai", "backend", "web"],
-        techStack: ["Python", "Qdrant", "Rust", "TypeScript", "OpenAI API", "Hugging Face"],
-        links: {
-          liveUrl: "https://docs.mcpcoop.org",
-          githubUrl: "https://github.com/MCP-COOP-DAO/knowledge-mesh",
         },
       },
     ],
@@ -450,7 +348,7 @@ const HOME_PAGE_CONTENT_EN = {
         experience: "14+ years exp",
         description: "11+ years at EPAM. Over 6 commercial projects across Big Tech, Fintech, and Enterprise.",
         photoUrl: "https://avatars.githubusercontent.com/u/3286958?v=4",
-        techStack: ["Architecture", "Databases", "Firebase", "FullstackNodeJS", "CloudPlatforms", "Flutter", "DevOps", "CI/CD"],
+        techStack: ["Architecture", "FullstackNodeJS", "CloudPlatforms", "Flutter", "CI/CD", "Firebase", "Databases", "DevOps"],
         links: {
           github: "https://github.com/Shpakowski",
           linkedin: "https://www.linkedin.com/in/vitali-shpakowski-73256568/",

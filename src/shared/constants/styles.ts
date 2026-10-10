@@ -72,3 +72,15 @@ export function getArticleCardClasses(idx: number, total: number): string {
     rowStyles,
   ].join(" ");
 }
+
+/**
+ * Shared blueprint card layout constants to adhere to DRY across homepage sections (Team, Projects).
+ * Both profile and project cards share identical dimensions, borders, and interaction states.
+ */
+export const BLUEPRINT_CARD_WIDTH_PX = 288; // 320px reduced by 10% = 288px
+export const BLUEPRINT_CARD_GAP_PX = 24; // sm:gap-6
+export const BLUEPRINT_CARD_SCROLL_STEP = BLUEPRINT_CARD_WIDTH_PX + BLUEPRINT_CARD_GAP_PX; // 312px
+
+export const blueprintCardClass =
+  "w-full max-w-[288px] sm:w-[288px] md:w-[288px] flex-shrink-0 flex flex-col justify-between p-4 border-[2px] border-dashed border-foreground/20 rounded-medium bg-background hover:border-primary/60 transition-all duration-300 group relative";
+

@@ -1,5 +1,6 @@
 import type { TeamSection as TeamSectionType } from "@/entities/page-content/types";
 import { GitHub, Telegram, LinkedIn } from "@/shared/ui/icons";
+import { blueprintCardClass } from "@/shared/constants/styles";
 
 export interface TeamSectionProps {
   data: TeamSectionType;
@@ -40,24 +41,11 @@ export function TeamSection({ data }: TeamSectionProps) {
           return (
             <article
               key={member.id}
-              className="w-full max-w-[320px] sm:w-[320px] md:w-[320px] flex flex-col justify-between p-4 border-[2px] border-dashed border-foreground/20 rounded-medium bg-background hover:border-primary/60 transition-all duration-300 group relative"
+              className={blueprintCardClass}
             >
               <div className="flex flex-col flex-grow">
                 {/* Photo frame */}
                 <div className="w-full aspect-[4/3] border border-dashed border-foreground/20 rounded-small overflow-hidden relative bg-default-100/50 mb-3.5">
-                  {/* Micro-crosshairs in corners */}
-                  <span className="absolute top-1 left-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
-                    +
-                  </span>
-                  <span className="absolute top-1 right-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
-                    +
-                  </span>
-                  <span className="absolute bottom-1 left-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
-                    +
-                  </span>
-                  <span className="absolute bottom-1 right-1.5 font-mono text-[11px] text-foreground/40 select-none z-10 pointer-events-none leading-none">
-                    +
-                  </span>
 
                   {/* Experience Badge */}
                   {formattedExp && (

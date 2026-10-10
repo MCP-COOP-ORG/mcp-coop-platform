@@ -213,5 +213,18 @@
     "platform": "Платформа (например, Telegram)",
     "contactValue": "Ссылка или Имя пользователя",
     "noContacts": "Контакты еще не добавлены"
+  },
+  "Projects": {
+    "all": "Все",
+    "counterPrefix": "// ПРОЕКТЫ:",
+    "counterSuffix": "ЕДИНИЦ //",
+    "prevProjects": "Предыдущие проекты",
+    "nextProjects": "Следующие проекты",
+    "emptyStatus": "// СТАТУС: В РАЗРАБОТКЕ //",
+    "emptyTitle": "Проекты в разработке",
+    "emptyDescription": "В данной категории проекты находятся на этапе проектирования. Обновления появятся в ближайших релизах.",
+    "viewProject": "Смотреть проект",
+    "internalProject": "// ВНУТРЕННИЙ //",
+    "githubRepo": "Репозиторий GitHub для {title}"
   }
 }
