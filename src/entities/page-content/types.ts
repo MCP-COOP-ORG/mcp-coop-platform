@@ -36,6 +36,7 @@ export interface TeamMemberItem {
   name: string;
   role: string;
   experience: string;
+  description?: string;
   photoUrl: string;
   techStack: string[];
   links: {

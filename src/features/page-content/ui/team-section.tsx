@@ -40,7 +40,7 @@ export function TeamSection({ data }: TeamSectionProps) {
           return (
             <article
               key={member.id}
-              className="w-full max-w-[280px] sm:w-[270px] md:w-[280px] flex flex-col justify-between p-4 border-[2px] border-dashed border-foreground/20 rounded-medium bg-background hover:border-primary/60 transition-all duration-300 group relative"
+              className="w-full max-w-[320px] sm:w-[320px] md:w-[320px] flex flex-col justify-between p-4 border-[2px] border-dashed border-foreground/20 rounded-medium bg-background hover:border-primary/60 transition-all duration-300 group relative"
             >
               <div className="flex flex-col flex-grow">
                 {/* Photo frame */}
@@ -61,7 +61,7 @@ export function TeamSection({ data }: TeamSectionProps) {
 
                   {/* Experience Badge */}
                   {formattedExp && (
-                    <div className="absolute bottom-1.5 right-1.5 z-10 bg-background/90 backdrop-blur-sm px-1.5 py-0.5 text-[10px] font-mono border border-dashed border-foreground/25 rounded text-foreground/85 select-none">
+                    <div className="absolute bottom-2 right-2 z-10 bg-primary text-white font-mono text-[11px] font-medium tracking-wide px-2 py-0.5 border border-white/20 rounded shadow-md select-none">
                       {formattedExp}
                     </div>
                   )}
@@ -77,12 +77,20 @@ export function TeamSection({ data }: TeamSectionProps) {
 
                 {/* Information Block */}
                 <div>
-                  <h3 className="text-[17px] font-medium leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="text-[18px] font-medium leading-tight group-hover:text-primary transition-colors">
                     {member.name}
                   </h3>
-                  <div className="font-mono text-[12px] text-primary uppercase tracking-wider mt-1">
+                  <div
+                    className="font-mono text-[10px] sm:text-[11px] text-primary uppercase tracking-tight font-medium mt-1 whitespace-nowrap overflow-hidden text-ellipsis"
+                    title={member.role}
+                  >
                     {member.role}
                   </div>
+                  {member.description && (
+                    <p className="text-[13px] text-foreground/80 leading-relaxed mt-2.5">
+                      {member.description}
+                    </p>
+                  )}
                 </div>
 
                 {/* Tech Stack */}

@@ -178,10 +178,11 @@ const HOME_PAGE_CONTENT_RU = {
       {
         id: "vitali-shpakowski",
         name: "Vitali Shpakowski",
-        role: "Tech Lead & System Architect",
-        experience: "10+ лет опыта",
+        role: "Principal Software Engineer | Team Lead",
+        experience: "14+ лет опыта",
+        description: "11+ лет работы в EPAM. Свыше 6 коммерческих проектов в бигтех, финтех и энтерпрайз.",
         photoUrl: "https://avatars.githubusercontent.com/u/3286958?v=4",
-        techStack: ["Architecture", "TypeScript", "Next.js", "Go", "PostgreSQL", "Docker"],
+        techStack: ["Architecture", "Databases", "Firebase", "FullstackNodeJS", "CloudPlatforms", "Flutter", "DevOps", "CI/CD"],
         links: {
           github: "https://github.com/Shpakowski",
           linkedin: "https://www.linkedin.com/in/vitali-shpakowski-73256568/",
@@ -445,10 +446,11 @@ const HOME_PAGE_CONTENT_EN = {
       {
         id: "vitali-shpakowski",
         name: "Vitali Shpakowski",
-        role: "Tech Lead & System Architect",
-        experience: "10+ years exp",
+        role: "Principal Software Engineer | Team Lead",
+        experience: "14+ years exp",
+        description: "11+ years at EPAM. Over 6 commercial projects across Big Tech, Fintech, and Enterprise.",
         photoUrl: "https://avatars.githubusercontent.com/u/3286958?v=4",
-        techStack: ["Architecture", "TypeScript", "Next.js", "Go", "PostgreSQL", "Docker"],
+        techStack: ["Architecture", "Databases", "Firebase", "FullstackNodeJS", "CloudPlatforms", "Flutter", "DevOps", "CI/CD"],
         links: {
           github: "https://github.com/Shpakowski",
           linkedin: "https://www.linkedin.com/in/vitali-shpakowski-73256568/",
