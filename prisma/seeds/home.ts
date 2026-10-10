@@ -228,7 +228,7 @@ const HOME_PAGE_CONTENT_RU = {
       },
       {
         id: "vladislav-rybakou",
-        name: "Vladislav Rybakou",
+        name: "Uladzislau Rybakou",
         role: "Senior Backend & Full Stack Engineer",
         experience: "5+ лет опыта",
         description: "5+ лет продуктовой разработки. Архитектура high-load бэкендов, Telegram Mini Apps, гео-сервисы и AI-пайплайны.",
@@ -533,7 +533,7 @@ const HOME_PAGE_CONTENT_EN = {
       },
       {
         id: "vladislav-rybakou",
-        name: "Vladislav Rybakou",
+        name: "Uladzislau Rybakou",
         role: "Senior Backend & Full Stack Engineer",
         experience: "5+ years exp",
         description: "5+ years of product engineering. High-load backend architectures, Telegram Mini Apps, GIS platforms, and AI pipelines.",
