@@ -10,6 +10,11 @@ export interface GetPageParams {
   language?: string;
 }
 
+export interface ProjectLinkItem {
+  label: string;
+  url: string;
+}
+
 export interface ProjectItem {
   id: string;
   order?: number; // Позиция в очереди показа слева направо (1, 2, 3...)
@@ -21,7 +26,9 @@ export interface ProjectItem {
   techStack: string[];  // ["SwiftUI", "Combine"]
   links: {
     liveUrl?: string;
+    liveLabel?: string;
     githubUrl?: string;
+    items?: ProjectLinkItem[];
   };
 }
 

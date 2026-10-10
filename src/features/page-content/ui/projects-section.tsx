@@ -216,22 +216,24 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                   </div>
 
                   {/* Blueprint Image Frame */}
-                  <div className="aspect-video border border-dashed border-foreground/20 rounded-small overflow-hidden relative bg-default-100/50 my-3">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
+                  <div className="w-full h-36 flex items-center justify-center my-3">
+                    <div className="h-full w-fit max-w-full border border-dashed border-foreground/20 rounded-small overflow-hidden relative bg-default-100/50 flex items-center justify-center">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="block h-full w-auto max-w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
 
                   {/* Title and Description */}
                   <div>
-                    <h3 className="text-[18px] font-medium leading-tight group-hover:text-primary transition-colors">
+                    <h3 className="text-[18px] font-medium leading-tight group-hover:text-primary transition-colors text-center">
                       {project.title}
                     </h3>
-                    <p className="text-[13px] text-foreground/80 leading-relaxed mt-1.5 line-clamp-3">
+                    <p className="text-[13px] text-foreground/80 leading-relaxed mt-1.5">
                       {project.description}
                     </p>
                   </div>
@@ -252,15 +254,34 @@ export function ProjectsSection({ data }: ProjectsSectionProps) {
                 </div>
 
                 {/* Footer Links */}
-                <div className="mt-4 pt-3 border-t border-dashed border-foreground/20 flex items-center justify-between gap-3">
-                  {project.links?.liveUrl ? (
+                <div className="mt-4 pt-3 border-t border-dashed border-foreground/20 flex items-center justify-between gap-3 flex-wrap">
+                  {project.links?.items && project.links.items.length > 0 ? (
+                    <div className="flex items-center gap-3 flex-wrap">
+                      {project.links.items.map((item, idx) => (
+                        <a
+                          key={idx}
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono text-[12px] text-primary no-underline flex items-center gap-1.5 transition-colors group/link"
+                        >
+                          <span className="group-hover/link:underline underline-offset-4">{item.label}</span>
+                          <span className="no-underline inline-block transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
+                            ↗
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  ) : project.links?.liveUrl ? (
                     <a
                       href={project.links.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="font-mono text-[12px] text-primary no-underline flex items-center gap-1.5 transition-colors group/link"
                     >
-                      <span className="group-hover/link:underline underline-offset-4">{t("viewProject")}</span>
+                      <span className="group-hover/link:underline underline-offset-4">
+                        {project.links.liveLabel || t("viewProject")}
+                      </span>
                       <span className="no-underline inline-block transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
                         ↗
                       </span>
